@@ -1,4 +1,4 @@
-Website: https://yunranchen.github.io/intro-network-R/
+Website: https://yunranchen.github.io/intro-net-r/
 
 Here I provide a tutorial on basic network analysis using R. This tutorial is suitable for people who are familiar with R.
 
