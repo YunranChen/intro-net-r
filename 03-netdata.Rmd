@@ -1,0 +1,503 @@
+# Collect network data and API requests
+
+## Several useful websites
+
+- [Papers, reviews, dataset, software (tutorial)](https://github.com/briatte/awesome-network-analysis) 
+- [Katherine's webpage](http://kateto.net/2016/05/network-datasets/)
+- [Kaggle](https://www.kaggle.com/datasets)
+- [dataworld](https://data.world/search?q=network+dataset)
+
+
+## Web scraping
+
+- Web APIs (application programming interface): website offers a set of structured http requests that return JSON or XML files.
+- R packages: `rtweet` (twitter), `Rfacebook` (facebook), `RedditExtractoR` (reddit), `imdbapi` (IMDB), `omdbapi`(The Open Movie Database).
+  - Using `rtweet` to make API requests
+  - Construct Retweet networks
+  - Construct Friendship networks
+- API request from R. `rjson` (map JSON file to datafram),`rvest` (web scrapping).
+
+## Preparation
+
+```{r,echo=TRUE, message=FALSE, warning=FALSE}
+library(dplyr)
+library(igraph)
+library(purrr)
+library("stringr")
+```
+
+## Twitter API request
+
+### R package `rtweet`
+
+Official website: <https://rtweet.info/index.html>
+
+**Explore the official websites to find more info.**
+
+- All the functions
+- Tutorial
+- FAQ (possible issues)
+
+Good documentation; Recommended over another R package `twitteR`.
+
+### Preparation
+
+```{r, echo=TRUE, message=FALSE, warning=FALSE}
+#install.packages("rtweet")
+library("rtweet")
+```
+
+### API authorization
+
+Follow <https://rtweet.info/articles/auth.html>
+
+- Create a Twitter App
+
+- Authorization via access token:  `create_token()` automatically saves your token as an environment variable, you’ll be set for future sessions as well!
+
+```{r,echo=TRUE, eval=FALSE}
+#save your token as an environment variable for you
+create_token(
+  app = "your_research_app",
+  consumer_key = "consumer_API_key",
+  consumer_secret = "consumer_API_secret_key",
+  access_token = "access_token",
+  access_secret = "access_token_secret")
+```
+
+### `rtweet`
+
+**API request**
+
+- [Tweeter Developer](https://developer.twitter.com/en/docs/tweets/search/api-reference/get-search-tweets)
+- Send a request specifying parameters; Get response in JSON format
+- `search_tweets`: **sampling** from tweets in past 7 days matching keywords (**specified # of tweets**)  -- recent/popular/mixed
+- `stream_tweets`: sampling/keyword-filter/user-track/geo-location **live stream** for future time period;(**specified time period**) 
+
+#### `search_tweets`
+
+- limiting searches to 10 keywords and operators
+- only past 6-9 days of Tweets
+
+
+**Parameters:**
+
+- `help()` or see <https://developer.twitter.com/en/docs/tweets/search/api-reference/get-search-tweets>
+- `q`: Query to be searched. 
+  - Spaces/AND -- both ("data science";"data AND science"); 
+  - OR -- either or (data OR science); 
+  - '""' -- exact ('"data science"'; "\"data science\""); 
+  - "\#datascience" -- track hashtag; 
+  - "\@duke" -- track at. 
+  - [More about operators](https://developer.twitter.com/en/docs/tweets/rules-and-filtering/overview/standard-operators.html)
+- `n`: total number of desired tweets. 
+  - At most 18,000 in a single call; 
+  - For $>$ 18,000, `retryonratelimit`=TRUE
+- `type`: "recent","popular","mixed"
+- `include_rts`: whether to include retweets
+- `geocode`:  "latitude,longitude,radius" 
+- `lang`: language
+- `parse`: TRUE(dateframe); FALSE(list)
+
+```{r,echo=TRUE,cache=TRUE}
+rt <- search_tweets(
+  q="#dukebasketball", #Query to be searched
+  n = 10,
+include_rts=FALSE,
+result_type="recent",
+geocode = "36.00,-78.94,5mi"
+)
+rt
+
+rt <- search_tweets(
+  "trump OR president", n = 10,
+  lang = "en"
+)
+rt
+
+search_tweets(
+  q="#dukebasketball", #Query to be searched
+  n = 10,
+include_rts=FALSE,
+result_type="recent",
+geocode = "36.00,-78.94,5mi"
+)
+```
+
+
+---
+
+- dataframe: each row a tweet
+- `users_data`: only extract user-related column
+- `ts_plot`
+- `lat_lng`
+
+
+```{r,echo=TRUE,cache=TRUE}
+## search for 18000 tweets using the rstats hashtag
+rt <- search_tweets(
+  "#dukebasketball", n = 50000, include_rts = FALSE,
+  geocode = "36.00,-78.94,2000mi"
+)
+rt_dmbb=rt
+class(rt)
+
+## preview tweets data
+names(rt)
+
+
+## preview users data
+users_data(rt)%>%names()
+
+## plot time series (if ggplot2 is installed)
+ts_plot(rt) #Duke vs No. 16 Louisville
+```
+
+#### `search_tweets2`
+
+Search different queries independently. 
+
+Other parameters are the same.
+
+```{r,echo=TRUE,cache=TRUE}
+st2 <- search_tweets2(
+  c("\"data science\"", "rstats OR python"),
+  n = 50
+)
+st2$query
+names(st2)
+```
+
+#### Visualization
+
+`research_tweets` returns a dataframe. Visualization based on the dataframe.
+
+- `ts_plot`: Creates a ggplot2 plot of the frequency of tweets over a specified interval of time. Using `ggplot2`; 
+- Map: Using `lat_lng`
+
+```{r,echo=TRUE,cache=TRUE}
+## plot time series of tweets
+ts_plot(rt_dmbb, "3 hours") + # a ggplot object
+  ggplot2::theme_minimal() + # Add multiple layers directly
+  ggplot2::theme(plot.title = ggplot2::element_text(face = "bold")) +
+  ggplot2::labs(
+    x = NULL, y = NULL,
+    title = "Frequency of #dukebasketball Twitter statuses from past 6-9 days",
+    subtitle = "Twitter status (tweet) counts aggregated using three-hour intervals",
+    caption = "\nSource: Data collected from Twitter's REST API via rtweet"
+  )
+# an example using `groupby` with ggplot2
+ts_plot(rt_dmbb%>%dplyr::group_by(is_quote), "3 hours") + # a ggplot object
+  ggplot2::theme_minimal()
+```
+
+```{r,echo=TRUE,cache=TRUE}
+#install.packages("maps")
+## create lat/lng variables using all available tweet and profile geo-location data
+rt_dmbbll <- lat_lng(rt_dmbb)
+names(rt_dmbbll)[!names(rt_dmbbll)%in%names(rt_dmbb)]
+
+## plot state boundaries
+par(mar = c(0, 0, 0, 0))
+maps::map("state","north carolina", lwd = .25)
+
+## plot lat and lng points onto state map
+with(rt_dmbbll, points(lng, lat, pch = 20, cex = .75, col = rgb(0, .3, .7, .75)))
+```
+
+#### `stream_tweets`
+
+<https://developer.twitter.com/en/docs/tweets/search/api-reference/get-search-tweets>
+
+- `q`
+  - Sampling a small random sample of all publicly available tweets `q=""`
+  - Filtering via a search-like query (up to 400 keywords) `q="duke,basketball"`. "," separation
+  - Tracking via vector of user ids (up to 5000 user_ids) `q="hillaryclinton,realdonaldtrump"`. "," separation
+  - Location via geo coordinates (1-360 degree location boxes) `q=c(-125, 26, -65, 49)`
+- `timeout` : amount of time (seconds) **occupy your r session**
+- `parse`: TRUE(dataframe); FALSE(JSON).
+- `file_name`: save as a file
+
+**Usually the file is large. Recommend to save as JSON file then parse to data.frame.**
+
+To ensure the stream automatically reconnects following any interruption prior to the specified stream time, use `stream_tweets2()`.
+
+```{r,echo=TRUE,cache=TRUE}
+## Randomly sample (approximately 1%) from the live stream of all tweets for 30 seconds (default)
+rt <- stream_tweets("")
+nrow(rt)
+
+rt <- stream_tweets("duke,bluedevil,unc")
+nrow(rt)
+rt
+## stream tweets for a day (60 secs x 60 mins * 24 hours )
+stream_tweets(
+  "abc,nbcnews,cbsnews,nytimes,bbcworld,bbcbreaking,bbcnews,bbcsport",
+  timeout = 60*2,
+  file_name = "tweetsth1.json",
+  parse = FALSE
+)
+
+## read in the data as a tidy tbl data frame
+djt1 <- parse_stream("tweetsth1.json")
+djt1
+```
+
+#### Other functions
+
+<https://rtweet.info/reference/index.html>
+
+
+### Retweet networks
+
+Retweet networks: create networks based on datasets
+
+directed: retweet
+
+Similarly, we can get quote networks, replying networks.
+
+```{r,echo=TRUE,cache=TRUE}
+rt_duke <- search_tweets(
+  "#duke", n = 1000
+)
+nrow(rt_duke)
+names(rt_duke)
+
+netdf=rt_duke%>%dplyr::select(.,screen_name,retweet_screen_name,is_retweet)
+netdfr=netdf%>%filter(is_retweet)%>%select(-is_retweet)
+netdfp=netdf%>%filter(!is_retweet)%>%pull(screen_name)
+igra_duke=graph_from_data_frame(netdfr)#+netdfp
+E(igra_duke)$weight=rep(1,ecount(igra_duke))
+igra_duke_s <- igraph::simplify( igra_duke, remove.multiple = T, remove.loops = F, 
+                 edge.attr.comb=c(weight="sum"))
+igra_duke_s
+plot(igra_duke_s,vertex.color="gold", vertex.size=log(igraph::degree(igra_duke_s))*3+1, 
+     vertex.frame.color="gray", vertex.label.color="black", 
+     vertex.label.cex=log(igraph::degree(igra_duke_s))*0.2+0.1, vertex.label.dist=2, edge.curved=0.5,edge.arrow.size=.2)
+```
+
+
+### Friendship networks
+
+#### `get_friends()`
+
+Friendship network of NYC political science
+
+directed: following
+
+`get_friends()`: Get user IDs of accounts followed by target user(s).
+
+```{r,echo=TRUE,cache=TRUE}
+##maximum ids: 100
+user.seed="drewconway"
+user.following=get_friends(user.seed,n=500,retryonratelimit = TRUE)
+nrow(user.following)
+user.following%>%head(5)
+
+```
+
+#### filter on the following user list
+
+```{r,echo=TRUE,cache=TRUE}
+info.following=lookup_users(user.following$user_id)
+info.following
+names(info.following)
+##choose the filtering criterion: description, verified (blue check mark), location
+info.following%>%select(geo_coords,country,country_code,location)%>%lat_lng()
+## filter based on description
+candidates=info.following%>%filter(description%>%
+                          str_detect("nyu|new york university"),
+                        description%>%
+                          str_detect("poli(tics|tical|sci|cy)"))%>%
+  select(user_id,screen_name,name,friends_count,description)
+candidates%>%head(5)
+```
+
+#### request rate limit
+
+`rate_limit`
+
+<https://developer.twitter.com/en/docs/developer-utilities/rate-limit-status/api-reference/get-application-rate_limit_status>
+
+
+```{r,echo=TRUE,cache=TRUE}
+rate_limit()%>%head()
+rate_limit("get_friends")
+get_friends(c("drewconway","BarackObama"))
+rate_limit("get_friends") # 15 every 15 min
+rate_limit("lookup_users") # 900 every 15 min
+```
+
+
+```{r,echo=TRUE,cache=TRUE,eval=FALSE}
+limit.fri=rate_limit("get_friends")
+  if (limit.fri$remaining==0){
+    Sys.sleep(60*as.numeric(limit.fri$reset))}
+```
+
+#### Friendship network 
+
+```{r,echo=TRUE,cache=TRUE,eval=FALSE}
+# seed user
+user.seed= 20916144 #"cdsamii"
+user.following=get_friends(user.seed,n=15,retryonratelimit = TRUE)
+userid=c(user.seed,user.following$user_id)
+info.following=lookup_users(userid)
+user.df=info.following%>%filter(description%>%
+                          str_detect(regex("nyu|new york university",ignore_case = T)),
+                        description%>%
+                          str_detect(regex("poli(tics|tical|sci|cy)",ignore_case = T))
+                        )%>%
+  select(user_id,screen_name,name,friends_count,description)
+acc.id=user.df$user_id # qualified id
+nyc.id=user.seed # already scrapped the friends
+can.id=acc.id[!acc.id%in%nyc.id] # to be scrapped
+rej.id=userid[!info.following$user_id%in%acc.id] # non-qualified
+edge.list=user.following%>%filter(user_id%in%acc.id) # netowork
+info.id=userid # already request user info
+while((length(nyc.id)<100)){
+  # pick the first user in the acc.id
+user.following=get_friends(can.id,n=1000,retryonratelimit = TRUE)
+userid=user.following$user_id
+useridx=userid[!userid%in%info.id] # new userid
+info.following=lookup_users(useridx)
+user.dfx=info.following%>%filter(description%>%
+                          str_detect(regex("nyu|new york university",ignore_case = T)),
+                        description%>%
+                          str_detect(regex("poli(tics|tical|sci|cy)",ignore_case = T))
+                        )%>%
+  select(user_id,screen_name,name,friends_count,description)
+nyc.id=c(nyc.id,can.id)%>%unique() #already scrapped and in the list
+if(nrow(user.dfx)==0){break}
+user.df=rbind(user.df,user.dfx) #merge user info df
+can.id=user.dfx$user_id #to be scrapped
+rej.idx=useridx[!useridx%in%can.id] #not qualified
+rej.id=c(rej.id,rej.idx)%>%unique()
+acc.id=c(acc.id,can.id)%>%unique()
+info.id=c(info.id,useridx)%>%unique()
+edge.listx=user.following%>%filter(user_id%in%acc.id) #add edgelist
+edge.list=rbind(edge.list,edge.listx)
+}
+```
+
+#### Network Visualization
+
+```{r,echo=TRUE,cache=TRUE}
+load("images/friendship.rdata")
+edge.list%>%head(5)
+user.df%>%head(5)
+library(igraph)
+net=graph_from_data_frame(edge.list)
+netsim=igraph::simplify(net, remove.multiple = T, remove.loops = F)
+V(netsim)$id=V(netsim)$name
+
+user.df=user.df %>%
+  unique()%>%
+    arrange(match(user_id, V(netsim)$id))
+user.name=user.df%>%
+  pull(name)
+V(netsim)$name=user.name
+V(netsim)$degree=user.df$friends_count
+set.seed(123)
+plot(netsim,vertex.name=V(netsim)$user.name,vertex.color="gold", vertex.size=log(V(netsim)$degree)*.8+0.01, 
+     vertex.frame.color="gray", vertex.label.color="black", 
+     vertex.label.cex=0.5, vertex.label.dist=2, edge.curved=0.5,edge.arrow.size=.2,vertex.label.cex=.5,vertex.label=NA)
+```
+
+
+## Other APIs
+
+- [`Rfacebook`])(https://cran.r-project.org/web/packages/Rfacebook/Rfacebook.pdf) (facebook) 
+- [`RedditExtractoR`](https://cran.r-project.org/web/packages/RedditExtractoR/RedditExtractoR.pdf) (reddit) 
+
+- [`imdbapi`](https://cran.r-project.org/web/packages/imdbapi/imdbapi.pdf) (IMDB)
+
+- [`omdbapi`](https://github.com/hrbrmstr/omdbapi)(The Open Movie Database)
+
+
+## API request directly from R
+
+### Introduction
+
+The movie database API <https://www.themoviedb.org/>
+
+- Signup and request for an API key <https://developers.themoviedb.org/3/getting-started/introduction>
+- Write functions to make query:
+  - Create a query
+  - From JSON file to dataframe
+- Build your own network based on these functions
+
+### preparation
+
+```{r, echo=TRUE, message=FALSE, warning=FALSE}
+#install.packages("rjson")
+library(rjson)
+#install.packages("jsonlite")
+library(jsonlite)
+```
+
+### search people id
+
+Search people based on the name:
+<https://developers.themoviedb.org/3/search/search-people>
+
+```{r,echo=TRUE,eval=FALSE}
+### get actor/director id based on name
+get_search_people = function(people,api="YOUR_API_ACCOUNT"){
+  
+  search = URLencode(people, reserved = TRUE) 
+  
+  people_url = paste0("https://api.themoviedb.org/3/search/person?api_key=",api,"&language=en-US&query=",
+                      search,"&include_adult=false")
+  people_json = jsonlite::fromJSON(paste(readLines(people_url), collapse=""))
+  
+  total_page = people_json$total_pages
+  if (total_page > 1){
+    people_id_df = data.frame()
+    n = min(5, total_page)
+    for (j in 1:n){
+      url = paste0("https://api.themoviedb.org/3/search/person?api_key=",api,"&language=en-US&query=",
+                   search,"&page=",j,"&include_adult=false")
+      json = jsonlite::fromJSON(paste(readLines(people_url), collapse=""))
+      temp = json$results %>% as.data.frame() %>% select(id, name)
+      people_id_df = rbind(people_id_df, temp)
+    }
+  } else {
+    people_id_df = people_json$results %>% as.data.frame() %>% select(id, name)
+  }
+  
+  return(people_id_df) # this dataframe only contains name and people id
+  
+}
+actress="Julianne Moore" # She comes from NC
+get_search_people(actress)
+people=actress
+```
+
+### search movies based on people id
+
+Search the movies of one person based on id:<https://developers.themoviedb.org/3/people/get-person-movie-credits>
+
+
+```{r,echo=TRUE,eval=FALSE}
+# get movie details of one person with the person id
+get_people_movie = function(id,api="YOUR_API_ACCOUNT"){
+  
+  url = paste0("https://api.themoviedb.org/3/person/",id,"/movie_credits?api_key=",api,"&language=en-US")
+  people_movie_json = jsonlite::fromJSON(paste(readLines(url), collapse=""))
+  people_movie_df = people_movie_json$cast %>% as.data.frame() %>% select(character, poster_path, id, vote_average, original_language,
+                                                                          title, popularity, overview, release_date)
+  base_url = "http://image.tmdb.org/t/p/w500" 
+  people_movie_df = people_movie_df %>% mutate(poster_path = paste0(base_url, poster_path))
+  
+  return(people_movie_df)
+  
+}
+id=1231 # got from the previous function `get_search_people`
+get_people_movie(id)
+
+```
+
+
+
+

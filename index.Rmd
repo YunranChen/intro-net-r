@@ -1,0 +1,132 @@
+--- 
+title: "Introduction to Network Analysis Using R"
+author: "Yunran Chen"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+biblio-style: apalike
+link-citations: yes
+github-repo: YunranChen/intro-network-R
+description: "This github page provide a basic introduction on network analysis using R. The documents are based on the lab materials of STAT650 Social Network at Duke University. "
+---
+
+# Introduction
+
+Here I provide a tutorial on basic network analysis using R. This tutorial is suitable for people who are familiar with R.
+
+- The documents are based on the [lab materials](https://github.com/YunranChen/STA650Lab) of [STAT650 Social Network at Duke University](http://www2.stat.duke.edu/courses/Spring19/sta650.001/). 
+
+- The webpage is built using [bookdown](https://bookdown.org/yihui/bookdown/)
+
+## Outline 
+
+- Basic introduction on network objects. R packages including `igraph`, `statnet`(including `sna`, `network`).
+- Collect network data. 
+  - Web API requesting (Twitter, Reddit, IMDB, or more).
+  - Useful websites (SNAP, or more)
+- Visualization (static and dynamic networks).
+- Network analysis using package `amen`.
+
+
+## Detailed Outline
+
+- `igraph` package
+  - Create networks and basics concepts 
+    - Create simple networks, specific graphs, graph models
+    - Adjustments on graphs, rewiring graphs
+    - Edge, vertex and network attributes
+  - Built networks from external sources, basic visualization and network descriptions
+    - Get network from files (edgelist, matrix, dataframe)
+    - Visualization
+      - Plotting parameters
+      - Layouts
+    - Network and node descriptions
+  - Paths, communitites and related visualization
+    - Paths
+      - Paths, distances and diameter
+      - Components
+      - Transitivity and reciprocity
+      - Max-flow and min-cut
+    - Communities
+      - Pre-defined clusters
+      - Different algorithms
+    - Visualization
+      - Color the paths
+      - Plotting clusters
+      - Plotting dendrograms
+      - Mark groups  
+  - References: 
+    - Tutorial: http://kateto.net/networks-r-igraph
+    - Handbook: http://igraph.org/r/
+    - Book: https://sites.fas.harvard.edu/~airoldi/pub/books/BookDraft-CsardiNepuszAiroldi2016.pdf
+    - Datasets: https://github.com/mathbeveridge/asoiaf
+                https://networkofthrones.wordpress.com/data/
+                https://www.macalester.edu/~abeverid/thrones.html
+- ERGM (`statnet`)
+  - `summary` network statistics
+  - `ergm` model fitting and interpretation:
+  - `simulate` network simulations based on specified model.
+  - `gof`, `mcmc.diagnostics`: Goodness of fit and MCMC diagnostics
+  - References:
+    - Tutorial: https://statnet.org/trac/raw-attachment/wiki/Sunbelt2016/ergm_tutorial.html
+    - Handbook: http://statnet.org/
+- Collect network data and API requests
+  - Several useful websites: 
+    - Awesome website for papers, reviews, datasets and softwares: https://github.com/briatte/awesome-network-analysis
+    - Katherine’s webpage: http://kateto.net/2016/05/network-datasets/
+    - Data analysis competition: https://www.kaggle.com/datasets https://data.world/search?q=network+dataset
+  - twitter API request: `rtweet`
+    - Official website: https://rtweet.info/index.html
+    - API authorization; `create_token`
+    - `search_tweets`
+    - `stream_tweets`
+    - Other functions 
+    - Examples: retweet networks, friendship networks
+    - Other available R packages for API request: `rtweet`,`Rfacebook`,`RedditExtractoR`,`imdbapi`,`omdbapi`
+  - Direct API request from R. `rjson`, `jsonlite`
+  - References:
+    - https://rtweet.info/index.html
+- Advanced Visualization 
+  - Visualization for static network: 
+    - Graph: hairball plot
+    - Matrix: `heatmap` in R basic package; `geom_tile` in pkg `ggplot2`
+  - Other static networks:
+    - Two-mode networks (node-specific attribute)
+    - Multiple networks (edge-specific attribute)
+    - ... ( `ggtree`, `ggalluvial`, etc.)
+  - `ggplot2` version for network visualization: 
+    - Comparison between `ggnet2`,`geomnet`,`ggnetwork`
+    - Extension to interactive (`plotly`) , dynamic network (`ggnetwork`)
+  - Other interactive network visualizations: 
+    -  `visNetwork` (good documentation)
+    -  `networkD3`
+    -  `threejs`
+    -  `ggigraph`
+  - Visualization for dynamic networks
+    - Snapshots for the evolving networks: `ggnetwork` (common)
+    - Animation for the evolving networks: `ggplot2` + `gganimate`
+    - `ndtv` pkg (good documentation)
+  - References:
+    - http://kateto.net/netscix2016
+    - http://kateto.net/network-visualization
+    - http://curleylab.psych.columbia.edu/netviz/
+    - https://journal.r-project.org/archive/2017/RJ-2017-023/RJ-2017-023.pdf
+- `amen` packages 
+  - Gaussian AME model: `ame`
+  - Different relation: `ame(...,model=,...)`
+    - ordinal data
+    - censored and fixed rank nomination data
+    - sampled or missing data
+  - symmetric relation: `ame(...,symmetric=TRUE,...)`
+  - repeated measures data: longitudal data `ame_rep(Y,Xdyad,Xrow,Xcol)`
+  - References: 
+    - https://github.com/pdhoff/amen/blob/master/inst/doc/amen.pdf 
+    
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+```
