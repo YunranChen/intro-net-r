@@ -818,7 +818,7 @@ plot(got2, vertex.shape="none",vertex.label.color="black",
 
 ####  Layouts
 
-```{r, out.width = "850px",cache=TRUE}
+```{r, fig.cap=' Layouts from  [Kateto tutorial](https://kateto.net/networks-r-igraph)',  fig.align='center',echo=FALSE}
 knitr::include_graphics("images/layouts.png")
 ```
 
