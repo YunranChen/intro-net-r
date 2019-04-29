@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>6 amen packages | Introduction to Network Analysis Using R</title>
+  <meta name="description" content="This github page provide a basic introduction on network analysis using R. The documents are based on the lab materials of STAT650 Social Network at Duke University.">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="6 amen packages | Introduction to Network Analysis Using R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This github page provide a basic introduction on network analysis using R. The documents are based on the lab materials of STAT650 Social Network at Duke University." />
+  <meta name="github-repo" content="YunranChen/intro-network-R" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="6 amen packages | Introduction to Network Analysis Using R" />
+  
+  <meta name="twitter:description" content="This github page provide a basic introduction on network analysis using R. The documents are based on the lab materials of STAT650 Social Network at Duke University." />
+  
+
+<meta name="author" content="Yunran Chen">
+
+
+<meta name="date" content="2019-04-27">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="advanced-network-visualization.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.8.0/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.39.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.39.2/plotly-latest.min.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#outline"><i class="fa fa-check"></i><b>1.1</b> Outline</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#detailed-outline"><i class="fa fa-check"></i><b>1.2</b> Detailed Outline</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="igraph.html"><a href="igraph.html"><i class="fa fa-check"></i><b>2</b> <code>igraph</code> package</a><ul>
+<li class="chapter" data-level="2.1" data-path="igraph.html"><a href="igraph.html#introduction-1"><i class="fa fa-check"></i><b>2.1</b> Introduction</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="igraph.html"><a href="igraph.html#igraph-vs-statnet"><i class="fa fa-check"></i><b>2.1.1</b> <code>igraph</code> vs <code>statnet</code></a></li>
+<li class="chapter" data-level="2.1.2" data-path="igraph.html"><a href="igraph.html#references"><i class="fa fa-check"></i><b>2.1.2</b> References</a></li>
+<li class="chapter" data-level="2.1.3" data-path="igraph.html"><a href="igraph.html#preparation"><i class="fa fa-check"></i><b>2.1.3</b> Preparation</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="igraph.html"><a href="igraph.html#create-networks-and-basics-concepts"><i class="fa fa-check"></i><b>2.2</b> Create networks and basics concepts</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="igraph.html"><a href="igraph.html#outline-1"><i class="fa fa-check"></i><b>2.2.1</b> Outline</a></li>
+<li class="chapter" data-level="2.2.2" data-path="igraph.html"><a href="igraph.html#create-simple-networks"><i class="fa fa-check"></i><b>2.2.2</b> Create simple networks</a></li>
+<li class="chapter" data-level="2.2.3" data-path="igraph.html"><a href="igraph.html#creating-specific-graphs-and-graph-models"><i class="fa fa-check"></i><b>2.2.3</b> Creating specific graphs and graph models</a></li>
+<li class="chapter" data-level="2.2.4" data-path="igraph.html"><a href="igraph.html#adjustments-on-graphs"><i class="fa fa-check"></i><b>2.2.4</b> Adjustments on graphs</a></li>
+<li class="chapter" data-level="2.2.5" data-path="igraph.html"><a href="igraph.html#edge-vertex-and-network-attributes"><i class="fa fa-check"></i><b>2.2.5</b> Edge, vertex and network attributes</a></li>
+<li class="chapter" data-level="2.2.6" data-path="igraph.html"><a href="igraph.html#description-of-igraph-object"><i class="fa fa-check"></i><b>2.2.6</b> Description of igraph object</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="igraph.html"><a href="igraph.html#built-networks-from-external-sources-basic-visualization-and-more-on-network-descriptions"><i class="fa fa-check"></i><b>2.3</b> Built networks from external sources, basic visualization and more on network descriptions</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="igraph.html"><a href="igraph.html#outline-2"><i class="fa fa-check"></i><b>2.3.1</b> Outline</a></li>
+<li class="chapter" data-level="2.3.2" data-path="igraph.html"><a href="igraph.html#dataset"><i class="fa fa-check"></i><b>2.3.2</b> Dataset</a></li>
+<li class="chapter" data-level="2.3.3" data-path="igraph.html"><a href="igraph.html#get-network-from-files"><i class="fa fa-check"></i><b>2.3.3</b> Get network from files</a></li>
+<li class="chapter" data-level="2.3.4" data-path="igraph.html"><a href="igraph.html#visualization"><i class="fa fa-check"></i><b>2.3.4</b> Visualization</a></li>
+<li class="chapter" data-level="2.3.5" data-path="igraph.html"><a href="igraph.html#network-and-node-descriptions"><i class="fa fa-check"></i><b>2.3.5</b> Network and node descriptions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="igraph.html"><a href="igraph.html#paths-communitites-and-related-visualization"><i class="fa fa-check"></i><b>2.4</b> Paths, communitites and related visualization</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="igraph.html"><a href="igraph.html#outline-3"><i class="fa fa-check"></i><b>2.4.1</b> Outline</a></li>
+<li class="chapter" data-level="2.4.2" data-path="igraph.html"><a href="igraph.html#datasets"><i class="fa fa-check"></i><b>2.4.2</b> Datasets</a></li>
+<li class="chapter" data-level="2.4.3" data-path="igraph.html"><a href="igraph.html#paths-distances-and-diameter"><i class="fa fa-check"></i><b>2.4.3</b> Paths, distances and diameter</a></li>
+<li class="chapter" data-level="2.4.4" data-path="igraph.html"><a href="igraph.html#components"><i class="fa fa-check"></i><b>2.4.4</b> Components</a></li>
+<li class="chapter" data-level="2.4.5" data-path="igraph.html"><a href="igraph.html#community"><i class="fa fa-check"></i><b>2.4.5</b> Community</a></li>
+<li class="chapter" data-level="2.4.6" data-path="igraph.html"><a href="igraph.html#visualization-1"><i class="fa fa-check"></i><b>2.4.6</b> Visualization</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="igraph.html"><a href="igraph.html#more-about-igraph"><i class="fa fa-check"></i><b>2.5</b> More about <code>igraph</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html"><i class="fa fa-check"></i><b>3</b> ERGM (<code>statnet</code> Package)</a><ul>
+<li class="chapter" data-level="3.1" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#introduction-2"><i class="fa fa-check"></i><b>3.1</b> Introduction</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#outline-4"><i class="fa fa-check"></i><b>3.1.1</b> Outline</a></li>
+<li class="chapter" data-level="3.1.2" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#statnet"><i class="fa fa-check"></i><b>3.1.2</b> <code>statnet</code></a></li>
+<li class="chapter" data-level="3.1.3" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#references-1"><i class="fa fa-check"></i><b>3.1.3</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#preparation-1"><i class="fa fa-check"></i><b>3.2</b> Preparation</a></li>
+<li class="chapter" data-level="3.3" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#summary-the-network-statistics"><i class="fa fa-check"></i><b>3.3</b> <code>summary</code> the network statistics</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#dataset-1"><i class="fa fa-check"></i><b>3.3.1</b> Dataset</a></li>
+<li class="chapter" data-level="3.3.2" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#summary"><i class="fa fa-check"></i><b>3.3.2</b> <code>summary</code></a></li>
+<li class="chapter" data-level="3.3.3" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#directed-networks"><i class="fa fa-check"></i><b>3.3.3</b> directed networks</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#ergm-fit-ergm-model"><i class="fa fa-check"></i><b>3.4</b> <code>ergm</code> fit ergm model</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#ergm"><i class="fa fa-check"></i><b>3.4.1</b> ERGM</a></li>
+<li class="chapter" data-level="3.4.2" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#ergm-function."><i class="fa fa-check"></i><b>3.4.2</b> <code>ergm</code> function.</a></li>
+<li class="chapter" data-level="3.4.3" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#ergm-terms"><i class="fa fa-check"></i><b>3.4.3</b> <code>ergm-terms</code></a></li>
+<li class="chapter" data-level="3.4.4" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#missing-edges"><i class="fa fa-check"></i><b>3.4.4</b> Missing edges</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#simulate-netowrks-from-an-ergm-model-fit"><i class="fa fa-check"></i><b>3.5</b> <code>simulate</code> netowrks from an ergm model fit</a></li>
+<li class="chapter" data-level="3.6" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#check-the-goodness-of-fit"><i class="fa fa-check"></i><b>3.6</b> Check the goodness of fit</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#gof"><i class="fa fa-check"></i><b>3.6.1</b> <code>gof</code></a></li>
+<li class="chapter" data-level="3.6.2" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#mcmc.diagnostics"><i class="fa fa-check"></i><b>3.6.2</b> <code>mcmc.diagnostics</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#more-functions"><i class="fa fa-check"></i><b>3.7</b> More functions</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html"><i class="fa fa-check"></i><b>4</b> Collect network data and API requests</a><ul>
+<li class="chapter" data-level="4.1" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#several-useful-websites"><i class="fa fa-check"></i><b>4.1</b> Several useful websites</a></li>
+<li class="chapter" data-level="4.2" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#web-scraping"><i class="fa fa-check"></i><b>4.2</b> Web scraping</a></li>
+<li class="chapter" data-level="4.3" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#preparation-2"><i class="fa fa-check"></i><b>4.3</b> Preparation</a></li>
+<li class="chapter" data-level="4.4" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#twitter-api-request"><i class="fa fa-check"></i><b>4.4</b> Twitter API request</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#r-package-rtweet"><i class="fa fa-check"></i><b>4.4.1</b> R package <code>rtweet</code></a></li>
+<li class="chapter" data-level="4.4.2" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#preparation-3"><i class="fa fa-check"></i><b>4.4.2</b> Preparation</a></li>
+<li class="chapter" data-level="4.4.3" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#api-authorization"><i class="fa fa-check"></i><b>4.4.3</b> API authorization</a></li>
+<li class="chapter" data-level="4.4.4" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#rtweet"><i class="fa fa-check"></i><b>4.4.4</b> <code>rtweet</code></a></li>
+<li class="chapter" data-level="4.4.5" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#retweet-networks"><i class="fa fa-check"></i><b>4.4.5</b> Retweet networks</a></li>
+<li class="chapter" data-level="4.4.6" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#friendship-networks"><i class="fa fa-check"></i><b>4.4.6</b> Friendship networks</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#other-apis"><i class="fa fa-check"></i><b>4.5</b> Other APIs</a></li>
+<li class="chapter" data-level="4.6" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#api-request-directly-from-r"><i class="fa fa-check"></i><b>4.6</b> API request directly from R</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#introduction-3"><i class="fa fa-check"></i><b>4.6.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.6.2" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#preparation-4"><i class="fa fa-check"></i><b>4.6.2</b> preparation</a></li>
+<li class="chapter" data-level="4.6.3" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#search-people-id"><i class="fa fa-check"></i><b>4.6.3</b> search people id</a></li>
+<li class="chapter" data-level="4.6.4" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#search-movies-based-on-people-id"><i class="fa fa-check"></i><b>4.6.4</b> search movies based on people id</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html"><i class="fa fa-check"></i><b>5</b> Advanced Network Visualization</a><ul>
+<li class="chapter" data-level="5.1" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#introduction-4"><i class="fa fa-check"></i><b>5.1</b> Introduction</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#outline-5"><i class="fa fa-check"></i><b>5.1.1</b> Outline</a></li>
+<li class="chapter" data-level="5.1.2" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#available-r-packages-and-tutorial"><i class="fa fa-check"></i><b>5.1.2</b> Available R packages and tutorial</a></li>
+<li class="chapter" data-level="5.1.3" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#references-2"><i class="fa fa-check"></i><b>5.1.3</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#preparation-5"><i class="fa fa-check"></i><b>5.2</b> Preparation</a></li>
+<li class="chapter" data-level="5.3" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#visualization-for-static-network"><i class="fa fa-check"></i><b>5.3</b> Visualization for static network</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#hairball-plot"><i class="fa fa-check"></i><b>5.3.1</b> Hairball plot</a></li>
+<li class="chapter" data-level="5.3.2" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#heatmap"><i class="fa fa-check"></i><b>5.3.2</b> Heatmap</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#other-static-networks"><i class="fa fa-check"></i><b>5.4</b> Other static networks</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#two-mode-network"><i class="fa fa-check"></i><b>5.4.1</b> Two-mode network</a></li>
+<li class="chapter" data-level="5.4.2" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#multiple-neworks"><i class="fa fa-check"></i><b>5.4.2</b> Multiple neworks</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#ggplot2-version-for-network-visualization"><i class="fa fa-check"></i><b>5.5</b> <code>ggplot2</code> version for network visualization</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#ggnet2geomnetggnetwork"><i class="fa fa-check"></i><b>5.5.1</b> <code>ggnet2</code>,<code>geomnet</code>,<code>ggnetwork</code></a></li>
+<li class="chapter" data-level="5.5.2" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#football-data"><i class="fa fa-check"></i><b>5.5.2</b> football data</a></li>
+<li class="chapter" data-level="5.5.3" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#ggnet2"><i class="fa fa-check"></i><b>5.5.3</b> <code>ggnet2</code></a></li>
+<li class="chapter" data-level="5.5.4" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#geomnet"><i class="fa fa-check"></i><b>5.5.4</b> <code>geomnet</code></a></li>
+<li class="chapter" data-level="5.5.5" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#ggnetwork"><i class="fa fa-check"></i><b>5.5.5</b> <code>ggnetwork</code></a></li>
+<li class="chapter" data-level="5.5.6" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#extensions-of-ggnet2geomnetggnetwork"><i class="fa fa-check"></i><b>5.5.6</b> Extensions of <code>ggnet2</code>,<code>geomnet</code>,<code>ggnetwork</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#interactive-network-visualization"><i class="fa fa-check"></i><b>5.6</b> Interactive network visualization</a></li>
+<li class="chapter" data-level="5.7" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#dynamic-network"><i class="fa fa-check"></i><b>5.7</b> Dynamic network</a><ul>
+<li class="chapter" data-level="5.7.1" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#introduction-5"><i class="fa fa-check"></i><b>5.7.1</b> Introduction</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="amen-packages.html"><a href="amen-packages.html"><i class="fa fa-check"></i><b>6</b> <code>amen</code> packages</a><ul>
+<li class="chapter" data-level="6.1" data-path="amen-packages.html"><a href="amen-packages.html#outline-6"><i class="fa fa-check"></i><b>6.1</b> Outline</a></li>
+<li class="chapter" data-level="6.2" data-path="amen-packages.html"><a href="amen-packages.html#ame"><i class="fa fa-check"></i><b>6.2</b> <code>ame()</code></a></li>
+<li class="chapter" data-level="6.3" data-path="amen-packages.html"><a href="amen-packages.html#input-prepare-the-dataset"><i class="fa fa-check"></i><b>6.3</b> Input: prepare the dataset</a></li>
+<li class="chapter" data-level="6.4" data-path="amen-packages.html"><a href="amen-packages.html#fit-the-model-the-gaussian-ame-model-continuous-y"><i class="fa fa-check"></i><b>6.4</b> Fit the model: the Gaussian AME model (continuous Y)</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="amen-packages.html"><a href="amen-packages.html#the-gaussian-ame-model"><i class="fa fa-check"></i><b>6.4.1</b> The Gaussian AME model</a></li>
+<li class="chapter" data-level="6.4.2" data-path="amen-packages.html"><a href="amen-packages.html#social-relations-model-srm"><i class="fa fa-check"></i><b>6.4.2</b> Social relations model (SRM)</a></li>
+<li class="chapter" data-level="6.4.3" data-path="amen-packages.html"><a href="amen-packages.html#social-relations-regression-model-srrm"><i class="fa fa-check"></i><b>6.4.3</b> Social relations regression model (SRRM)</a></li>
+<li class="chapter" data-level="6.4.4" data-path="amen-packages.html"><a href="amen-packages.html#no-row-variance-column-variance-or-dyadic-correlation"><i class="fa fa-check"></i><b>6.4.4</b> No row variance, column variance or dyadic correlation</a></li>
+<li class="chapter" data-level="6.4.5" data-path="amen-packages.html"><a href="amen-packages.html#additive-and-multiplicative-effects-model-ame"><i class="fa fa-check"></i><b>6.4.5</b> additive and multiplicative effects model (ame)</a></li>
+<li class="chapter" data-level="6.4.6" data-path="amen-packages.html"><a href="amen-packages.html#circle-plot-for-estimated-latent-factor"><i class="fa fa-check"></i><b>6.4.6</b> circle plot for estimated latent factor</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="amen-packages.html"><a href="amen-packages.html#choice-of-model-in-ame-binary-ordinal-discrete-or-sparse-relations"><i class="fa fa-check"></i><b>6.5</b> Choice of <code>model</code> in <code>ame</code>: binary, ordinal, discrete or sparse relations</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="amen-packages.html"><a href="amen-packages.html#binary-outcome"><i class="fa fa-check"></i><b>6.5.1</b> binary outcome</a></li>
+<li class="chapter" data-level="6.5.2" data-path="amen-packages.html"><a href="amen-packages.html#ordinal-outcome"><i class="fa fa-check"></i><b>6.5.2</b> ordinal outcome</a></li>
+<li class="chapter" data-level="6.5.3" data-path="amen-packages.html"><a href="amen-packages.html#censored-and-fixed-rank-nomination-data"><i class="fa fa-check"></i><b>6.5.3</b> censored and fixed rank nomination data</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="amen-packages.html"><a href="amen-packages.html#symmetric-outcome-symmetrictrue"><i class="fa fa-check"></i><b>6.6</b> symmetric outcome: <code>symmetric=TRUE</code></a><ul>
+<li class="chapter" data-level="6.6.1" data-path="amen-packages.html"><a href="amen-packages.html#symmetric-outcome-symmetrictrue-1"><i class="fa fa-check"></i><b>6.6.1</b> symmetric outcome: <code>symmetric=TRUE</code></a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="amen-packages.html"><a href="amen-packages.html#ame_rep-for-longitudinal-outcome"><i class="fa fa-check"></i><b>6.7</b> <code>ame_rep()</code> for longitudinal outcome</a><ul>
+<li class="chapter" data-level="6.7.1" data-path="amen-packages.html"><a href="amen-packages.html#repeated-measures-data-longitudinal-outcome"><i class="fa fa-check"></i><b>6.7.1</b> repeated measures data: longitudinal outcome</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to Network Analysis Using R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="amen-packages" class="section level1">
+<h1><span class="header-section-number">6</span> <code>amen</code> packages</h1>
+<div id="outline-6" class="section level2">
+<h2><span class="header-section-number">6.1</span> Outline</h2>
+<ul>
+<li>Gaussian AME model: <code>ame</code></li>
+<li>Different relation: <code>ame(...,model=,...)</code>
+<ul>
+<li>ordinal data</li>
+<li>censored and fixed rank nomination data</li>
+<li>sampled or missing data</li>
+</ul></li>
+<li>symmetric relation: <code>ame(...,symmetric=TRUE,...)</code></li>
+<li>repeated measures data: longitudal data <code>ame_rep(Y,Xdyad,Xrow,Xcol)</code></li>
+</ul>
+<p><strong>Tutorial</strong>: <a href="https://github.com/pdhoff/amen/blob/master/inst/doc/amen.pdf" class="uri">https://github.com/pdhoff/amen/blob/master/inst/doc/amen.pdf</a></p>
+</div>
+<div id="ame" class="section level2">
+<h2><span class="header-section-number">6.2</span> <code>ame()</code></h2>
+<p><span class="math display">\[z_{i,j}=\beta_d^Tx_{d,i,j}+\beta_r^Tx_{r,i}+\beta_c^Tx_{c,j}+\mu+a_i+b_j+u_i^Tv_j+\epsilon_{i,j}\]</span></p>
+<p><span class="math display">\[y_{i,j}=g(z_{i,j})\]</span></p>
+<p><code>ame(Y,Xd,Xr,Xc,model,R,rvar=TRUE,cvar=TRUE,dcor=TRUE,symmetric=FALSE)</code></p>
+<p>model:</p>
+<ul>
+<li>“nrm”: continuous Y</li>
+<li>“bin”: binary Y</li>
+<li>“ord”: ordinal Y</li>
+<li>“cbin”: censored binary Y</li>
+<li>“frn”: fixed rank Y</li>
+<li><p>“rrl”: row ranks (relationships across rows of Y are not directly comparable)</p></li>
+<li>Y: named matrix <span class="math inline">\(n\times n \times p_d\)</span></li>
+<li>Xd: named array (dyadic covariates)</li>
+<li>Xr: named matrix (nodal covariates)</li>
+<li>Xc: named matrix (nodal covariates)</li>
+<li><p>R: number (dimension of latent factor)</p></li>
+<li>rvar,cvar,dcor: whether to include row/column/corr effect or not</li>
+<li><p>symmetric: symmetric outcome or not</p></li>
+</ul>
+</div>
+<div id="input-prepare-the-dataset" class="section level2">
+<h2><span class="header-section-number">6.3</span> Input: prepare the dataset</h2>
+<p>prepare the dataset</p>
+<ul>
+<li>Get the Xnode,Xdyad from <code>igraph</code> object.</li>
+<li>Get the Xnode,Xdyad from edgelist dataframe.</li>
+</ul>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(igraph)
+<span class="kw">library</span>(igraphdata)
+<span class="kw">library</span>(dplyr)</code></pre>
+<p>From <code>igraph</code> object:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;USairports&quot;</span>)
+?USairports
+USairports</code></pre>
+<pre><code>## IGRAPH bf6202d DN-- 755 23473 -- US airports
+## + attr: name (g/c), name (v/c), City (v/c), Position (v/c),
+## | Carrier (e/c), Departures (e/n), Seats (e/n), Passengers (e/n),
+## | Aircraft (e/n), Distance (e/n)
+## + edges from bf6202d (vertex names):
+##  [1] BGR-&gt;JFK BGR-&gt;JFK BOS-&gt;EWR ANC-&gt;JFK JFK-&gt;ANC LAS-&gt;LAX MIA-&gt;JFK
+##  [8] EWR-&gt;ANC BJC-&gt;MIA MIA-&gt;BJC TEB-&gt;ANC JFK-&gt;LAX LAX-&gt;JFK LAX-&gt;SFO
+## [15] AEX-&gt;LAS BFI-&gt;SBA ELM-&gt;PIT GEG-&gt;SUN ICT-&gt;PBI LAS-&gt;LAX LAS-&gt;PBI
+## [22] LAS-&gt;SFO LAX-&gt;LAS PBI-&gt;AEX PBI-&gt;ICT PIT-&gt;VCT SFO-&gt;LAX VCT-&gt;DWH
+## [29] IAD-&gt;JFK ABE-&gt;CLT ABE-&gt;HPN AGS-&gt;CLT AGS-&gt;CLT AVL-&gt;CLT AVL-&gt;CLT
+## [36] AVP-&gt;CLT AVP-&gt;PHL BDL-&gt;CLT BHM-&gt;CLT BHM-&gt;CLT BNA-&gt;CLT BNA-&gt;CLT
+## + ... omitted several edges</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#For vertex attributes -Xnode</span>
+Xnode_ls=<span class="kw">vertex_attr</span>(USairports)
+Xnode=<span class="kw">matrix</span>(<span class="kw">unlist</span>(Xnode_ls),<span class="dt">ncol=</span><span class="kw">length</span>(Xnode_ls))
+<span class="kw">colnames</span>(Xnode)=<span class="kw">names</span>(Xnode_ls)
+<span class="kw">rownames</span>(Xnode)=Xnode_ls<span class="op">$</span>name
+Xnode=Xnode[,<span class="op">-</span><span class="dv">1</span>]
+
+<span class="co">#For edge attributes - Xdyad</span>
+Xdyad_ls=<span class="kw">edge_attr</span>(USairports)
+Xdyad=<span class="kw">array</span>(<span class="kw">c</span>(<span class="kw">as_adjacency_matrix</span>(USairports,<span class="dt">sparse =</span> <span class="ot">FALSE</span>),<span class="kw">unlist</span>(Xdyad_ls)),<span class="dt">dim=</span><span class="kw">c</span>(<span class="kw">nrow</span>(Xnode),<span class="kw">nrow</span>(Xnode),<span class="kw">length</span>(Xdyad_ls)<span class="op">+</span><span class="dv">1</span>))
+<span class="kw">dimnames</span>(Xdyad)[[<span class="dv">1</span>]]=<span class="kw">dimnames</span>(Xdyad)[[<span class="dv">2</span>]]=Xnode_ls<span class="op">$</span>name
+<span class="kw">dimnames</span>(Xdyad)[[<span class="dv">3</span>]]=<span class="kw">c</span>(<span class="st">&quot;relation&quot;</span>,<span class="kw">names</span>(Xdyad_ls))</code></pre>
+<p>From dataframe:</p>
+<p>transfer it to a <code>igraph</code> then to the array may be the easiest.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Xdyad</span>
+df=igraph<span class="op">::</span><span class="kw">as_data_frame</span>(USairports)
+net=<span class="kw">graph_from_data_frame</span>(df)
+
+vnames=<span class="kw">V</span>(net)<span class="op">$</span>name
+
+Xdyad_ls=<span class="kw">edge_attr</span>(USairports)
+Xdyad=<span class="kw">array</span>(<span class="kw">c</span>(<span class="kw">as_adjacency_matrix</span>(USairports,<span class="dt">sparse =</span> <span class="ot">FALSE</span>),<span class="kw">unlist</span>(Xdyad_ls)),<span class="dt">dim=</span><span class="kw">c</span>(<span class="kw">nrow</span>(Xnode),<span class="kw">nrow</span>(Xnode),<span class="kw">length</span>(Xdyad_ls)<span class="op">+</span><span class="dv">1</span>))
+<span class="kw">dimnames</span>(Xdyad)[[<span class="dv">1</span>]]=<span class="kw">dimnames</span>(Xdyad)[[<span class="dv">2</span>]]=vnames
+<span class="kw">dimnames</span>(Xdyad)[[<span class="dv">3</span>]]=<span class="kw">c</span>(<span class="st">&quot;relation&quot;</span>,<span class="kw">names</span>(Xdyad_ls))
+
+<span class="co">#Xnode</span>
+<span class="co">#If your nodal attributes stored in a data.frame</span>
+Xnode_df=<span class="kw">as.data.frame</span>(Xnode)<span class="op">%&gt;%</span><span class="kw">mutate</span>(<span class="dt">Vertex=</span><span class="kw">rownames</span>(Xnode))<span class="op">%&gt;%</span><span class="kw">arrange</span>(Vertex)
+<span class="kw">head</span>(Xnode_df)</code></pre>
+<pre><code>##                             City         Position Vertex
+## 1              Peach Springs, AZ N355925 W1134859    1G4
+## 2               Bradley Lake, AK N565311 W1340930    A23
+## 3                 Pogo Mines, AK N592603 W1514228    A27
+## 4                 Kiluda Bay, AK N570308 W1352046    A29
+## 5 Allentown/Bethlehem/Easton, PA N403909 W0752625    ABE
+## 6                    Abilene, TX N322441 W0994055    ABI</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Xnode</span>
+<span class="co">#need to match the order of Xnode to the order of the Xdyad</span>
+Xnode_df=Xnode_df<span class="op">%&gt;%</span><span class="kw">arrange</span>(<span class="kw">match</span>(Vertex,vnames))
+Xnode=<span class="kw">as.matrix</span>(Xnode_df)
+<span class="kw">rownames</span>(Xnode)=Xnode[,<span class="st">&quot;Vertex&quot;</span>]
+Xnode=Xnode[,<span class="op">-</span><span class="dv">3</span>]
+Xnode<span class="op">%&gt;%</span><span class="kw">head</span>()</code></pre>
+<pre><code>##     City            Position          
+## BGR &quot;Bangor, ME&quot;    &quot;N444827 W0684941&quot;
+## BOS &quot;Boston, MA&quot;    &quot;N422152 W0710019&quot;
+## ANC &quot;Anchorage, AK&quot; &quot;N611028 W1495947&quot;
+## JFK &quot;New York, NY&quot;  &quot;N403823 W0734644&quot;
+## LAS &quot;Las Vegas, NV&quot; &quot;N360449 W1150908&quot;
+## MIA &quot;Miami, FL&quot;     &quot;N254736 W0801726&quot;</code></pre>
+</div>
+<div id="fit-the-model-the-gaussian-ame-model-continuous-y" class="section level2">
+<h2><span class="header-section-number">6.4</span> Fit the model: the Gaussian AME model (continuous Y)</h2>
+<div id="the-gaussian-ame-model" class="section level3">
+<h3><span class="header-section-number">6.4.1</span> The Gaussian AME model</h3>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages(&quot;amen&quot;)</span>
+<span class="kw">library</span>(amen)
+<span class="kw">library</span>(ggplot2)</code></pre>
+<hr />
+<p><span class="math inline">\(y_{i,j}=\mu+a_i+b_j+\epsilon_{i,j}\)</span></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># use the trade data (export) from top 30 countries ranked by gdp</span>
+<span class="kw">data</span>(IR90s)
+<span class="kw">names</span>(IR90s) <span class="co"># list</span></code></pre>
+<pre><code>## [1] &quot;dyadvars&quot; &quot;nodevars&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(IR90s<span class="op">$</span>dyadvars) <span class="co">#- array</span></code></pre>
+<pre><code>## [1] 130 130   5</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dimnames</span>(IR90s<span class="op">$</span>dyadvars)</code></pre>
+<pre><code>## [[1]]
+##   [1] &quot;AFG&quot; &quot;ALB&quot; &quot;ALG&quot; &quot;ANG&quot; &quot;ARG&quot; &quot;AUL&quot; &quot;AUS&quot; &quot;BAH&quot; &quot;BEL&quot; &quot;BEN&quot; &quot;BFO&quot;
+##  [12] &quot;BHU&quot; &quot;BNG&quot; &quot;BOL&quot; &quot;BOT&quot; &quot;BRA&quot; &quot;BUI&quot; &quot;BUL&quot; &quot;CAM&quot; &quot;CAN&quot; &quot;CAO&quot; &quot;CDI&quot;
+##  [23] &quot;CEN&quot; &quot;CHA&quot; &quot;CHL&quot; &quot;CHN&quot; &quot;COL&quot; &quot;COM&quot; &quot;CON&quot; &quot;COS&quot; &quot;CUB&quot; &quot;CYP&quot; &quot;DEN&quot;
+##  [34] &quot;DJI&quot; &quot;DOM&quot; &quot;DRC&quot; &quot;ECU&quot; &quot;EGY&quot; &quot;EQG&quot; &quot;FIN&quot; &quot;FJI&quot; &quot;FRN&quot; &quot;GAB&quot; &quot;GAM&quot;
+##  [45] &quot;GHA&quot; &quot;GNB&quot; &quot;GRC&quot; &quot;GUA&quot; &quot;GUI&quot; &quot;GUY&quot; &quot;HAI&quot; &quot;HON&quot; &quot;HUN&quot; &quot;IND&quot; &quot;INS&quot;
+##  [56] &quot;IRE&quot; &quot;IRN&quot; &quot;IRQ&quot; &quot;ISR&quot; &quot;ITA&quot; &quot;JAM&quot; &quot;JOR&quot; &quot;JPN&quot; &quot;KEN&quot; &quot;LAO&quot; &quot;LBR&quot;
+##  [67] &quot;LES&quot; &quot;LIB&quot; &quot;MAA&quot; &quot;MAG&quot; &quot;MAL&quot; &quot;MAS&quot; &quot;MAW&quot; &quot;MEX&quot; &quot;MLI&quot; &quot;MON&quot; &quot;MOR&quot;
+##  [78] &quot;MYA&quot; &quot;MZM&quot; &quot;NAM&quot; &quot;NEP&quot; &quot;NEW&quot; &quot;NIC&quot; &quot;NIG&quot; &quot;NIR&quot; &quot;NOR&quot; &quot;NTH&quot; &quot;OMA&quot;
+##  [89] &quot;PAK&quot; &quot;PAN&quot; &quot;PAR&quot; &quot;PHI&quot; &quot;PNG&quot; &quot;POL&quot; &quot;POR&quot; &quot;PRK&quot; &quot;QAT&quot; &quot;ROK&quot; &quot;RUM&quot;
+## [100] &quot;RWA&quot; &quot;SAF&quot; &quot;SAL&quot; &quot;SAU&quot; &quot;SEN&quot; &quot;SIE&quot; &quot;SIN&quot; &quot;SOM&quot; &quot;SPN&quot; &quot;SRI&quot; &quot;SUD&quot;
+## [111] &quot;SWA&quot; &quot;SWD&quot; &quot;SWZ&quot; &quot;SYR&quot; &quot;TAW&quot; &quot;TAZ&quot; &quot;THI&quot; &quot;TOG&quot; &quot;TRI&quot; &quot;TUN&quot; &quot;TUR&quot;
+## [122] &quot;UAE&quot; &quot;UGA&quot; &quot;UKG&quot; &quot;URU&quot; &quot;USA&quot; &quot;VEN&quot; &quot;YEM&quot; &quot;ZAM&quot; &quot;ZIM&quot;
+## 
+## [[2]]
+##   [1] &quot;AFG&quot; &quot;ALB&quot; &quot;ALG&quot; &quot;ANG&quot; &quot;ARG&quot; &quot;AUL&quot; &quot;AUS&quot; &quot;BAH&quot; &quot;BEL&quot; &quot;BEN&quot; &quot;BFO&quot;
+##  [12] &quot;BHU&quot; &quot;BNG&quot; &quot;BOL&quot; &quot;BOT&quot; &quot;BRA&quot; &quot;BUI&quot; &quot;BUL&quot; &quot;CAM&quot; &quot;CAN&quot; &quot;CAO&quot; &quot;CDI&quot;
+##  [23] &quot;CEN&quot; &quot;CHA&quot; &quot;CHL&quot; &quot;CHN&quot; &quot;COL&quot; &quot;COM&quot; &quot;CON&quot; &quot;COS&quot; &quot;CUB&quot; &quot;CYP&quot; &quot;DEN&quot;
+##  [34] &quot;DJI&quot; &quot;DOM&quot; &quot;DRC&quot; &quot;ECU&quot; &quot;EGY&quot; &quot;EQG&quot; &quot;FIN&quot; &quot;FJI&quot; &quot;FRN&quot; &quot;GAB&quot; &quot;GAM&quot;
+##  [45] &quot;GHA&quot; &quot;GNB&quot; &quot;GRC&quot; &quot;GUA&quot; &quot;GUI&quot; &quot;GUY&quot; &quot;HAI&quot; &quot;HON&quot; &quot;HUN&quot; &quot;IND&quot; &quot;INS&quot;
+##  [56] &quot;IRE&quot; &quot;IRN&quot; &quot;IRQ&quot; &quot;ISR&quot; &quot;ITA&quot; &quot;JAM&quot; &quot;JOR&quot; &quot;JPN&quot; &quot;KEN&quot; &quot;LAO&quot; &quot;LBR&quot;
+##  [67] &quot;LES&quot; &quot;LIB&quot; &quot;MAA&quot; &quot;MAG&quot; &quot;MAL&quot; &quot;MAS&quot; &quot;MAW&quot; &quot;MEX&quot; &quot;MLI&quot; &quot;MON&quot; &quot;MOR&quot;
+##  [78] &quot;MYA&quot; &quot;MZM&quot; &quot;NAM&quot; &quot;NEP&quot; &quot;NEW&quot; &quot;NIC&quot; &quot;NIG&quot; &quot;NIR&quot; &quot;NOR&quot; &quot;NTH&quot; &quot;OMA&quot;
+##  [89] &quot;PAK&quot; &quot;PAN&quot; &quot;PAR&quot; &quot;PHI&quot; &quot;PNG&quot; &quot;POL&quot; &quot;POR&quot; &quot;PRK&quot; &quot;QAT&quot; &quot;ROK&quot; &quot;RUM&quot;
+## [100] &quot;RWA&quot; &quot;SAF&quot; &quot;SAL&quot; &quot;SAU&quot; &quot;SEN&quot; &quot;SIE&quot; &quot;SIN&quot; &quot;SOM&quot; &quot;SPN&quot; &quot;SRI&quot; &quot;SUD&quot;
+## [111] &quot;SWA&quot; &quot;SWD&quot; &quot;SWZ&quot; &quot;SYR&quot; &quot;TAW&quot; &quot;TAZ&quot; &quot;THI&quot; &quot;TOG&quot; &quot;TRI&quot; &quot;TUN&quot; &quot;TUR&quot;
+## [122] &quot;UAE&quot; &quot;UGA&quot; &quot;UKG&quot; &quot;URU&quot; &quot;USA&quot; &quot;VEN&quot; &quot;YEM&quot; &quot;ZAM&quot; &quot;ZIM&quot;
+## 
+## [[3]]
+## [1] &quot;conflicts&quot;   &quot;exports&quot;     &quot;distance&quot;    &quot;shared_igos&quot; &quot;polity_int&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">gdp=IR90s<span class="op">$</span>nodevars[,<span class="dv">2</span>]
+topgdp=<span class="kw">which</span>(gdp<span class="op">&gt;=</span><span class="kw">sort</span>(gdp,<span class="dt">decreasing =</span> <span class="ot">TRUE</span>)[<span class="dv">30</span>])
+Y=<span class="kw">log</span>(IR90s<span class="op">$</span>dyadvars[topgdp,topgdp,<span class="dv">2</span>]<span class="op">+</span><span class="dv">1</span>)
+Y[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</code></pre>
+<pre><code>##           ARG        AUL       BEL        BNG        BRA
+## ARG        NA 0.05826891 0.2468601 0.03922071 1.76473080
+## AUL 0.0861777         NA 0.3784364 0.10436002 0.21511138
+## BEL 0.2700271 0.35065687        NA 0.01980263 0.39877612
+## BNG 0.0000000 0.01980263 0.1222176         NA 0.01980263
+## BRA 1.6937791 0.23901690 0.6205765 0.03922071         NA</code></pre>
+</div>
+<div id="social-relations-model-srm" class="section level3">
+<h3><span class="header-section-number">6.4.2</span> Social relations model (SRM)</h3>
+<p><span class="math display">\[y_{i,j}=\mu+a_i+b_j+\epsilon_{i,j}\]</span></p>
+<p>Input:
+Y - a named matrix</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># fit the model</span>
+fit_SRM=<span class="kw">ame</span>(Y,<span class="dt">model=</span><span class="st">&quot;nrm&quot;</span>,<span class="dt">plot=</span><span class="ot">FALSE</span>,<span class="dt">print =</span> <span class="ot">FALSE</span>) <span class="co">#normal AME model; by default: niter=10,000; save every 25; burnin=500</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#output</span>
+<span class="kw">names</span>(fit_SRM)</code></pre>
+<pre><code>##  [1] &quot;BETA&quot; &quot;VC&quot;   &quot;APM&quot;  &quot;BPM&quot;  &quot;U&quot;    &quot;V&quot;    &quot;UVPM&quot; &quot;EZ&quot;   &quot;YPM&quot;  &quot;GOF&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(fit_SRM<span class="op">$</span>BETA) <span class="co">#mu_hat</span></code></pre>
+<pre><code>## [1] 0.6616995</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">(<span class="dt">muhat=</span><span class="kw">mean</span>(Y,<span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</code></pre>
+<pre><code>## [1] 0.680044</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">apply</span>(fit_SRM<span class="op">$</span>VC,<span class="dv">2</span>,mean) <span class="co"># covariance </span></code></pre>
+<pre><code>##        va       cab        vb       rho        ve 
+## 0.2809375 0.2364107 0.2722367 0.8577201 0.2387065</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">ahat=<span class="kw">rowMeans</span>(Y,<span class="dt">na.rm =</span> <span class="ot">TRUE</span>)<span class="op">-</span><span class="kw">mean</span>(Y,<span class="dt">na.rm =</span> <span class="ot">TRUE</span>)
+bhat=<span class="kw">colMeans</span>(Y,<span class="dt">na.rm =</span> <span class="ot">TRUE</span>)<span class="op">-</span><span class="kw">mean</span>(Y,<span class="dt">na.rm =</span> <span class="ot">TRUE</span>)
+(<span class="dt">corab=</span><span class="kw">cov</span>(<span class="kw">cbind</span>(ahat,bhat)))</code></pre>
+<pre><code>##           ahat      bhat
+## ahat 0.2407563 0.2290788
+## bhat 0.2290788 0.2289489</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">(<span class="dt">R=</span>Y<span class="op">-</span>(muhat<span class="op">+</span><span class="kw">outer</span>(ahat,bhat,<span class="st">&quot;+&quot;</span>)))</code></pre>
+<pre><code>##             ARG          AUL         BEL          BNG         BRA
+## ARG          NA -0.138060630 -0.23544663  0.312875331  1.63527007
+## AUL -0.16956545           NA -0.43273546  0.049149445 -0.24321454
+## BEL -0.21364558 -0.402467428          NA -0.263337516 -0.28747937
+## BNG  0.28580442  0.036155468 -0.14740670           NA  0.10302428
+## BRA  1.46096778 -0.263245960 -0.16766355  0.006942009          NA
+## CAN -0.17367495  0.008106998 -0.30453842 -0.086801691  0.10095129
+## CHN -0.28802510  0.388372858 -0.30185657 -0.100071302 -0.36177499
+## COL  0.29564048 -0.022129678 -0.17829524  0.437904147  0.14811749
+## EGY  0.25762273 -0.001878520 -0.21162833  0.468105637  0.07484259
+## FRN -0.23537558 -0.357291724  1.60148082 -0.635013732 -0.29042291
+## IND -0.01417791 -0.043803438  0.06583220  0.637489812 -0.13599932
+## INS -0.13556799  0.325168886 -0.32399791  0.102005862 -0.26539140
+## IRN  0.03803907 -0.221462181 -0.21728509  0.248521975  0.20701985
+## ITA -0.04846778 -0.160389153  0.55599067 -0.545832983  0.13043260
+## JPN -0.77132395  0.587375094 -0.43066468 -0.739867701 -0.32622191
+## MEX  0.31445810 -0.176365556 -0.33770028  0.171400968  0.25071177
+## NTH -0.35738098 -0.398742583  2.11143771 -0.261291065 -0.33187377
+## PAK  0.23763171  0.043687688 -0.21538203  0.504539360  0.04480512
+## PHI  0.06168391 -0.043764695 -0.40838500  0.252266154 -0.11162848
+## POL  0.20701146 -0.072196296  0.01406599  0.387935563  0.10589815
+## ROK -0.16700865  0.192608090 -0.72935785 -0.075675369 -0.15336832
+## SAF  0.15365832 -0.024443477  0.02378144  0.214428959  0.01016447
+## SAU -0.31498022 -0.149696308 -0.66524792 -0.029087793  0.26547920
+## SPN  0.27723450 -0.300832361  0.37460163 -0.073409842  0.03430044
+## SWD -0.10048691  0.088730653  0.60848888 -0.069246392 -0.02568636
+## TAW -0.26831811  0.249196248 -0.55259409 -0.035524670 -0.25764209
+## THI -0.10070850  0.175886982 -0.21970992  0.118516213 -0.24823149
+## TUR  0.13431957 -0.106144478 -0.09025494  0.324999845 -0.04884512
+## UKG -0.58169724  0.242724120  1.08346413 -0.559239933 -0.46004035
+## USA -0.16801641  0.489417309 -0.09654737 -1.359712929  0.35838719
+##             CAN          CHN          COL          EGY         FRN
+## ARG -0.25750202 -0.218112259  0.379283330  0.335425500 -0.50910133
+## AUL -0.14391354  0.487239680 -0.095293669  0.110238741 -0.63291671
+## BEL -0.54194908 -0.388986507 -0.266064828 -0.196471710  1.70626150
+## BNG -0.11692294 -0.394894646  0.426451271  0.384104903 -0.44483896
+## BRA -0.12658392 -0.164793316  0.229919068  0.037860427 -0.12880792
+## CAN          NA  0.192689487  0.053983278 -0.198984116 -0.33600377
+## CHN  0.38302118           NA -0.495164243 -0.354867835  0.13190355
+## COL -0.06750000 -0.482167329           NA  0.325721722 -0.50130398
+## EGY -0.19296065 -0.432645788  0.398269579           NA -0.45714730
+## FRN -0.10102537 -0.153364961 -0.500193843 -0.216018305          NA
+## IND -0.19454812  0.059967577  0.088369094  0.172028032 -0.36779412
+## INS -0.30654846  0.403748876 -0.033387417  0.016730889 -0.53243819
+## IRN -0.31901826 -0.319886607  0.178685918  0.136339550 -0.15494203
+## ITA -0.16692944  0.001411349 -0.407648796 -0.070228744  1.55611087
+## JPN  0.46908045  1.458427987 -0.647484216 -0.878718373 -0.02644183
+## MEX  1.10390222 -0.527509119  0.440818988  0.069168873 -0.53184292
+## NTH -0.50556372 -0.410390081 -0.312044308 -0.159546595  1.24932142
+## PAK -0.12152866 -0.112884023  0.358475938  0.325981866 -0.45832611
+## PHI -0.05400932  0.025341858  0.192380427  0.150034059 -0.62442162
+## POL -0.20675566 -0.438707890  0.328049837  0.333461456 -0.07819955
+## ROK  0.12887478  1.397776911 -0.249505355 -0.227078508 -0.54070127
+## SAF -0.24137825 -0.190864320  0.184102035  0.112196864 -0.42706692
+## SAU -0.43764211 -0.523791529 -0.184283699  0.056089216  0.02690898
+## SPN -0.36535493 -0.457920467  0.062013184 -0.006544036  1.60143892
+## SWD -0.14378535 -0.124608851 -0.045362235  0.028029281  0.30922160
+## TAW  0.17100764  1.413411595 -0.240344421 -0.213304377 -0.48486254
+## THI -0.09287004  0.443899383 -0.008380224 -0.012358346 -0.32430698
+## TUR -0.25150906 -0.416121434  0.265114119  0.417978469 -0.01949016
+## UKG  0.30907514 -0.173171638 -0.577625928 -0.451674396  1.21014874
+## USA  2.44390557  0.493707570 -0.071731672 -0.594444456  0.38161638
+##             IND          INS          IRN          ITA          JPN
+## ARG  0.12233225  0.062477771  0.503935683 -0.207345734 -0.720363646
+## AUL  0.31608726  0.612026831  0.111444799 -0.377986917  1.199289037
+## BEL  0.54742550 -0.369674544 -0.087705809  0.972810738 -0.706327549
+## BNG  0.20872090  0.162892849  0.377402340 -0.347264973 -0.831081422
+## BRA -0.11009861 -0.126656283  0.148869672  0.005514737 -0.005172175
+## CAN -0.21823527 -0.065374795  0.010165397 -0.260472972  0.698722565
+## CHN -0.16138315 -0.053643104 -0.334087963 -0.008877084  1.527796818
+## COL  0.13101767  0.104509668  0.289748777 -0.412091633 -0.697192715
+## EGY  0.31527181  0.134711157  0.309999935  0.149907060 -0.850213278
+## FRN -0.45419538 -0.482181747 -0.291211963  1.563964415 -0.159540500
+## IND          NA  0.121773776  0.136055086 -0.179982776 -0.061472319
+## INS  0.09532398           NA -0.064498647 -0.446133793  1.259109783
+## IRN  0.39796902  0.136288886           NA  0.157305726  0.248951379
+## ITA -0.33484659 -0.451783448  0.022689324           NA -0.186033475
+## JPN -0.37347476  0.522930506 -0.460865139 -0.490816315           NA
+## MEX -0.09664567 -0.103724604  0.043048224 -0.670364313 -0.285816186
+## NTH -0.30663112 -0.268753590 -0.188139432  1.146405249 -0.763248726
+## PAK  0.16918351  0.189327200  0.328475202 -0.407143096 -0.602324847
+## PHI -0.03501185 -0.004167284  0.226328416 -0.631346237  0.408153473
+## POL  0.11941733  0.074149555  0.269050575  0.134876289 -0.930383351
+## ROK -0.04511087  0.403568310 -0.003768855 -0.581148577  0.979043460
+## SAF  0.08821251 -0.023655341  0.115063752  0.397588251  0.001665143
+## SAU  0.60958685  0.072835799 -0.141525081 -0.135394695  0.862585232
+## SPN -0.26162927 -0.235986589  0.013274379  1.037508198 -0.735832846
+## SWD -0.20862783 -0.154567937 -0.031849185  0.184997624 -0.406276962
+## TAW -0.23988349  0.254384458 -0.328614065 -0.532525363  0.897056769
+## THI -0.09296008  0.208935980  0.050403550 -0.480267175  0.822712249
+## TUR  0.06587136  0.020875748  0.459563758  0.356238545 -0.915357528
+## UKG  0.03681840 -0.492835042 -0.348181213  0.784074660 -0.190145269
+## USA -0.51389508 -0.366074511 -1.484337802 -0.238101334  1.189580283
+##              MEX          NTH         PAK          PHI          POL
+## ARG  0.124973579 -0.163851688  0.26677001  0.042982916  0.119797247
+## AUL -0.310989745 -0.615849561  0.10277947  0.207138727 -0.228299303
+## BEL -0.401049524  1.634785609 -0.23496497 -0.393852530  0.068097435
+## BNG  0.090795880 -0.306103608  0.46040420  0.245812999  0.293639793
+## BRA  0.275277690 -0.001306934 -0.02977357 -0.092132674 -0.077922490
+## CAN  0.452297063 -0.454111393 -0.14273855 -0.223616702 -0.253081581
+## CHN -0.269940422  0.057863812 -0.23060758 -0.080421871 -0.271563669
+## COL  0.164580663 -0.295447541  0.37275063  0.187429818  0.264815414
+## EGY  0.062614189 -0.360718556  0.41280442  0.207680976  0.255507771
+## FRN -0.318888621  0.799615236 -0.53671417 -0.645662010  0.084221278
+## IND -0.145816836 -0.343502900  0.15790252  0.050543246  0.047076746
+## INS -0.181831266 -0.237372227  0.06375980  0.154997473 -0.082623168
+## IRN -0.137166846 -0.051777017  0.33893257  0.288201907  0.192927858
+## ITA -0.248226920  0.258244786 -0.38974953 -0.671144170  0.491961966
+## JPN  0.004025465 -0.109779114 -0.52063404  0.410646473 -0.916539749
+## MEX           NA -0.513941502  0.11619778 -0.059270735 -0.011443940
+## NTH -0.511898158           NA -0.26420227 -0.351083013  0.238341064
+## PAK  0.042623174 -0.365420878          NA  0.197446137  0.225664460
+## PHI  0.022239475 -0.038082507  0.18711264           NA  0.069421246
+## POL  0.031234280  0.071721116  0.33263434  0.157069705           NA
+## ROK  0.129309204 -0.547536198 -0.11801421  0.327776769 -0.121976834
+## SAF -0.132321994 -0.353130475  0.17883425  0.003175342  0.060571588
+## SAU -0.471148926  0.055256995  0.30514475  0.313262336 -0.307242881
+## SPN  0.194343258  0.360879345 -0.10009708 -0.276028150  0.186566145
+## SWD -0.179535571  0.503706625 -0.08699767 -0.253969344  0.308312843
+## TAW -0.052411936  0.187455423 -0.18336990  0.358358017 -0.270433067
+## THI -0.138874566 -0.093140180  0.08973034  0.169517278 -0.074914667
+## TUR -0.050932801 -0.069031625  0.31755465  0.084377812  0.216761995
+## UKG -0.554981679  1.055749094 -0.41147145 -0.638756464  0.008691453
+## USA  2.229606283  0.171599983 -0.98303369 -0.083441062 -1.005014825
+##              ROK         SAF           SAU         SPN         SWD
+## ARG -0.362233457  0.19553986  3.860386e-05  0.14735374 -0.06359310
+## AUL  0.860561467  0.07592911 -5.323656e-02 -0.54508562 -0.30065074
+## BEL -0.598980861 -0.14503179 -2.107145e-01  0.58202663  0.44895404
+## BNG -0.270629009  0.25980223  1.834506e-01 -0.21711215  0.14908928
+## BRA -0.121161499 -0.05996261  1.255901e-02 -0.05215012 -0.20173297
+## CAN  0.181178447 -0.19144664 -1.989677e-01 -0.50389239 -0.30121427
+## CHN  0.727143852 -0.32029690 -2.660169e-01 -0.11278727 -0.22101478
+## COL -0.289791477  0.21136938  1.448700e-01 -0.14038186  0.13839675
+## EGY -0.186543399  0.26117934  3.441694e-01 -0.10346365  0.15864791
+## FRN -0.476336945 -0.28735326 -2.090332e-01  1.54531048  0.35832183
+## IND -0.135396692  0.06611456  2.441142e-01 -0.25510686 -0.10935241
+## INS  0.674863870 -0.13366139  8.669695e-03 -0.20321934 -0.29281171
+## IRN  0.313222493  0.46946173 -2.547492e-02 -0.03124152  0.07721459
+## ITA -0.349938573 -0.19521948 -7.890806e-02  1.08235528  0.12418180
+## JPN  1.312006916 -0.26018320 -8.512040e-02 -0.36112944 -0.39401347
+## MEX -0.356498469 -0.01591308 -9.264560e-02  0.17996748 -0.17550867
+## NTH -0.477808270 -0.14222111 -2.415952e-01  0.62127121  0.81077717
+## PAK -0.141540504  0.21162953  2.452869e-01 -0.19411571  0.10955188
+## PHI -0.007832581  0.07452155 -1.178041e-02 -0.40466298 -0.08498157
+## POL -0.321272456  0.16140080  1.043692e-01 -0.21725033  0.44620262
+## ROK           NA -0.26446981 -3.569072e-02 -0.39713177 -0.40702337
+## SAF  0.115341994          NA  4.135417e-02 -0.12570070 -0.12281876
+## SAU  0.907089702 -0.02884924            NA -0.13469994 -0.34386266
+## SPN -0.530825059 -0.12089638 -7.674545e-02          NA  0.12915560
+## SWD -0.421035710 -0.07847988 -8.955842e-02  0.11593934          NA
+## TAW  0.113849725 -0.01693698 -2.010367e-01 -0.47075430 -0.27846171
+## THI -0.088784337 -0.03655959 -2.442148e-02 -0.28541641 -0.16095996
+## TUR -0.312104881  0.13730491  3.096975e-01 -0.05875336  0.06960934
+## UKG -0.383108089  0.28418233  2.598720e-01  0.77849980  0.75819531
+## USA  0.853908792 -0.43607760  1.619809e-02 -0.25615041 -0.33218743
+##             TAW          THI         TUR          UKG         USA
+## ARG -0.26786838 -0.016537857  0.07753578 -0.798550230 -0.73684143
+## AUL  0.53918578  0.226666204 -0.17534350 -0.214520275 -0.45750012
+## BEL -0.50461578 -0.298895772  0.03156665  1.070656955 -0.36375742
+## BNG -0.17626393  0.084918888  0.17899253 -0.473750553 -0.77454325
+## BRA -0.21013372 -0.131415942 -0.12831408 -0.353707259  0.20859124
+## CAN -0.03431240 -0.255679721 -0.30028947  0.203947873  2.70296369
+## CHN  0.06467976  0.149454205 -0.39606323  0.195394892  1.36350552
+## COL -0.22469678  0.026633741  0.12070738 -0.552955061 -0.00972408
+## EGY -0.17517524  0.056737196  0.28801196 -0.443091744 -1.19778413
+## FRN -0.16328266 -0.450948644  0.14575385  1.259912772  0.19044508
+## IND -0.22455149  0.148550901 -0.02612952  0.002654294 -0.01334986
+## INS  0.39885516  0.104268739 -0.21609140 -0.402471787  0.01458823
+## IRN -0.06933650 -0.000327536  0.36884939 -0.816826086 -1.85438126
+## ITA -0.43426528 -0.467722476  0.47941273  0.770347252  0.20546309
+## JPN  1.49642155  1.161041251 -0.59372709  0.319721049  1.48870792
+## MEX -0.27003857 -0.145459754 -0.10695597 -0.667542199  2.28170453
+## NTH -0.18711089 -0.369913379  0.05293275  1.350794221 -0.40898934
+## PAK -0.08867515  0.074101969  0.15887322 -0.387575206 -0.87656442
+## PHI  0.31687896  0.209481853 -0.05507832 -0.327933130  0.32836696
+## POL -0.13756227  0.061124511  0.15519815 -0.217880168 -1.24136475
+## ROK  0.63998897  0.315742053 -0.15836913 -0.225091737  0.73090586
+## SAF  0.17314948 -0.067029836  0.05279630  0.101639269 -0.66212862
+## SAU  0.18137689 -0.063192560  0.33691229 -0.457899109  0.13950385
+## SPN -0.51890365 -0.340479899  0.16742710  0.708989028 -0.56335572
+## SWD -0.27058116 -0.190722184  0.08687133  0.664955520 -0.21075662
+## TAW          NA  0.509091062 -0.30860455 -0.105638796  0.99065212
+## THI  0.27322207           NA -0.19941423 -0.225385198  0.40671073
+## TUR -0.22647348 -0.047902314          NA -0.064008153 -0.74554048
+## UKG -0.46121227 -0.423269125  0.01968215           NA  0.54460268
+## USA  0.71724273 -0.010565387 -0.48288722  0.699873295          NA</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cov</span>(<span class="kw">cbind</span>(<span class="kw">c</span>(R),<span class="kw">c</span>(<span class="kw">t</span>(R))),<span class="dt">use=</span><span class="st">&quot;complete&quot;</span>) <span class="co">#ignore the NAs </span></code></pre>
+<pre><code>##           [,1]      [,2]
+## [1,] 0.2212591 0.1900891
+## [2,] 0.1900891 0.2212591</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data=</span><span class="kw">data.frame</span>(<span class="dt">anova=</span>ahat,<span class="dt">posterior=</span>fit_SRM<span class="op">$</span>APM),<span class="kw">aes</span>(<span class="dt">x=</span>anova,<span class="dt">y=</span>posterior))<span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span><span class="kw">geom_abline</span>(<span class="dt">slope=</span><span class="dv">1</span>,<span class="dt">intercept =</span> <span class="dv">0</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_fixed</span>()<span class="op">+</span><span class="kw">theme_bw</span>()</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-165-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data=</span><span class="kw">data.frame</span>(<span class="dt">anova=</span>bhat,<span class="dt">posterior=</span>fit_SRM<span class="op">$</span>BPM),<span class="kw">aes</span>(<span class="dt">x=</span>anova,<span class="dt">y=</span>posterior))<span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span><span class="kw">geom_abline</span>(<span class="dt">slope=</span><span class="dv">1</span>,<span class="dt">intercept =</span> <span class="dv">0</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_fixed</span>()<span class="op">+</span><span class="kw">theme_bw</span>()</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-165-2.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r">fit_SRM<span class="op">$</span>GOF[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>,] <span class="co">#statistics to check the goodness of fitting</span></code></pre>
+<pre><code>##     sd.rowmean sd.colmean  dyad.dep   triad.dep
+## obs  0.4906692  0.4784861 0.9392867  0.20403144
+##      0.5067037  0.4927832 0.9439214 -0.04290418</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">fit_SRM<span class="op">$</span>EZ[<span class="dv">1</span>,] <span class="co">#outer(fit_SRM$APM,fit_SRM$BPM,&quot;+&quot;)+mean(fit_SRM$BETA)</span></code></pre>
+<pre><code>##         ARG         AUL         BEL         BNG         BRA         CAN 
+## -0.07794040  0.20119396  0.47274114 -0.27231126  0.12639108  0.39109046 
+##         CHN         COL         EGY         FRN         IND         INS 
+##  0.65814039 -0.21862131 -0.18080266  0.87439754  0.04244846  0.05873294 
+##         IRN         ITA         JPN         MEX         NTH         PAK 
+## -0.12913288  0.76432070  1.14712258  0.11145944  0.64902071 -0.20233784 
+##         PHI         POL         ROK         SAF         SAU         SPN 
+## -0.02683689 -0.08070833  0.48956943 -0.04639155  0.03904056  0.46910842 
+##         SWD         TAW         THI         TUR         UKG         USA 
+##  0.10333439  0.40538545  0.14927293  0.03727601  0.95566614  1.86031544</code></pre>
+<p>missing dyadic data</p>
+<p>Can fill the NAs by MCMC approximation.</p>
+<p>Appropriate when missing at random. (many types of link tracing designs, such as egocentric and snowball sampling)</p>
+<pre class="sourceCode r"><code class="sourceCode r">fit_SRM<span class="op">$</span>YPM[<span class="dv">1</span>,] <span class="co">#estimate of Y: add epsilon</span></code></pre>
+<pre><code>##          ARG          AUL          BEL          BNG          BRA 
+##           NA  0.208100702  0.495727907 -0.239767170  0.121767896 
+##          CAN          CHN          COL          EGY          FRN 
+##  0.380297124  0.676787809 -0.168728890 -0.182872326  0.882133875 
+##          IND          INS          IRN          ITA          JPN 
+##  0.081284533  0.084503762 -0.178630396  0.773802677  1.142515148 
+##          MEX          NTH          PAK          PHI          POL 
+##  0.098379646  0.669411379 -0.175831799 -0.030543475 -0.039650740 
+##          ROK          SAF          SAU          SPN          SWD 
+##  0.494026113 -0.026982824  0.001747629  0.488819195  0.083139518 
+##          TAW          THI          TUR          UKG          USA 
+##  0.409170751  0.170518602  0.031709477  0.914005344  1.872744222</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#summary</span>
+<span class="kw">summary</span>(fit_SRM) <span class="co">#significant non-zero</span></code></pre>
+<pre><code>## 
+## Regression coefficients:
+##           pmean   psd z-stat p-val
+## intercept 0.662 0.184  3.601     0
+## 
+## Variance parameters:
+##     pmean   psd
+## va  0.281 0.078
+## cab 0.236 0.070
+## vb  0.272 0.072
+## rho 0.858 0.013
+## ve  0.239 0.015</code></pre>
+</div>
+<div id="social-relations-regression-model-srrm" class="section level3">
+<h3><span class="header-section-number">6.4.3</span> Social relations regression model (SRRM)</h3>
+<p><span class="math display">\[y_{i,j}=\beta_d^Tx_{d,i,j}+\beta_r^Tx_{r,i}+\beta_c^Tx_{c,j}+\mu+a_i+b_j+\epsilon_{i,j}\]</span></p>
+<p>Input:
+Y- a named matrix
+Xd - a named array <span class="math inline">\(n\times n \times p_d\)</span> dyadic covariates
+Xr - a named matrix <span class="math inline">\(n\times p_r\)</span>
+Xc - a named matrix <span class="math inline">\(n\times p_c\)</span></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#nodal covariates</span>
+<span class="kw">colnames</span>(IR90s<span class="op">$</span>nodevars)</code></pre>
+<pre><code>## [1] &quot;pop&quot;    &quot;gdp&quot;    &quot;polity&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">Xn=IR90s<span class="op">$</span>nodevars[topgdp,]
+Xn[,<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]=<span class="kw">log</span>(Xn[,<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]) <span class="co"># use the log </span>
+
+<span class="co">#dyadic covariates</span>
+<span class="kw">dimnames</span>(IR90s<span class="op">$</span>dyadvars)[[<span class="dv">3</span>]]</code></pre>
+<pre><code>## [1] &quot;conflicts&quot;   &quot;exports&quot;     &quot;distance&quot;    &quot;shared_igos&quot; &quot;polity_int&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">Xd=IR90s<span class="op">$</span>dyadvars[topgdp,topgdp,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>)]
+Xd[,,<span class="dv">3</span>]=<span class="kw">log</span>(Xd[,,<span class="dv">3</span>]) <span class="co"># use log</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">fit_srrm=<span class="kw">ame</span>(Y,<span class="dt">Xd=</span>Xd,<span class="dt">Xr=</span>Xn,<span class="dt">Xc=</span>Xn,<span class="dt">model =</span> <span class="st">&quot;nrm&quot;</span>,<span class="dt">plot =</span> <span class="ot">FALSE</span>,<span class="dt">print =</span> <span class="ot">FALSE</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(fit_srrm)</code></pre>
+<pre><code>## 
+## Regression coefficients:
+##                   pmean   psd z-stat p-val
+## intercept        -6.411 1.258 -5.096 0.000
+## pop.row          -0.330 0.132 -2.498 0.012
+## gdp.row           0.567 0.151  3.756 0.000
+## polity.row       -0.015 0.020 -0.786 0.432
+## pop.col          -0.302 0.127 -2.384 0.017
+## gdp.col           0.537 0.148  3.635 0.000
+## polity.col       -0.006 0.019 -0.309 0.757
+## conflicts.dyad    0.076 0.042  1.823 0.068
+## distance.dyad    -0.041 0.007 -6.087 0.000
+## shared_igos.dyad  0.886 0.187  4.737 0.000
+## polity_int.dyad  -0.001 0.001 -1.672 0.095
+## 
+## Variance parameters:
+##     pmean   psd
+## va  0.265 0.105
+## cab 0.214 0.098
+## vb  0.251 0.099
+## rho 0.785 0.020
+## ve  0.157 0.011</code></pre>
+</div>
+<div id="no-row-variance-column-variance-or-dyadic-correlation" class="section level3">
+<h3><span class="header-section-number">6.4.4</span> No row variance, column variance or dyadic correlation</h3>
+<p><span class="math display">\[y_{i,j}=\beta_d^Tx_{d,i,j}+\beta_r^Tx_{r,i}+\beta_c^Tx_{c,j}+\mu+\epsilon_{i,j}\]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">fit_rm=<span class="kw">ame</span>(Y,<span class="dt">Xd=</span>Xd,<span class="dt">Xr=</span>Xn,<span class="dt">Xc=</span>Xn,<span class="dt">model =</span> <span class="st">&quot;nrm&quot;</span>,<span class="dt">rvar =</span> <span class="ot">FALSE</span>,<span class="dt">cvar =</span> <span class="ot">FALSE</span>,<span class="dt">dcor=</span><span class="ot">FALSE</span>,<span class="dt">plot=</span><span class="ot">FALSE</span>,<span class="dt">print =</span> <span class="ot">FALSE</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(fit_rm)</code></pre>
+<pre><code>## 
+## Regression coefficients:
+##                   pmean   psd  z-stat p-val
+## intercept        -4.417 0.170 -25.947 0.000
+## pop.row          -0.318 0.022 -14.621 0.000
+## gdp.row           0.664 0.024  27.417 0.000
+## polity.row       -0.007 0.005  -1.335 0.182
+## pop.col          -0.280 0.023 -12.328 0.000
+## gdp.col           0.622 0.024  25.590 0.000
+## polity.col        0.002 0.005   0.509 0.611
+## conflicts.dyad    0.238 0.057   4.152 0.000
+## distance.dyad    -0.053 0.004 -14.407 0.000
+## shared_igos.dyad -0.021 0.028  -0.739 0.460
+## polity_int.dyad   0.000 0.001   0.280 0.780
+## 
+## Variance parameters:
+##     pmean   psd
+## va  0.000 0.000
+## cab 0.000 0.000
+## vb  0.000 0.000
+## rho 0.000 0.000
+## ve  0.229 0.011</code></pre>
+</div>
+<div id="additive-and-multiplicative-effects-model-ame" class="section level3">
+<h3><span class="header-section-number">6.4.5</span> additive and multiplicative effects model (ame)</h3>
+<p><span class="math display">\[y_{i,j}=\beta_d^Tx_{d,i,j}+\beta_r^Tx_{r,i}+\beta_c^Tx_{c,j}+\mu+a_i+b_j+u_i^Tv_j+\epsilon_{i,j}\]</span>
+Input:</p>
+<p>Y- a named matrix
+Xd - a named array <span class="math inline">\(n\times n \times p_d\)</span> dyadic covariates
+Xr - a named matrix <span class="math inline">\(n\times p_r\)</span>
+Xc - a named matrix <span class="math inline">\(n\times p_c\)</span>
+R - dimension of latent factor <span class="math inline">\(U\)</span> and <span class="math inline">\(V\)</span> are <span class="math inline">\(n\times R\)</span> matrices</p>
+<pre class="sourceCode r"><code class="sourceCode r">fit_ame2=<span class="kw">ame</span>(Y,<span class="dt">Xd=</span>Xd,<span class="dt">Xr=</span>Xn,<span class="dt">Xc=</span>Xn,<span class="dt">model =</span> <span class="st">&quot;nrm&quot;</span>,<span class="dt">R=</span><span class="dv">2</span>,<span class="dt">plot=</span><span class="ot">FALSE</span>,<span class="dt">print =</span> <span class="ot">FALSE</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(fit_ame2)</code></pre>
+<pre><code>## 
+## Regression coefficients:
+##                   pmean   psd z-stat p-val
+## intercept        -4.096 0.777 -5.270 0.000
+## pop.row          -0.281 0.069 -4.081 0.000
+## gdp.row           0.567 0.092  6.187 0.000
+## polity.row       -0.001 0.010 -0.064 0.949
+## pop.col          -0.236 0.072 -3.290 0.001
+## gdp.col           0.521 0.100  5.208 0.000
+## polity.col        0.008 0.010  0.761 0.447
+## conflicts.dyad    0.016 0.037  0.420 0.674
+## distance.dyad    -0.038 0.004 -9.542 0.000
+## shared_igos.dyad  0.095 0.074  1.281 0.200
+## polity_int.dyad  -0.001 0.000 -2.273 0.023
+## 
+## Variance parameters:
+##     pmean   psd
+## va  0.074 0.023
+## cab 0.030 0.017
+## vb  0.072 0.022
+## rho 0.620 0.037
+## ve  0.064 0.004</code></pre>
+</div>
+<div id="circle-plot-for-estimated-latent-factor" class="section level3">
+<h3><span class="header-section-number">6.4.6</span> circle plot for estimated latent factor</h3>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">circplot</span>(Y,<span class="dt">U=</span>fit_ame2<span class="op">$</span>U,<span class="dt">V=</span>fit_ame2<span class="op">$</span>V) <span class="co">#only available for 2 dimension latent factor</span></code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-175-1.png" width="672" /></p>
+</div>
+</div>
+<div id="choice-of-model-in-ame-binary-ordinal-discrete-or-sparse-relations" class="section level2">
+<h2><span class="header-section-number">6.5</span> Choice of <code>model</code> in <code>ame</code>: binary, ordinal, discrete or sparse relations</h2>
+<div id="binary-outcome" class="section level3">
+<h3><span class="header-section-number">6.5.1</span> binary outcome</h3>
+<p>Probit model.</p>
+<p><span class="math display">\[z_{i,j}=\beta_d^Tx_{d,i,j}+\beta_r^Tx_{r,i}+\beta_c^Tx_{c,j}+\mu+a_i+b_j+u_i^Tv_j+\epsilon_{i,j}\]</span></p>
+<p><span class="math display">\[y_{i,j}=1(z_{i,j}&gt;0)\]</span>
+Interpretation on the coefficients: one unit change in <span class="math inline">\(x_i\)</span> leads to a <span class="math inline">\(\beta_i\)</span> change in the z-score of Y: <span class="math inline">\(\beta_i\phi(\beta_0+\beta_1x_1+...)\)</span></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;lazegalaw&quot;</span>)
+<span class="kw">names</span>(lazegalaw)</code></pre>
+<pre><code>## [1] &quot;X&quot; &quot;Y&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dimnames</span>(lazegalaw<span class="op">$</span>X) <span class="co">#nodal covariates</span></code></pre>
+<pre><code>## [[1]]
+## NULL
+## 
+## [[2]]
+## [1] &quot;status&quot;    &quot;female&quot;    &quot;office&quot;    &quot;seniority&quot; &quot;age&quot;       &quot;practice&quot; 
+## [7] &quot;school&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dimnames</span>(lazegalaw<span class="op">$</span>Y) <span class="co">#relation and dyadic covariates</span></code></pre>
+<pre><code>## [[1]]
+## NULL
+## 
+## [[2]]
+## NULL
+## 
+## [[3]]
+## [1] &quot;advice&quot;     &quot;friendship&quot; &quot;cowork&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">Y=lazegalaw<span class="op">$</span>Y[,,<span class="dv">2</span>]
+Xd=lazegalaw<span class="op">$</span>Y[,,<span class="op">-</span><span class="dv">2</span>]
+Xn=lazegalaw<span class="op">$</span>X</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">fit_amebin3=<span class="kw">ame</span>(Y,<span class="dt">Xd=</span>Xd,<span class="dt">Xr=</span>Xn,<span class="dt">Xc=</span>Xn,<span class="dt">model =</span> <span class="st">&quot;bin&quot;</span>,<span class="dt">R=</span><span class="dv">2</span>,<span class="dt">plot=</span><span class="ot">FALSE</span>,<span class="dt">print =</span> <span class="ot">FALSE</span>)</code></pre>
+</div>
+<div id="ordinal-outcome" class="section level3">
+<h3><span class="header-section-number">6.5.2</span> ordinal outcome</h3>
+<p>ordinal probit model</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(sheep)
+<span class="kw">names</span>(sheep) </code></pre>
+<pre><code>## [1] &quot;dom&quot; &quot;age&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">Y=sheep<span class="op">$</span>dom
+x=sheep<span class="op">$</span>age<span class="op">-</span><span class="kw">mean</span>(sheep<span class="op">$</span>age) <span class="co">#centralize - beta can be (-,+)</span>
+Xd=<span class="kw">outer</span>(x,x)
+Xn=<span class="kw">cbind</span>(x,x<span class="op">^</span><span class="dv">2</span>)
+<span class="kw">colnames</span>(Xn)=<span class="kw">c</span>(<span class="st">&quot;age&quot;</span>,<span class="st">&quot;age2&quot;</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">fit_ameord=<span class="kw">ame</span>(<span class="dt">Y =</span> Y,<span class="dt">Xdyad =</span> Xd,<span class="dt">Xrow =</span> Xn,<span class="dt">Xcol =</span> Xn,<span class="dt">model =</span> <span class="st">&quot;ord&quot;</span>,<span class="dt">plot=</span><span class="ot">FALSE</span>,<span class="dt">print =</span> <span class="ot">FALSE</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(fit_ameord)</code></pre>
+<pre><code>## 
+## Regression coefficients:
+##           pmean   psd z-stat p-val
+## age.row   0.158 0.051  3.108 0.002
+## age2.row -0.086 0.019 -4.468 0.000
+## age.col  -0.242 0.039 -6.138 0.000
+## age2.col -0.008 0.015 -0.568 0.570
+## .dyad     0.043 0.008  5.371 0.000
+## 
+## Variance parameters:
+##      pmean   psd
+## va   0.433 0.153
+## cab  0.039 0.073
+## vb   0.215 0.084
+## rho -0.399 0.092
+## ve   1.000 0.000</code></pre>
+</div>
+<div id="censored-and-fixed-rank-nomination-data" class="section level3">
+<h3><span class="header-section-number">6.5.3</span> censored and fixed rank nomination data</h3>
+<p>Fix rank nomination: named a fixed number of people. – ordinal + censored</p>
+<p><code>(...,model=&quot;frn&quot;,odmax=..)</code></p>
+<p><code>odmax</code>: maximum number of links each row may have</p>
+<p>higher shows stronger relationship – make sure your data follows the right order.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;sampsonmonks&quot;</span>)
+<span class="kw">dimnames</span>(sampsonmonks)</code></pre>
+<pre><code>## [[1]]
+##  [1] &quot;ROMUL&quot;   &quot;BONAVEN&quot; &quot;AMBROSE&quot; &quot;BERTH&quot;   &quot;PETER&quot;   &quot;LOUIS&quot;   &quot;VICTOR&quot; 
+##  [8] &quot;WINF&quot;    &quot;JOHN&quot;    &quot;GREG&quot;    &quot;HUGH&quot;    &quot;BONI&quot;    &quot;MARK&quot;    &quot;ALBERT&quot; 
+## [15] &quot;AMAND&quot;   &quot;BASIL&quot;   &quot;ELIAS&quot;   &quot;SIMP&quot;   
+## 
+## [[2]]
+##  [1] &quot;ROMUL&quot;   &quot;BONAVEN&quot; &quot;AMBROSE&quot; &quot;BERTH&quot;   &quot;PETER&quot;   &quot;LOUIS&quot;   &quot;VICTOR&quot; 
+##  [8] &quot;WINF&quot;    &quot;JOHN&quot;    &quot;GREG&quot;    &quot;HUGH&quot;    &quot;BONI&quot;    &quot;MARK&quot;    &quot;ALBERT&quot; 
+## [15] &quot;AMAND&quot;   &quot;BASIL&quot;   &quot;ELIAS&quot;   &quot;SIMP&quot;   
+## 
+## [[3]]
+##  [1] &quot;like_m2&quot;       &quot;like_m1&quot;       &quot;like&quot;          &quot;dislike&quot;      
+##  [5] &quot;esteem&quot;        &quot;disesteem&quot;     &quot;pos_influence&quot; &quot;neg_influence&quot;
+##  [9] &quot;praise&quot;        &quot;blame&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">Y=sampsonmonks[,,<span class="dv">3</span>] <span class="co">#like</span>
+<span class="kw">apply</span>(Y<span class="op">&gt;</span><span class="dv">0</span>,<span class="dv">1</span>,sum,<span class="dt">na.rm=</span>T) <span class="co"># named at least 4 people</span></code></pre>
+<pre><code>##   ROMUL BONAVEN AMBROSE   BERTH   PETER   LOUIS  VICTOR    WINF    JOHN 
+##       3       3       4       3       3       3       3       3       3 
+##    GREG    HUGH    BONI    MARK  ALBERT   AMAND   BASIL   ELIAS    SIMP 
+##       4       3       3       3       3       3       3       3       3</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">fit_amefrn=<span class="kw">ame</span>(Y,<span class="dt">R=</span><span class="dv">2</span>,<span class="dt">model =</span> <span class="st">&quot;frn&quot;</span>,<span class="dt">odmax =</span> <span class="dv">4</span>,<span class="dt">plot=</span><span class="ot">FALSE</span>,<span class="dt">print =</span> <span class="ot">FALSE</span>) </code></pre>
+<pre><code>## WARNING: Random reordering used to break ties in ranks</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(fit_amefrn)</code></pre>
+<pre><code>## 
+## Regression coefficients:
+##            pmean   psd z-stat p-val
+## intercept -1.326 0.226 -5.868     0
+## 
+## Variance parameters:
+##     pmean   psd
+## va  0.188 0.100
+## cab 0.009 0.068
+## vb  0.212 0.120
+## rho 0.654 0.166
+## ve  1.000 0.000</code></pre>
+<p>Sensored binary</p>
+<p><code>(...,model=&quot;cbin&quot;,odmax=..)</code></p>
+<p><code>odmax</code>: maximum number of links each row may have</p>
+</div>
+</div>
+<div id="symmetric-outcome-symmetrictrue" class="section level2">
+<h2><span class="header-section-number">6.6</span> symmetric outcome: <code>symmetric=TRUE</code></h2>
+<div id="symmetric-outcome-symmetrictrue-1" class="section level3">
+<h3><span class="header-section-number">6.6.1</span> symmetric outcome: <code>symmetric=TRUE</code></h3>
+<p><span class="math display">\[z_{i,j}=\beta_d^Tx_{d,i,j}+\beta_n^Tx_{i}+\beta_n^Tx_{j}+\mu+a_i+a_j+u_i^T\Lambda u_j+\epsilon_{i,j}\]</span></p>
+<p><span class="math display">\[y_{i,j}=g(z_{i,j})\]</span>
+<code>symmetric=TRUE</code></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;coldwar&quot;</span>)
+<span class="kw">names</span>(coldwar)</code></pre>
+<pre><code>## [1] &quot;cc&quot;       &quot;distance&quot; &quot;gdp&quot;      &quot;polity&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">Y=<span class="kw">sign</span>(<span class="kw">apply</span>(coldwar<span class="op">$</span>cc,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),mean)) <span class="co">#avg across time - binary relation</span>
+
+Xn=<span class="kw">cbind</span>(<span class="kw">apply</span>(<span class="kw">log</span>(coldwar<span class="op">$</span>gdp),<span class="dv">1</span>,mean),
+         <span class="kw">sign</span>(<span class="kw">apply</span>(coldwar<span class="op">$</span>polity,<span class="dv">1</span>,mean))
+         )
+Xn[,<span class="dv">1</span>]=Xn[,<span class="dv">1</span>]<span class="op">-</span><span class="kw">mean</span>(Xn[,<span class="dv">1</span>]) <span class="co">#centralize</span>
+<span class="kw">dimnames</span>(Xn)[[<span class="dv">2</span>]]=<span class="kw">c</span>(<span class="st">&quot;lgdp&quot;</span>,<span class="st">&quot;polity&quot;</span>)
+
+Xd=<span class="kw">array</span>(<span class="dt">dim=</span><span class="kw">c</span>(<span class="kw">nrow</span>(Y),<span class="kw">nrow</span>(Y),<span class="dv">3</span>))
+Xd[,,<span class="dv">1</span>]=<span class="kw">outer</span>(Xn[,<span class="dv">1</span>],Xn[,<span class="dv">1</span>]) 
+Xd[,,<span class="dv">2</span>]=<span class="kw">outer</span>(Xn[,<span class="dv">2</span>],Xn[,<span class="dv">2</span>]) 
+Xd[,,<span class="dv">3</span>]=<span class="kw">log</span>(coldwar<span class="op">$</span>distance)
+<span class="kw">dimnames</span>(Xd)[[<span class="dv">3</span>]]=<span class="kw">c</span>(<span class="st">&quot;igdp&quot;</span>,<span class="st">&quot;ipol&quot;</span>,<span class="st">&quot;ldist&quot;</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># fit the model</span>
+fit_amesym1=<span class="kw">ame</span>(Y,Xd,Xn,<span class="dt">R=</span><span class="dv">1</span>,<span class="dt">symmetric =</span> <span class="ot">TRUE</span>,<span class="dt">model =</span> <span class="st">&quot;ord&quot;</span>,<span class="dt">plot=</span><span class="ot">FALSE</span>,<span class="dt">print =</span> <span class="ot">FALSE</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(fit_amesym1)</code></pre>
+<pre><code>## 
+## Regression coefficients:
+##              pmean   psd z-stat p-val
+## lgdp.node   -0.002 0.038 -0.053 0.958
+## polity.node  0.068 0.068  1.003 0.316
+## igdp.dyad   -0.026 0.021 -1.276 0.202
+## ipol.dyad    0.127 0.058  2.186 0.029
+## ldist.dyad   0.346 0.052  6.684 0.000
+## 
+## Variance parameters:
+##    pmean   psd
+## va 0.138 0.038
+## ve 1.000 0.000</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(fit_amesym1)</code></pre>
+<pre><code>## [1] &quot;BETA&quot;  &quot;VC&quot;    &quot;APM&quot;   &quot;U&quot;     &quot;L&quot;     &quot;ULUPM&quot; &quot;EZ&quot;    &quot;YPM&quot;   &quot;GOF&quot;</code></pre>
+</div>
+</div>
+<div id="ame_rep-for-longitudinal-outcome" class="section level2">
+<h2><span class="header-section-number">6.7</span> <code>ame_rep()</code> for longitudinal outcome</h2>
+<div id="repeated-measures-data-longitudinal-outcome" class="section level3">
+<h3><span class="header-section-number">6.7.1</span> repeated measures data: longitudinal outcome</h3>
+<p><span class="math display">\[z_{i,j,t}=\beta_d^Tx_{d,i,j,t}+\beta_r^Tx_{r,i,t}+\beta_c^Tx_{c,j,t}+\mu+a_i+b_j+u_i^Tv_j+\epsilon_{i,j,t}\]</span></p>
+<p><span class="math display">\[y_{i,j,t}=g(z_{i,j,t})\]</span></p>
+<p>For <span class="math inline">\(\beta_r^Tx_{r,i,t}\)</span> can also consider <span class="math inline">\(\beta_r^Tx_{r,i}\)</span>. For example, gender.</p>
+<p>For <span class="math inline">\(\beta_d^Tx_{d,i,j,t}\)</span> can consider <span class="math inline">\(y_{i,j,t-1}\)</span> or <span class="math inline">\(y_{j,i,t-1}\)</span> or more. (autoregression)</p>
+<p><code>ame_rep(Y,Xdyad,Xrow,Xcol)</code></p>
+<p>Add extra dimension for the time <span class="math inline">\(T\)</span>. For time-invariant covariates, need to construct array by repeating the matrix across time.</p>
+<p>Example:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-187"></span>
+<img src="images/model.png" alt="Example from [`amen` tutorial](https://github.com/pdhoff/amen/blob/master/inst/doc/amen.pdf)" width="80%" />
+<p class="caption">
+Figure 6.1: Example from <a href="https://github.com/pdhoff/amen/blob/master/inst/doc/amen.pdf"><code>amen</code> tutorial</a>
+</p>
+</div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;dutchcollege&quot;</span>)
+<span class="kw">names</span>(dutchcollege)</code></pre>
+<pre><code>## [1] &quot;Y&quot; &quot;X&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(dutchcollege<span class="op">$</span>Y)</code></pre>
+<pre><code>## [1] 32 32  7</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(dutchcollege<span class="op">$</span>Y[,,<span class="dv">1</span>])<span class="op">%&gt;%</span><span class="kw">unique</span>() <span class="co">#</span></code></pre>
+<pre><code>## [1] NA  0 -1  2  1</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">Y=<span class="dv">1</span><span class="op">*</span>(dutchcollege<span class="op">$</span>Y<span class="op">&gt;=</span><span class="dv">2</span>)[,,<span class="dv">2</span><span class="op">:</span><span class="dv">7</span>] <span class="co"># transfer to binary relation; </span>
+n=<span class="kw">dim</span>(Y)[<span class="dv">1</span>]
+t=<span class="kw">dim</span>(Y)[<span class="dv">3</span>]
+
+<span class="co">#nodal covariates</span>
+<span class="kw">colnames</span>(dutchcollege<span class="op">$</span>X)</code></pre>
+<pre><code>## [1] &quot;male&quot;    &quot;smoker&quot;  &quot;program&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">Xnode=dutchcollege<span class="op">$</span>X[,<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]
+Xnode=<span class="kw">array</span>(Xnode,<span class="dt">dim=</span><span class="kw">c</span>(n,<span class="kw">ncol</span>(Xnode),t)) <span class="co">#repeat the X across time</span>
+<span class="kw">dimnames</span>(Xnode)[[<span class="dv">2</span>]]=<span class="kw">c</span>(<span class="st">&quot;male&quot;</span>,<span class="st">&quot;smoker&quot;</span>)
+
+<span class="co"># dyadic covariates</span>
+Xdyad=<span class="kw">array</span>(<span class="dt">dim=</span><span class="kw">c</span>(n,n,<span class="dv">5</span>,t))
+Xdyad[,,<span class="dv">1</span>,]=<span class="dv">1</span><span class="op">*</span>(dutchcollege<span class="op">$</span>Y<span class="op">&gt;=</span><span class="dv">2</span>)[,,<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>] <span class="co">#lag Y</span>
+Xdyad[,,<span class="dv">2</span>,]=<span class="kw">array</span>(<span class="kw">apply</span>(Xdyad[,,<span class="dv">1</span>,],<span class="dv">3</span>,t),<span class="dt">dim=</span><span class="kw">c</span>(n,n,t)) <span class="co">#transpose the matrix</span>
+Xdyad[,,<span class="dv">3</span>,]=<span class="kw">outer</span>(Xnode[,<span class="dv">1</span>,<span class="dv">1</span>],Xnode[,<span class="dv">1</span>,<span class="dv">1</span>])
+Xdyad[,,<span class="dv">4</span>,]=<span class="kw">outer</span>(Xnode[,<span class="dv">2</span>,<span class="dv">1</span>],Xnode[,<span class="dv">2</span>,<span class="dv">1</span>])
+Xdyad[,,<span class="dv">5</span>,]=<span class="kw">outer</span>(dutchcollege<span class="op">$</span>X[,<span class="dv">3</span>],dutchcollege<span class="op">$</span>X[,<span class="dv">3</span>],<span class="st">&quot;==&quot;</span>) <span class="co">#same program</span>
+<span class="kw">dimnames</span>(Xdyad)[[<span class="dv">3</span>]]=<span class="kw">c</span>(<span class="st">&quot;Ylag&quot;</span>,<span class="st">&quot;tYlag&quot;</span>,<span class="st">&quot;bothmale&quot;</span>,<span class="st">&quot;bothsmoke&quot;</span>,<span class="st">&quot;sameprog&quot;</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># fit the model</span>
+fit_amet=<span class="kw">ame_rep</span>(Y,Xdyad,Xnode,Xnode,<span class="dt">model =</span> <span class="st">&quot;bin&quot;</span>,<span class="dt">plot=</span><span class="ot">FALSE</span>,<span class="dt">print =</span> <span class="ot">FALSE</span>)</code></pre>
+<pre><code>## 5  pct burnin complete 
+## 10  pct burnin complete 
+## 15  pct burnin complete 
+## 20  pct burnin complete 
+## 25  pct burnin complete 
+## 30  pct burnin complete 
+## 35  pct burnin complete 
+## 40  pct burnin complete 
+## 45  pct burnin complete 
+## 50  pct burnin complete 
+## 55  pct burnin complete 
+## 60  pct burnin complete 
+## 65  pct burnin complete 
+## 70  pct burnin complete 
+## 75  pct burnin complete 
+## 80  pct burnin complete 
+## 85  pct burnin complete 
+## 90  pct burnin complete 
+## 95  pct burnin complete 
+## 100  pct burnin complete</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(fit_amet)</code></pre>
+<pre><code>## 
+## Regression coefficients:
+##                 pmean   psd z-stat p-val
+## intercept      -1.612 0.170 -9.456 0.000
+## male.row       -0.169 0.220 -0.771 0.441
+## smoker.row     -0.458 0.182 -2.514 0.012
+## male.col       -0.038 0.162 -0.237 0.813
+## smoker.col     -0.237 0.145 -1.628 0.104
+## Ylag.dyad       1.201 0.063 19.150 0.000
+## tYlag.dyad      0.860 0.062 13.799 0.000
+## bothmale.dyad   0.740 0.145  5.090 0.000
+## bothsmoke.dyad  0.661 0.122  5.424 0.000
+## sameprog.dyad   0.432 0.063  6.881 0.000
+## 
+## Variance parameters:
+##     pmean   psd
+## va  0.223 0.073
+## cab 0.033 0.034
+## vb  0.119 0.038
+## rho 0.641 0.038
+## ve  1.000 0.000</code></pre>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="advanced-network-visualization.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

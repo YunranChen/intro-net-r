@@ -1,0 +1,2232 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>2 igraph package | Introduction to Network Analysis Using R</title>
+  <meta name="description" content="This github page provide a basic introduction on network analysis using R. The documents are based on the lab materials of STAT650 Social Network at Duke University.">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="2 igraph package | Introduction to Network Analysis Using R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This github page provide a basic introduction on network analysis using R. The documents are based on the lab materials of STAT650 Social Network at Duke University." />
+  <meta name="github-repo" content="YunranChen/intro-network-R" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2 igraph package | Introduction to Network Analysis Using R" />
+  
+  <meta name="twitter:description" content="This github page provide a basic introduction on network analysis using R. The documents are based on the lab materials of STAT650 Social Network at Duke University." />
+  
+
+<meta name="author" content="Yunran Chen">
+
+
+<meta name="date" content="2019-04-27">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="index.html">
+<link rel="next" href="ergm-statnet-package.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.8.0/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.39.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.39.2/plotly-latest.min.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#outline"><i class="fa fa-check"></i><b>1.1</b> Outline</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#detailed-outline"><i class="fa fa-check"></i><b>1.2</b> Detailed Outline</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="igraph.html"><a href="igraph.html"><i class="fa fa-check"></i><b>2</b> <code>igraph</code> package</a><ul>
+<li class="chapter" data-level="2.1" data-path="igraph.html"><a href="igraph.html#introduction-1"><i class="fa fa-check"></i><b>2.1</b> Introduction</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="igraph.html"><a href="igraph.html#igraph-vs-statnet"><i class="fa fa-check"></i><b>2.1.1</b> <code>igraph</code> vs <code>statnet</code></a></li>
+<li class="chapter" data-level="2.1.2" data-path="igraph.html"><a href="igraph.html#references"><i class="fa fa-check"></i><b>2.1.2</b> References</a></li>
+<li class="chapter" data-level="2.1.3" data-path="igraph.html"><a href="igraph.html#preparation"><i class="fa fa-check"></i><b>2.1.3</b> Preparation</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="igraph.html"><a href="igraph.html#create-networks-and-basics-concepts"><i class="fa fa-check"></i><b>2.2</b> Create networks and basics concepts</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="igraph.html"><a href="igraph.html#outline-1"><i class="fa fa-check"></i><b>2.2.1</b> Outline</a></li>
+<li class="chapter" data-level="2.2.2" data-path="igraph.html"><a href="igraph.html#create-simple-networks"><i class="fa fa-check"></i><b>2.2.2</b> Create simple networks</a></li>
+<li class="chapter" data-level="2.2.3" data-path="igraph.html"><a href="igraph.html#creating-specific-graphs-and-graph-models"><i class="fa fa-check"></i><b>2.2.3</b> Creating specific graphs and graph models</a></li>
+<li class="chapter" data-level="2.2.4" data-path="igraph.html"><a href="igraph.html#adjustments-on-graphs"><i class="fa fa-check"></i><b>2.2.4</b> Adjustments on graphs</a></li>
+<li class="chapter" data-level="2.2.5" data-path="igraph.html"><a href="igraph.html#edge-vertex-and-network-attributes"><i class="fa fa-check"></i><b>2.2.5</b> Edge, vertex and network attributes</a></li>
+<li class="chapter" data-level="2.2.6" data-path="igraph.html"><a href="igraph.html#description-of-igraph-object"><i class="fa fa-check"></i><b>2.2.6</b> Description of igraph object</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="igraph.html"><a href="igraph.html#built-networks-from-external-sources-basic-visualization-and-more-on-network-descriptions"><i class="fa fa-check"></i><b>2.3</b> Built networks from external sources, basic visualization and more on network descriptions</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="igraph.html"><a href="igraph.html#outline-2"><i class="fa fa-check"></i><b>2.3.1</b> Outline</a></li>
+<li class="chapter" data-level="2.3.2" data-path="igraph.html"><a href="igraph.html#dataset"><i class="fa fa-check"></i><b>2.3.2</b> Dataset</a></li>
+<li class="chapter" data-level="2.3.3" data-path="igraph.html"><a href="igraph.html#get-network-from-files"><i class="fa fa-check"></i><b>2.3.3</b> Get network from files</a></li>
+<li class="chapter" data-level="2.3.4" data-path="igraph.html"><a href="igraph.html#visualization"><i class="fa fa-check"></i><b>2.3.4</b> Visualization</a></li>
+<li class="chapter" data-level="2.3.5" data-path="igraph.html"><a href="igraph.html#network-and-node-descriptions"><i class="fa fa-check"></i><b>2.3.5</b> Network and node descriptions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="igraph.html"><a href="igraph.html#paths-communitites-and-related-visualization"><i class="fa fa-check"></i><b>2.4</b> Paths, communitites and related visualization</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="igraph.html"><a href="igraph.html#outline-3"><i class="fa fa-check"></i><b>2.4.1</b> Outline</a></li>
+<li class="chapter" data-level="2.4.2" data-path="igraph.html"><a href="igraph.html#datasets"><i class="fa fa-check"></i><b>2.4.2</b> Datasets</a></li>
+<li class="chapter" data-level="2.4.3" data-path="igraph.html"><a href="igraph.html#paths-distances-and-diameter"><i class="fa fa-check"></i><b>2.4.3</b> Paths, distances and diameter</a></li>
+<li class="chapter" data-level="2.4.4" data-path="igraph.html"><a href="igraph.html#components"><i class="fa fa-check"></i><b>2.4.4</b> Components</a></li>
+<li class="chapter" data-level="2.4.5" data-path="igraph.html"><a href="igraph.html#community"><i class="fa fa-check"></i><b>2.4.5</b> Community</a></li>
+<li class="chapter" data-level="2.4.6" data-path="igraph.html"><a href="igraph.html#visualization-1"><i class="fa fa-check"></i><b>2.4.6</b> Visualization</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="igraph.html"><a href="igraph.html#more-about-igraph"><i class="fa fa-check"></i><b>2.5</b> More about <code>igraph</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html"><i class="fa fa-check"></i><b>3</b> ERGM (<code>statnet</code> Package)</a><ul>
+<li class="chapter" data-level="3.1" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#introduction-2"><i class="fa fa-check"></i><b>3.1</b> Introduction</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#outline-4"><i class="fa fa-check"></i><b>3.1.1</b> Outline</a></li>
+<li class="chapter" data-level="3.1.2" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#statnet"><i class="fa fa-check"></i><b>3.1.2</b> <code>statnet</code></a></li>
+<li class="chapter" data-level="3.1.3" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#references-1"><i class="fa fa-check"></i><b>3.1.3</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#preparation-1"><i class="fa fa-check"></i><b>3.2</b> Preparation</a></li>
+<li class="chapter" data-level="3.3" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#summary-the-network-statistics"><i class="fa fa-check"></i><b>3.3</b> <code>summary</code> the network statistics</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#dataset-1"><i class="fa fa-check"></i><b>3.3.1</b> Dataset</a></li>
+<li class="chapter" data-level="3.3.2" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#summary"><i class="fa fa-check"></i><b>3.3.2</b> <code>summary</code></a></li>
+<li class="chapter" data-level="3.3.3" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#directed-networks"><i class="fa fa-check"></i><b>3.3.3</b> directed networks</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#ergm-fit-ergm-model"><i class="fa fa-check"></i><b>3.4</b> <code>ergm</code> fit ergm model</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#ergm"><i class="fa fa-check"></i><b>3.4.1</b> ERGM</a></li>
+<li class="chapter" data-level="3.4.2" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#ergm-function."><i class="fa fa-check"></i><b>3.4.2</b> <code>ergm</code> function.</a></li>
+<li class="chapter" data-level="3.4.3" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#ergm-terms"><i class="fa fa-check"></i><b>3.4.3</b> <code>ergm-terms</code></a></li>
+<li class="chapter" data-level="3.4.4" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#missing-edges"><i class="fa fa-check"></i><b>3.4.4</b> Missing edges</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#simulate-netowrks-from-an-ergm-model-fit"><i class="fa fa-check"></i><b>3.5</b> <code>simulate</code> netowrks from an ergm model fit</a></li>
+<li class="chapter" data-level="3.6" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#check-the-goodness-of-fit"><i class="fa fa-check"></i><b>3.6</b> Check the goodness of fit</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#gof"><i class="fa fa-check"></i><b>3.6.1</b> <code>gof</code></a></li>
+<li class="chapter" data-level="3.6.2" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#mcmc.diagnostics"><i class="fa fa-check"></i><b>3.6.2</b> <code>mcmc.diagnostics</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#more-functions"><i class="fa fa-check"></i><b>3.7</b> More functions</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html"><i class="fa fa-check"></i><b>4</b> Collect network data and API requests</a><ul>
+<li class="chapter" data-level="4.1" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#several-useful-websites"><i class="fa fa-check"></i><b>4.1</b> Several useful websites</a></li>
+<li class="chapter" data-level="4.2" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#web-scraping"><i class="fa fa-check"></i><b>4.2</b> Web scraping</a></li>
+<li class="chapter" data-level="4.3" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#preparation-2"><i class="fa fa-check"></i><b>4.3</b> Preparation</a></li>
+<li class="chapter" data-level="4.4" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#twitter-api-request"><i class="fa fa-check"></i><b>4.4</b> Twitter API request</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#r-package-rtweet"><i class="fa fa-check"></i><b>4.4.1</b> R package <code>rtweet</code></a></li>
+<li class="chapter" data-level="4.4.2" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#preparation-3"><i class="fa fa-check"></i><b>4.4.2</b> Preparation</a></li>
+<li class="chapter" data-level="4.4.3" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#api-authorization"><i class="fa fa-check"></i><b>4.4.3</b> API authorization</a></li>
+<li class="chapter" data-level="4.4.4" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#rtweet"><i class="fa fa-check"></i><b>4.4.4</b> <code>rtweet</code></a></li>
+<li class="chapter" data-level="4.4.5" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#retweet-networks"><i class="fa fa-check"></i><b>4.4.5</b> Retweet networks</a></li>
+<li class="chapter" data-level="4.4.6" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#friendship-networks"><i class="fa fa-check"></i><b>4.4.6</b> Friendship networks</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#other-apis"><i class="fa fa-check"></i><b>4.5</b> Other APIs</a></li>
+<li class="chapter" data-level="4.6" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#api-request-directly-from-r"><i class="fa fa-check"></i><b>4.6</b> API request directly from R</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#introduction-3"><i class="fa fa-check"></i><b>4.6.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.6.2" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#preparation-4"><i class="fa fa-check"></i><b>4.6.2</b> preparation</a></li>
+<li class="chapter" data-level="4.6.3" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#search-people-id"><i class="fa fa-check"></i><b>4.6.3</b> search people id</a></li>
+<li class="chapter" data-level="4.6.4" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#search-movies-based-on-people-id"><i class="fa fa-check"></i><b>4.6.4</b> search movies based on people id</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html"><i class="fa fa-check"></i><b>5</b> Advanced Network Visualization</a><ul>
+<li class="chapter" data-level="5.1" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#introduction-4"><i class="fa fa-check"></i><b>5.1</b> Introduction</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#outline-5"><i class="fa fa-check"></i><b>5.1.1</b> Outline</a></li>
+<li class="chapter" data-level="5.1.2" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#available-r-packages-and-tutorial"><i class="fa fa-check"></i><b>5.1.2</b> Available R packages and tutorial</a></li>
+<li class="chapter" data-level="5.1.3" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#references-2"><i class="fa fa-check"></i><b>5.1.3</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#preparation-5"><i class="fa fa-check"></i><b>5.2</b> Preparation</a></li>
+<li class="chapter" data-level="5.3" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#visualization-for-static-network"><i class="fa fa-check"></i><b>5.3</b> Visualization for static network</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#hairball-plot"><i class="fa fa-check"></i><b>5.3.1</b> Hairball plot</a></li>
+<li class="chapter" data-level="5.3.2" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#heatmap"><i class="fa fa-check"></i><b>5.3.2</b> Heatmap</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#other-static-networks"><i class="fa fa-check"></i><b>5.4</b> Other static networks</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#two-mode-network"><i class="fa fa-check"></i><b>5.4.1</b> Two-mode network</a></li>
+<li class="chapter" data-level="5.4.2" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#multiple-neworks"><i class="fa fa-check"></i><b>5.4.2</b> Multiple neworks</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#ggplot2-version-for-network-visualization"><i class="fa fa-check"></i><b>5.5</b> <code>ggplot2</code> version for network visualization</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#ggnet2geomnetggnetwork"><i class="fa fa-check"></i><b>5.5.1</b> <code>ggnet2</code>,<code>geomnet</code>,<code>ggnetwork</code></a></li>
+<li class="chapter" data-level="5.5.2" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#football-data"><i class="fa fa-check"></i><b>5.5.2</b> football data</a></li>
+<li class="chapter" data-level="5.5.3" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#ggnet2"><i class="fa fa-check"></i><b>5.5.3</b> <code>ggnet2</code></a></li>
+<li class="chapter" data-level="5.5.4" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#geomnet"><i class="fa fa-check"></i><b>5.5.4</b> <code>geomnet</code></a></li>
+<li class="chapter" data-level="5.5.5" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#ggnetwork"><i class="fa fa-check"></i><b>5.5.5</b> <code>ggnetwork</code></a></li>
+<li class="chapter" data-level="5.5.6" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#extensions-of-ggnet2geomnetggnetwork"><i class="fa fa-check"></i><b>5.5.6</b> Extensions of <code>ggnet2</code>,<code>geomnet</code>,<code>ggnetwork</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#interactive-network-visualization"><i class="fa fa-check"></i><b>5.6</b> Interactive network visualization</a></li>
+<li class="chapter" data-level="5.7" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#dynamic-network"><i class="fa fa-check"></i><b>5.7</b> Dynamic network</a><ul>
+<li class="chapter" data-level="5.7.1" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#introduction-5"><i class="fa fa-check"></i><b>5.7.1</b> Introduction</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="amen-packages.html"><a href="amen-packages.html"><i class="fa fa-check"></i><b>6</b> <code>amen</code> packages</a><ul>
+<li class="chapter" data-level="6.1" data-path="amen-packages.html"><a href="amen-packages.html#outline-6"><i class="fa fa-check"></i><b>6.1</b> Outline</a></li>
+<li class="chapter" data-level="6.2" data-path="amen-packages.html"><a href="amen-packages.html#ame"><i class="fa fa-check"></i><b>6.2</b> <code>ame()</code></a></li>
+<li class="chapter" data-level="6.3" data-path="amen-packages.html"><a href="amen-packages.html#input-prepare-the-dataset"><i class="fa fa-check"></i><b>6.3</b> Input: prepare the dataset</a></li>
+<li class="chapter" data-level="6.4" data-path="amen-packages.html"><a href="amen-packages.html#fit-the-model-the-gaussian-ame-model-continuous-y"><i class="fa fa-check"></i><b>6.4</b> Fit the model: the Gaussian AME model (continuous Y)</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="amen-packages.html"><a href="amen-packages.html#the-gaussian-ame-model"><i class="fa fa-check"></i><b>6.4.1</b> The Gaussian AME model</a></li>
+<li class="chapter" data-level="6.4.2" data-path="amen-packages.html"><a href="amen-packages.html#social-relations-model-srm"><i class="fa fa-check"></i><b>6.4.2</b> Social relations model (SRM)</a></li>
+<li class="chapter" data-level="6.4.3" data-path="amen-packages.html"><a href="amen-packages.html#social-relations-regression-model-srrm"><i class="fa fa-check"></i><b>6.4.3</b> Social relations regression model (SRRM)</a></li>
+<li class="chapter" data-level="6.4.4" data-path="amen-packages.html"><a href="amen-packages.html#no-row-variance-column-variance-or-dyadic-correlation"><i class="fa fa-check"></i><b>6.4.4</b> No row variance, column variance or dyadic correlation</a></li>
+<li class="chapter" data-level="6.4.5" data-path="amen-packages.html"><a href="amen-packages.html#additive-and-multiplicative-effects-model-ame"><i class="fa fa-check"></i><b>6.4.5</b> additive and multiplicative effects model (ame)</a></li>
+<li class="chapter" data-level="6.4.6" data-path="amen-packages.html"><a href="amen-packages.html#circle-plot-for-estimated-latent-factor"><i class="fa fa-check"></i><b>6.4.6</b> circle plot for estimated latent factor</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="amen-packages.html"><a href="amen-packages.html#choice-of-model-in-ame-binary-ordinal-discrete-or-sparse-relations"><i class="fa fa-check"></i><b>6.5</b> Choice of <code>model</code> in <code>ame</code>: binary, ordinal, discrete or sparse relations</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="amen-packages.html"><a href="amen-packages.html#binary-outcome"><i class="fa fa-check"></i><b>6.5.1</b> binary outcome</a></li>
+<li class="chapter" data-level="6.5.2" data-path="amen-packages.html"><a href="amen-packages.html#ordinal-outcome"><i class="fa fa-check"></i><b>6.5.2</b> ordinal outcome</a></li>
+<li class="chapter" data-level="6.5.3" data-path="amen-packages.html"><a href="amen-packages.html#censored-and-fixed-rank-nomination-data"><i class="fa fa-check"></i><b>6.5.3</b> censored and fixed rank nomination data</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="amen-packages.html"><a href="amen-packages.html#symmetric-outcome-symmetrictrue"><i class="fa fa-check"></i><b>6.6</b> symmetric outcome: <code>symmetric=TRUE</code></a><ul>
+<li class="chapter" data-level="6.6.1" data-path="amen-packages.html"><a href="amen-packages.html#symmetric-outcome-symmetrictrue-1"><i class="fa fa-check"></i><b>6.6.1</b> symmetric outcome: <code>symmetric=TRUE</code></a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="amen-packages.html"><a href="amen-packages.html#ame_rep-for-longitudinal-outcome"><i class="fa fa-check"></i><b>6.7</b> <code>ame_rep()</code> for longitudinal outcome</a><ul>
+<li class="chapter" data-level="6.7.1" data-path="amen-packages.html"><a href="amen-packages.html#repeated-measures-data-longitudinal-outcome"><i class="fa fa-check"></i><b>6.7.1</b> repeated measures data: longitudinal outcome</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to Network Analysis Using R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="igraph" class="section level1">
+<h1><span class="header-section-number">2</span> <code>igraph</code> package</h1>
+<div id="introduction-1" class="section level2">
+<h2><span class="header-section-number">2.1</span> Introduction</h2>
+<div id="igraph-vs-statnet" class="section level3">
+<h3><span class="header-section-number">2.1.1</span> <code>igraph</code> vs <code>statnet</code></h3>
+<div class="figure" style="text-align: center"><span id="fig:igrphstatnet"></span>
+<img src="images/igrastatnet.png" alt="`igraph` versus `statnet` from [Shizuka Lab](http://www.shizukalab.com/toolkits/sna/igraph-vs-statnet)" width="80%" />
+<p class="caption">
+Figure 2.1: <code>igraph</code> versus <code>statnet</code> from <a href="http://www.shizukalab.com/toolkits/sna/igraph-vs-statnet">Shizuka Lab</a>
+</p>
+</div>
+</div>
+<div id="references" class="section level3">
+<h3><span class="header-section-number">2.1.2</span> References</h3>
+<ul>
+<li>Official website (handbook): <a href="http://igraph.org/r/" class="uri">http://igraph.org/r/</a></li>
+<li>Tutorial: <a href="http://kateto.net/networks-r-igraph" class="uri">http://kateto.net/networks-r-igraph</a></li>
+<li>Book: <a href="https://sites.fas.harvard.edu/~airoldi/pub/books/BookDraft-CsardiNepuszAiroldi2016.pdf" class="uri">https://sites.fas.harvard.edu/~airoldi/pub/books/BookDraft-CsardiNepuszAiroldi2016.pdf</a></li>
+<li>Datasets:
+<ul>
+<li><a href="https://github.com/mathbeveridge/asoiaf" class="uri">https://github.com/mathbeveridge/asoiaf</a></li>
+<li><a href="https://networkofthrones.wordpress.com/data/" class="uri">https://networkofthrones.wordpress.com/data/</a></li>
+<li><a href="https://www.macalester.edu/~abeverid/thrones.html" class="uri">https://www.macalester.edu/~abeverid/thrones.html</a></li>
+</ul></li>
+</ul>
+</div>
+<div id="preparation" class="section level3">
+<h3><span class="header-section-number">2.1.3</span> Preparation</h3>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages(&quot;igraph&quot;)</span>
+<span class="co">#install.packages(&quot;igraphdata&quot;)</span>
+<span class="kw">library</span>(igraph)
+<span class="kw">library</span>(igraphdata)</code></pre>
+</div>
+</div>
+<div id="create-networks-and-basics-concepts" class="section level2">
+<h2><span class="header-section-number">2.2</span> Create networks and basics concepts</h2>
+<div id="outline-1" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> Outline</h3>
+<ul>
+<li>Basic introduction on network analysis using R.
+<ul>
+<li>R package <code>igraph</code>
+<ul>
+<li>create networks (predifined structures; specific graphs; graph models; adjustments)</li>
+<li>Edge, vertex and network attributes</li>
+<li>Network and node descriptions</li>
+</ul></li>
+<li>R package <code>statnet</code> (ERGM,…)</li>
+</ul></li>
+<li>Collecting network data
+<ul>
+<li><strong>Web API requesting</strong> (Twitter, Reddit, IMDB, or more)</li>
+<li>Useful websites (SNAP, or more)</li>
+</ul></li>
+<li>Visualization
+<ul>
+<li>static networks and dynamic networks</li>
+</ul></li>
+<li>Network analysis</li>
+</ul>
+</div>
+<div id="create-simple-networks" class="section level3">
+<h3><span class="header-section-number">2.2.2</span> Create simple networks</h3>
+<hr />
+<ul>
+<li><code>graph(edges,n,directed,isolates)</code></li>
+<li><code>graph_from_literal</code></li>
+</ul>
+<div id="graphedgesndirectedisolates" class="section level4">
+<h4><span class="header-section-number">2.2.2.1</span> <code>graph(edges,n,directed,isolates)</code></h4>
+<p>an undirected graph with 3 edges:</p>
+<pre class="sourceCode r"><code class="sourceCode r">g1 &lt;-<span class="st"> </span><span class="kw">graph</span>( <span class="dt">edges=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>, <span class="dv">2</span>,<span class="dv">3</span>, <span class="dv">3</span>,<span class="dv">1</span>), <span class="dt">n=</span><span class="dv">3</span>, <span class="dt">directed=</span>F ) 
+<span class="kw">plot</span>(g1) </code></pre>
+<p><img src="_main_files/figure-html/g1-1.png" width="672" /></p>
+<hr />
+<p>n can be greater than number of vertices in the edge list</p>
+<pre class="sourceCode r"><code class="sourceCode r">g2 &lt;-<span class="st"> </span><span class="kw">graph</span>( <span class="dt">edges=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>, <span class="dv">2</span>,<span class="dv">3</span>, <span class="dv">3</span>,<span class="dv">1</span>), <span class="dt">n=</span><span class="dv">10</span> ) <span class="co"># now with 10 vertices, and directed by default</span>
+<span class="kw">plot</span>(g2)   </code></pre>
+<p><img src="_main_files/figure-html/g2-1.png" width="672" /></p>
+<hr />
+<p>named vertices</p>
+<pre class="sourceCode r"><code class="sourceCode r">g3 &lt;-<span class="st"> </span><span class="kw">graph</span>( <span class="kw">c</span>(<span class="st">&quot;John&quot;</span>, <span class="st">&quot;Jim&quot;</span>, <span class="st">&quot;Jim&quot;</span>, <span class="st">&quot;Jill&quot;</span>, <span class="st">&quot;Jill&quot;</span>, <span class="st">&quot;John&quot;</span>)) 
+<span class="co"># When the edge list has vertex names, the number of nodes is not needed</span>
+<span class="kw">plot</span>(g3)</code></pre>
+<p><img src="_main_files/figure-html/g3-1.png" width="672" /></p>
+<hr />
+<p>named vertices without edges</p>
+<pre class="sourceCode r"><code class="sourceCode r">g4 &lt;-<span class="st"> </span><span class="kw">graph</span>( <span class="kw">c</span>(<span class="st">&quot;John&quot;</span>, <span class="st">&quot;Jim&quot;</span>, <span class="st">&quot;Jim&quot;</span>, <span class="st">&quot;Jack&quot;</span>, <span class="st">&quot;Jim&quot;</span>, <span class="st">&quot;Jack&quot;</span>, <span class="st">&quot;John&quot;</span>, <span class="st">&quot;John&quot;</span>), 
+             <span class="dt">isolates=</span><span class="kw">c</span>(<span class="st">&quot;Jesse&quot;</span>, <span class="st">&quot;Janis&quot;</span>, <span class="st">&quot;Jennifer&quot;</span>, <span class="st">&quot;Justin&quot;</span>) )  
+<span class="co"># In named graphs we can specify isolates by providing a list of their names.</span>
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+<span class="kw">plot</span>(g4, <span class="dt">edge.arrow.size=</span>.<span class="dv">5</span>, <span class="dt">vertex.color=</span><span class="st">&quot;gold&quot;</span>, <span class="dt">vertex.size=</span><span class="dv">15</span>, 
+     <span class="dt">vertex.frame.color=</span><span class="st">&quot;gray&quot;</span>, <span class="dt">vertex.label.color=</span><span class="st">&quot;black&quot;</span>, 
+     <span class="dt">vertex.label.cex=</span><span class="fl">1.5</span>, <span class="dt">vertex.label.dist=</span><span class="dv">2</span>, <span class="dt">edge.curved=</span><span class="fl">0.2</span>) </code></pre>
+<p><img src="_main_files/figure-html/g4-1.png" width="672" /></p>
+</div>
+<div id="graph_from_literal" class="section level4">
+<h4><span class="header-section-number">2.2.2.2</span> <code>graph_from_literal</code></h4>
+<p>Small graphs can also be generated with a description of this kind:</p>
+<ul>
+<li>‘-’ for undirected tie, “+-’ or”-+&quot; for directed ties pointing left &amp; right,</li>
+<li>“++” for a symmetric tie, and “:” for sets of vertices</li>
+</ul>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">graph_from_literal</span>(a<span class="op">---</span>b, b<span class="op">---</span>c)) <span class="co"># the number of dashes doesn&#39;t matter</span></code></pre>
+<p><img src="_main_files/figure-html/gfl1-1.png" width="672" /></p>
+<hr />
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">graph_from_literal</span>(a<span class="op">--+</span>b, b<span class="op">+--</span>c))</code></pre>
+<p><img src="_main_files/figure-html/gfl2-1.png" width="672" /></p>
+<hr />
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">graph_from_literal</span>(a<span class="op">+-+</span>b, b<span class="op">+-+</span>c)) </code></pre>
+<p><img src="_main_files/figure-html/gfl3-1.png" width="672" /></p>
+<hr />
+<p>a:b:c using colon to connect abc as a whole group.
+Each vertex within group a:b:c is connected to each vertex within group c:d:e</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">graph_from_literal</span>(a<span class="op">:</span>b<span class="op">:</span>c<span class="op">---</span>c<span class="op">:</span>d<span class="op">:</span>e))</code></pre>
+<p><img src="_main_files/figure-html/gfl4-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">graph_from_literal</span>(a<span class="op">--</span>b<span class="op">:</span>c<span class="op">:</span>d))</code></pre>
+<p><img src="_main_files/figure-html/gfl4-2.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">graph_from_literal</span>(a<span class="op">:</span>e<span class="op">--</span>b<span class="op">:</span>c<span class="op">:</span>d))</code></pre>
+<p><img src="_main_files/figure-html/gfl4-3.png" width="672" /></p>
+</div>
+</div>
+<div id="creating-specific-graphs-and-graph-models" class="section level3">
+<h3><span class="header-section-number">2.2.3</span> Creating specific graphs and graph models</h3>
+<hr />
+<ul>
+<li>Specific graph
+<ul>
+<li><code>make_empty_graph</code></li>
+<li><code>make_full_graph</code></li>
+<li><code>make_tree</code></li>
+<li><code>make_star</code></li>
+<li><code>make_ring</code></li>
+</ul></li>
+<li>Graph models
+<ul>
+<li><code>sample_gnm</code> Erdos-Renyi random graph</li>
+<li><code>sample_gnp</code> Erdos-Renyi with G(n,p) specification</li>
+<li><code>sample_smallworld</code> Watts-Strogatz small-world model</li>
+<li><code>sample_pa</code> Barabasi-Albert preferential attachment model for scale-free graphs</li>
+</ul></li>
+</ul>
+<div id="empty-graph" class="section level4">
+<h4><span class="header-section-number">2.2.3.1</span> Empty graph</h4>
+<pre class="sourceCode r"><code class="sourceCode r">eg &lt;-<span class="st"> </span><span class="kw">make_empty_graph</span>(<span class="dv">40</span>)
+<span class="kw">plot</span>(eg, <span class="dt">vertex.size=</span><span class="dv">10</span>, <span class="dt">vertex.label=</span><span class="ot">NA</span>)</code></pre>
+<p><img src="_main_files/figure-html/eg-1.png" width="672" /></p>
+</div>
+<div id="full-graph" class="section level4">
+<h4><span class="header-section-number">2.2.3.2</span> Full graph</h4>
+<pre class="sourceCode r"><code class="sourceCode r">fg &lt;-<span class="st"> </span><span class="kw">make_full_graph</span>(<span class="dv">40</span>)
+<span class="kw">plot</span>(fg, <span class="dt">vertex.size=</span><span class="dv">10</span>, <span class="dt">vertex.label=</span><span class="ot">NA</span>)</code></pre>
+<p><img src="_main_files/figure-html/fg-1.png" width="672" /></p>
+</div>
+<div id="tree-graph" class="section level4">
+<h4><span class="header-section-number">2.2.3.3</span> Tree graph</h4>
+<pre class="sourceCode r"><code class="sourceCode r">tr &lt;-<span class="st"> </span><span class="kw">make_tree</span>(<span class="dv">40</span>, <span class="dt">children =</span> <span class="dv">3</span>, <span class="dt">mode =</span> <span class="st">&quot;undirected&quot;</span>)
+
+<span class="kw">plot</span>(tr, <span class="dt">vertex.size=</span><span class="dv">10</span>, <span class="dt">vertex.label=</span><span class="ot">NA</span>) </code></pre>
+<p><img src="_main_files/figure-html/tr-1.png" width="672" /></p>
+</div>
+<div id="star-graph" class="section level4">
+<h4><span class="header-section-number">2.2.3.4</span> Star graph</h4>
+<pre class="sourceCode r"><code class="sourceCode r">st &lt;-<span class="st"> </span><span class="kw">make_star</span>(<span class="dv">40</span>)
+<span class="kw">plot</span>(st, <span class="dt">vertex.size=</span><span class="dv">10</span>, <span class="dt">vertex.label=</span><span class="ot">NA</span>) </code></pre>
+<p><img src="_main_files/figure-html/st-1.png" width="672" /></p>
+</div>
+<div id="ring-graph" class="section level4">
+<h4><span class="header-section-number">2.2.3.5</span> Ring graph</h4>
+<pre class="sourceCode r"><code class="sourceCode r">rn &lt;-<span class="st"> </span><span class="kw">make_ring</span>(<span class="dv">40</span>)
+<span class="kw">plot</span>(rn, <span class="dt">vertex.size=</span><span class="dv">10</span>, <span class="dt">vertex.label=</span><span class="ot">NA</span>)</code></pre>
+<p><img src="_main_files/figure-html/rn-1.png" width="672" /></p>
+</div>
+<div id="erdos-renyi-random-graph" class="section level4">
+<h4><span class="header-section-number">2.2.3.6</span> Erdos-Renyi random graph</h4>
+<p>‘n’ is number of nodes, ‘m’ is the number of edges</p>
+<pre class="sourceCode r"><code class="sourceCode r">er &lt;-<span class="st"> </span><span class="kw">sample_gnm</span>(<span class="dt">n=</span><span class="dv">100</span>, <span class="dt">m=</span><span class="dv">40</span>) <span class="co">####can also use erdos.renyi.game</span>
+<span class="co">## options include directed= and loops=</span>
+<span class="kw">plot</span>(er, <span class="dt">vertex.size=</span><span class="dv">6</span>, <span class="dt">vertex.label=</span><span class="ot">NA</span>)  </code></pre>
+<p><img src="_main_files/figure-html/er-1.png" width="672" /></p>
+</div>
+<div id="erdos-renyi-with-gnp-specification" class="section level4">
+<h4><span class="header-section-number">2.2.3.7</span> Erdos-Renyi with G(n,p) specification</h4>
+<pre class="sourceCode r"><code class="sourceCode r">er &lt;-<span class="st"> </span><span class="kw">sample_gnp</span>(<span class="dt">n=</span><span class="dv">100</span>, <span class="dt">p=</span>.<span class="dv">02</span>) <span class="co">####can also use erdos.renyi.game</span>
+<span class="kw">plot</span>(er, <span class="dt">vertex.size=</span><span class="dv">6</span>, <span class="dt">vertex.label=</span><span class="ot">NA</span>)  </code></pre>
+<p><img src="_main_files/figure-html/er1-1.png" width="672" /></p>
+</div>
+</div>
+<div id="adjustments-on-graphs" class="section level3">
+<h3><span class="header-section-number">2.2.4</span> Adjustments on graphs</h3>
+<hr />
+<ul>
+<li>igraph object as a layer (using <code>+</code>)</li>
+<li>igraph object as a matrix (using <code>[]</code>)</li>
+<li>rewiring a graph using <code>rewire</code>, <code>connect.neighborhood</code></li>
+<li>combine graphs <code>%du%</code></li>
+<li>other functions</li>
+</ul>
+<div id="igraph-object-as-a-layer" class="section level4">
+<h4><span class="header-section-number">2.2.4.1</span> igraph object as a layer</h4>
+<pre class="sourceCode r"><code class="sourceCode r">kite &lt;-<span class="st"> </span><span class="kw">make_empty_graph</span>(<span class="dt">directed =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">vertices</span>(LETTERS[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]) <span class="op">+</span>
+<span class="kw">edges</span>(<span class="st">&#39;A&#39;</span>,<span class="st">&#39;B&#39;</span>, <span class="st">&#39;B&#39;</span>,<span class="st">&#39;D&#39;</span>, <span class="st">&#39;C&#39;</span>,<span class="st">&#39;D&#39;</span>, <span class="st">&#39;D&#39;</span>,<span class="st">&#39;E&#39;</span>, <span class="st">&#39;E&#39;</span>,<span class="st">&#39;G&#39;</span>, <span class="st">&#39;F&#39;</span>,<span class="st">&#39;G&#39;</span>, <span class="st">&#39;G&#39;</span>,<span class="st">&#39;H&#39;</span>, <span class="st">&#39;H&#39;</span>,<span class="st">&#39;I&#39;</span>, <span class="st">&#39;I&#39;</span>,<span class="st">&#39;J&#39;</span>)
+<span class="kw">plot</span>(kite)</code></pre>
+<p><img src="_main_files/figure-html/kite-1.png" width="672" /></p>
+</div>
+<div id="igraph-object-as-a-matrix" class="section level4">
+<h4><span class="header-section-number">2.2.4.2</span> igraph object as a matrix</h4>
+<pre class="sourceCode r"><code class="sourceCode r">kite[]</code></pre>
+<pre><code>## 10 x 10 sparse Matrix of class &quot;dgCMatrix&quot;</code></pre>
+<pre><code>##    [[ suppressing 10 column names &#39;A&#39;, &#39;B&#39;, &#39;C&#39; ... ]]</code></pre>
+<pre><code>##                      
+## A . 1 . . . . . . . .
+## B 1 . . 1 . . . . . .
+## C . . . 1 . . . . . .
+## D . 1 1 . 1 . . . . .
+## E . . . 1 . . 1 . . .
+## F . . . . . . 1 . . .
+## G . . . . 1 1 . 1 . .
+## H . . . . . . 1 . 1 .
+## I . . . . . . . 1 . 1
+## J . . . . . . . . 1 .</code></pre>
+<hr />
+<p>add edge</p>
+<pre class="sourceCode r"><code class="sourceCode r">kite[<span class="st">&#39;A&#39;</span>,<span class="st">&#39;F&#39;</span>]=<span class="dv">1</span>
+kite[]</code></pre>
+<pre><code>## 10 x 10 sparse Matrix of class &quot;dgCMatrix&quot;</code></pre>
+<pre><code>##    [[ suppressing 10 column names &#39;A&#39;, &#39;B&#39;, &#39;C&#39; ... ]]</code></pre>
+<pre><code>##                      
+## A . 1 . . . 1 . . . .
+## B 1 . . 1 . . . . . .
+## C . . . 1 . . . . . .
+## D . 1 1 . 1 . . . . .
+## E . . . 1 . . 1 . . .
+## F 1 . . . . . 1 . . .
+## G . . . . 1 1 . 1 . .
+## H . . . . . . 1 . 1 .
+## I . . . . . . . 1 . 1
+## J . . . . . . . . 1 .</code></pre>
+<hr />
+<p>add multiple edges</p>
+<pre class="sourceCode r"><code class="sourceCode r">kite[<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>]</code></pre>
+<pre><code>## B C D E F G H I J 
+## 1 0 0 0 1 0 0 0 0</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">kite[<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>]=<span class="dv">1</span>
+kite[] <span class="co"># add multiple edges or using from and to</span></code></pre>
+<pre><code>## 10 x 10 sparse Matrix of class &quot;dgCMatrix&quot;</code></pre>
+<pre><code>##    [[ suppressing 10 column names &#39;A&#39;, &#39;B&#39;, &#39;C&#39; ... ]]</code></pre>
+<pre><code>##                      
+## A . 1 1 1 1 1 1 1 1 1
+## B 1 . . 1 . . . . . .
+## C 1 . . 1 . . . . . .
+## D 1 1 1 . 1 . . . . .
+## E 1 . . 1 . . 1 . . .
+## F 1 . . . . . 1 . . .
+## G 1 . . . 1 1 . 1 . .
+## H 1 . . . . . 1 . 1 .
+## I 1 . . . . . . 1 . 1
+## J 1 . . . . . . . 1 .</code></pre>
+<hr />
+<p>add multiple edges using <code>from</code> and <code>to</code></p>
+<pre class="sourceCode r"><code class="sourceCode r">kite[from=LETTERS[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>],to=LETTERS[<span class="dv">4</span><span class="op">:</span><span class="dv">6</span>]]=<span class="dv">1</span>
+kite[]</code></pre>
+<pre><code>## 10 x 10 sparse Matrix of class &quot;dgCMatrix&quot;</code></pre>
+<pre><code>##    [[ suppressing 10 column names &#39;A&#39;, &#39;B&#39;, &#39;C&#39; ... ]]</code></pre>
+<pre><code>##                      
+## A . 1 1 1 1 1 1 1 1 1
+## B 1 . . 1 1 . . . . .
+## C 1 . . 1 . 1 . . . .
+## D 1 1 1 . 1 . . . . .
+## E 1 1 . 1 . . 1 . . .
+## F 1 . 1 . . . 1 . . .
+## G 1 . . . 1 1 . 1 . .
+## H 1 . . . . . 1 . 1 .
+## I 1 . . . . . . 1 . 1
+## J 1 . . . . . . . 1 .</code></pre>
+<hr />
+<p>remove edge</p>
+<pre class="sourceCode r"><code class="sourceCode r">kite[<span class="op">-</span><span class="dv">1</span>,<span class="dv">2</span>]=<span class="dv">0</span></code></pre>
+</div>
+<div id="rewiring-a-graph" class="section level4">
+<h4><span class="header-section-number">2.2.4.3</span> rewiring a graph</h4>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
+<span class="kw">plot</span>(rn, <span class="dt">vertex.size=</span><span class="dv">10</span>, <span class="dt">vertex.label=</span><span class="ot">NA</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<hr />
+<p>‘each_edge()’ is a rewiring method that changes the edge endpoints to a new vertex with a probability ‘prob’. And the new vertex is random variable distributed uniformly.</p>
+<pre class="sourceCode r"><code class="sourceCode r">rn.rewired &lt;-<span class="st"> </span><span class="kw">rewire</span>(rn, <span class="kw">each_edge</span>(<span class="dt">prob=</span><span class="fl">0.1</span>))
+<span class="kw">plot</span>(rn.rewired, <span class="dt">vertex.size=</span><span class="dv">10</span>, <span class="dt">vertex.label=</span><span class="ot">NA</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<hr />
+<p>Rewire to connect vertices to other vertices at a certain distance.</p>
+<pre class="sourceCode r"><code class="sourceCode r">rn.neigh =<span class="st"> </span><span class="kw">connect.neighborhood</span>(rn, <span class="dv">5</span>)
+<span class="kw">plot</span>(rn.neigh, <span class="dt">vertex.size=</span><span class="dv">8</span>, <span class="dt">vertex.label=</span><span class="ot">NA</span>) </code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r">g &lt;-<span class="st"> </span><span class="kw">make_ring</span>(<span class="dv">10</span>)
+<span class="kw">plot</span>(g)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-5-2.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r">g &lt;-<span class="st"> </span><span class="kw">connect</span>(g, <span class="dv">2</span>)
+<span class="kw">plot</span>(g)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-5-3.png" width="672" /></p>
+<hr />
+<p>combine graphs</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(rn <span class="op">%du%</span><span class="st"> </span>tr, <span class="dt">vertex.size=</span><span class="dv">10</span>, <span class="dt">vertex.label=</span><span class="ot">NA</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+</div>
+</div>
+<div id="edge-vertex-and-network-attributes" class="section level3">
+<h3><span class="header-section-number">2.2.5</span> Edge, vertex and network attributes</h3>
+<hr />
+<ul>
+<li>Consider edge, vertex as sequences []</li>
+<li>Consider the network as matrix []</li>
+<li>Neighbors [[]]</li>
+<li>Attributes $</li>
+</ul>
+<div id="consider-edge-vertex-as-sequences" class="section level4">
+<h4><span class="header-section-number">2.2.5.1</span> consider edge, vertex as sequences</h4>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(g4)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<hr />
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">E</span>(g4) <span class="co">#edge list</span></code></pre>
+<pre><code>## + 4/4 edges from 8ae939e (vertex names):
+## [1] John-&gt;Jim  Jim -&gt;Jack Jim -&gt;Jack John-&gt;John</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">V</span>(g4) <span class="co">#vertex list</span></code></pre>
+<pre><code>## + 7/7 vertices, named, from 8ae939e:
+## [1] John     Jim      Jack     Jesse    Janis    Jennifer Justin</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ecount</span>(g4) <span class="co"># count</span></code></pre>
+<pre><code>## [1] 4</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">vcount</span>(g4) <span class="co"># count</span></code></pre>
+<pre><code>## [1] 7</code></pre>
+<hr />
+<p>refer vertex and edges</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">V</span>(g4)[<span class="kw">c</span>(<span class="st">&quot;John&quot;</span>,<span class="st">&quot;Jim&quot;</span>)]</code></pre>
+<pre><code>## + 2/7 vertices, named, from 8ae939e:
+## [1] John Jim</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">V</span>(g4)[<span class="kw">nei</span>(<span class="st">&quot;Jim&quot;</span>)] <span class="co"># neighbors of Jim</span></code></pre>
+<pre><code>## + 2/7 vertices, named, from 8ae939e:
+## [1] John Jack</code></pre>
+<hr />
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">E</span>(g4)[<span class="kw">c</span>(<span class="st">&quot;John|Jim&quot;</span>,<span class="st">&quot;Jim|Jack&quot;</span>)]</code></pre>
+<pre><code>## + 2/4 edges from 8ae939e (vertex names):
+## [1] John-&gt;Jim  Jim -&gt;Jack</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">E</span>(g4,<span class="dt">path =</span> <span class="kw">c</span>(<span class="st">&quot;John&quot;</span>,<span class="st">&quot;Jim&quot;</span>,<span class="st">&quot;Jack&quot;</span>))</code></pre>
+<pre><code>## + 2/4 edges from 8ae939e (vertex names):
+## [1] John-&gt;Jim  Jim -&gt;Jack</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">E</span>(g4)[ <span class="st">&quot;John&quot;</span> <span class="op">%--%</span><span class="st"> &quot;Jack&quot;</span> ]</code></pre>
+<pre><code>## + 0/4 edges from 8ae939e (vertex names):</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">E</span>(g4)[ <span class="st">&quot;Jim&quot;</span> <span class="op">%-&gt;%</span><span class="st"> &quot;Jack&quot;</span> ]</code></pre>
+<pre><code>## + 2/4 edges from 8ae939e (vertex names):
+## [1] Jim-&gt;Jack Jim-&gt;Jack</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">E</span>(g4)[ <span class="kw">from</span>(<span class="st">&quot;Jim&quot;</span>) ]</code></pre>
+<pre><code>## + 2/4 edges from 8ae939e (vertex names):
+## [1] Jim-&gt;Jack Jim-&gt;Jack</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">E</span>(g4)[ <span class="kw">to</span>(<span class="st">&quot;Jim&quot;</span>) ]</code></pre>
+<pre><code>## + 1/4 edge from 8ae939e (vertex names):
+## [1] John-&gt;Jim</code></pre>
+</div>
+<div id="consider-the-network-as-matrix" class="section level4">
+<h4><span class="header-section-number">2.2.5.2</span> consider the network as matrix</h4>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(g4)</code></pre>
+<pre><code>## [1] &quot;igraph&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">g4[] <span class="co">#&quot;adjacency matrix&quot;</span></code></pre>
+<pre><code>## 7 x 7 sparse Matrix of class &quot;dgCMatrix&quot;
+##          John Jim Jack Jesse Janis Jennifer Justin
+## John        1   1    .     .     .        .      .
+## Jim         .   .    2     .     .        .      .
+## Jack        .   .    .     .     .        .      .
+## Jesse       .   .    .     .     .        .      .
+## Janis       .   .    .     .     .        .      .
+## Jennifer    .   .    .     .     .        .      .
+## Justin      .   .    .     .     .        .      .</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">g4[<span class="dv">1</span>,] <span class="co"># consider as a matrix to select </span></code></pre>
+<pre><code>##     John      Jim     Jack    Jesse    Janis Jennifer   Justin 
+##        1        1        0        0        0        0        0</code></pre>
+<hr />
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get.adjacency</span>(g4) </code></pre>
+<pre><code>## 7 x 7 sparse Matrix of class &quot;dgCMatrix&quot;
+##          John Jim Jack Jesse Janis Jennifer Justin
+## John        1   1    .     .     .        .      .
+## Jim         .   .    2     .     .        .      .
+## Jack        .   .    .     .     .        .      .
+## Jesse       .   .    .     .     .        .      .
+## Janis       .   .    .     .     .        .      .
+## Jennifer    .   .    .     .     .        .      .
+## Justin      .   .    .     .     .        .      .</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">##explicitly getting adjacency matrix (as a sparse matrix)</span>
+<span class="kw">get.adjacency</span>(g4,<span class="dt">sparse=</span><span class="ot">FALSE</span>) </code></pre>
+<pre><code>##          John Jim Jack Jesse Janis Jennifer Justin
+## John        1   1    0     0     0        0      0
+## Jim         0   0    2     0     0        0      0
+## Jack        0   0    0     0     0        0      0
+## Jesse       0   0    0     0     0        0      0
+## Janis       0   0    0     0     0        0      0
+## Jennifer    0   0    0     0     0        0      0
+## Justin      0   0    0     0     0        0      0</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">##explicitly getting adjacency matrix  --- not sparse, lets you manipulate it better</span></code></pre>
+<hr />
+<pre class="sourceCode r"><code class="sourceCode r">g4[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>,<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>]</code></pre>
+<pre><code>## 2 x 2 sparse Matrix of class &quot;dgCMatrix&quot;
+##      Jim Jack
+## John   1    .
+## Jim    .    2</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">g4[from=<span class="kw">c</span>(<span class="st">&quot;Jack&quot;</span>,<span class="st">&quot;Jim&quot;</span>,<span class="st">&quot;John&quot;</span>),to=<span class="kw">c</span>(<span class="st">&quot;Jim&quot;</span>,<span class="st">&quot;Jack&quot;</span>,<span class="st">&quot;John&quot;</span>)]</code></pre>
+<pre><code>## [1] 0 1 1</code></pre>
+</div>
+<div id="neighbors" class="section level4">
+<h4><span class="header-section-number">2.2.5.3</span> neighbors</h4>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">neighbors</span>(g4,<span class="st">&quot;Jim&quot;</span>)</code></pre>
+<pre><code>## + 2/7 vertices, named, from 8ae939e:
+## [1] Jack Jack</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">g4[[<span class="st">&quot;Jim&quot;</span>]]</code></pre>
+<pre><code>## $Jim
+## + 2/7 vertices, named, from 8ae939e:
+## [1] Jack Jack</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">g4[[<span class="kw">c</span>(<span class="st">&quot;Jim&quot;</span>,<span class="st">&quot;John&quot;</span>)]] <span class="co">#works for multiple vertices</span></code></pre>
+<pre><code>## $Jim
+## + 2/7 vertices, named, from 8ae939e:
+## [1] Jack Jack
+## 
+## $John
+## + 2/7 vertices, named, from 8ae939e:
+## [1] John Jim</code></pre>
+<hr />
+<pre class="sourceCode r"><code class="sourceCode r">g4[[<span class="st">&quot;Jim&quot;</span>,]]</code></pre>
+<pre><code>## $Jim
+## + 2/7 vertices, named, from 8ae939e:
+## [1] Jack Jack</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">g4[[,<span class="st">&quot;Jim&quot;</span>]]</code></pre>
+<pre><code>## $Jim
+## + 1/7 vertex, named, from 8ae939e:
+## [1] John</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">g4[[,<span class="st">&quot;Jim&quot;</span>,edges=<span class="ot">TRUE</span>]]</code></pre>
+<pre><code>## $Jim
+## + 1/4 edge from 8ae939e (vertex names):
+## [1] John-&gt;Jim</code></pre>
+</div>
+<div id="attributes-vertex-attributes-edge-attributes-graph-attributes" class="section level4">
+<h4><span class="header-section-number">2.2.5.4</span> Attributes: vertex attributes, edge attributes, graph attributes</h4>
+<p>use $ to create attributes and get attributes</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">V</span>(g4)<span class="op">$</span>name <span class="co"># automatically generated when we created the network.</span></code></pre>
+<pre><code>## [1] &quot;John&quot;     &quot;Jim&quot;      &quot;Jack&quot;     &quot;Jesse&quot;    &quot;Janis&quot;    &quot;Jennifer&quot;
+## [7] &quot;Justin&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">V</span>(g4)<span class="op">$</span>gender &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;male&quot;</span>, <span class="st">&quot;male&quot;</span>, <span class="st">&quot;male&quot;</span>, <span class="st">&quot;male&quot;</span>, <span class="st">&quot;female&quot;</span>, <span class="st">&quot;female&quot;</span>, <span class="st">&quot;male&quot;</span>)
+<span class="kw">neighbors</span>(g4,<span class="st">&quot;Jim&quot;</span>,<span class="dt">mode =</span> <span class="st">&quot;all&quot;</span>)<span class="op">$</span>gender</code></pre>
+<pre><code>## [1] &quot;male&quot; &quot;male&quot; &quot;male&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">E</span>(g4)<span class="op">$</span>type &lt;-<span class="st"> &quot;email&quot;</span> <span class="co"># Edge attribute, assign &quot;email&quot; to all edges</span>
+<span class="kw">E</span>(g4)<span class="op">$</span>weight &lt;-<span class="st"> </span><span class="dv">10</span>    <span class="co"># Edge weight, setting all existing edges to 10</span>
+g4 &lt;-<span class="st"> </span><span class="kw">set_graph_attr</span>(g4, <span class="st">&quot;name&quot;</span>, <span class="st">&quot;Email Network&quot;</span>)</code></pre>
+<hr />
+<p>see the attributes</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">edge_attr</span>(g4)</code></pre>
+<pre><code>## $type
+## [1] &quot;email&quot; &quot;email&quot; &quot;email&quot; &quot;email&quot;
+## 
+## $weight
+## [1] 10 10 10 10</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">vertex_attr</span>(g4)</code></pre>
+<pre><code>## $name
+## [1] &quot;John&quot;     &quot;Jim&quot;      &quot;Jack&quot;     &quot;Jesse&quot;    &quot;Janis&quot;    &quot;Jennifer&quot;
+## [7] &quot;Justin&quot;  
+## 
+## $gender
+## [1] &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;female&quot; &quot;female&quot; &quot;male&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">graph_attr</span>(g4)</code></pre>
+<pre><code>## $name
+## [1] &quot;Email Network&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">graph_attr_names</span>(g4)</code></pre>
+<pre><code>## [1] &quot;name&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">graph_attr</span>(g4, <span class="st">&quot;name&quot;</span>)</code></pre>
+<pre><code>## [1] &quot;Email Network&quot;</code></pre>
+<hr />
+<p>can remove the attribute</p>
+<pre class="sourceCode r"><code class="sourceCode r">g4 &lt;-<span class="st"> </span><span class="kw">set_graph_attr</span>(g4, <span class="st">&quot;something&quot;</span>, <span class="st">&quot;A thing&quot;</span>)
+g4 &lt;-<span class="st"> </span><span class="kw">delete_graph_attr</span>(g4, <span class="st">&quot;something&quot;</span>)
+<span class="kw">graph_attr</span>(g4)</code></pre>
+<pre><code>## $name
+## [1] &quot;Email Network&quot;</code></pre>
+<hr />
+<p>Make use of these attributes</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(g4, <span class="dt">edge.arrow.size=</span>.<span class="dv">5</span>, <span class="dt">vertex.label.color=</span><span class="st">&quot;black&quot;</span>, <span class="dt">vertex.label.dist=</span><span class="fl">1.5</span>,
+     <span class="dt">vertex.color=</span><span class="kw">as.factor</span>(<span class="kw">V</span>(g4)<span class="op">$</span>gender) )</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<hr />
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(g4, <span class="dt">edge.arrow.size=</span>.<span class="dv">5</span>, <span class="dt">vertex.label.color=</span><span class="st">&quot;black&quot;</span>, <span class="dt">vertex.label.dist=</span><span class="fl">1.5</span>,
+     <span class="dt">vertex.color=</span><span class="kw">c</span>( <span class="st">&quot;pink&quot;</span>, <span class="st">&quot;skyblue&quot;</span>)[<span class="dv">1</span><span class="op">+</span>(<span class="kw">V</span>(g4)<span class="op">$</span>gender<span class="op">==</span><span class="st">&quot;male&quot;</span>)] ) </code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#consider as a sequence</span></code></pre>
+<hr />
+<p>attributes can be combined</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(g4)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r">g4s &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw">simplify</span>( g4, <span class="dt">remove.multiple =</span> T, <span class="dt">remove.loops =</span> F, 
+                 <span class="dt">edge.attr.comb=</span><span class="kw">c</span>(<span class="dt">weight=</span><span class="st">&quot;sum&quot;</span>, <span class="dt">type=</span><span class="st">&quot;ignore&quot;</span>) )
+<span class="co">#specifies what to do with edge attributes, if remove.multiple=TRUE. In this case many edges might be mapped to a single one in the new graph, and their attributes are combined.</span>
+<span class="kw">E</span>(g4)<span class="op">$</span>type</code></pre>
+<pre><code>## [1] &quot;email&quot; &quot;email&quot; &quot;email&quot; &quot;email&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">E</span>(g4s)<span class="op">$</span>type</code></pre>
+<pre><code>## NULL</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">E</span>(g4)<span class="op">$</span>weight</code></pre>
+<pre><code>## [1] 10 10 10 10</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">E</span>(g4s)<span class="op">$</span>weight</code></pre>
+<pre><code>## [1] 10 10 20</code></pre>
+</div>
+<div id="special-attributes" class="section level4">
+<h4><span class="header-section-number">2.2.5.5</span> special attributes</h4>
+<p>make sure to avoid using these attribute names: color(e/v), layout(g), name(v),shape(v),type(v),weight(e)</p>
+</div>
+</div>
+<div id="description-of-igraph-object" class="section level3">
+<h3><span class="header-section-number">2.2.6</span> Description of igraph object</h3>
+<hr />
+<pre class="sourceCode r"><code class="sourceCode r">g4s</code></pre>
+<pre><code>## IGRAPH df94000 DNW- 7 3 -- Email Network
+## + attr: name (g/c), name (v/c), gender (v/c), weight (e/n)
+## + edges from df94000 (vertex names):
+## [1] John-&gt;John John-&gt;Jim  Jim -&gt;Jack</code></pre>
+<ul>
+<li>D or U, for a directed or undirected graph</li>
+<li>N for a named graph (where nodes have a name attribute)</li>
+<li>W for a weighted graph (where edges have a weight attribute)</li>
+<li>B for a bipartite (two-mode) graph (where nodes have a type attribute)</li>
+<li>(7 5) refer to the number of nodes and edges</li>
+<li>node &amp; edge attributes, for example: g:graph; v: vertex; e: edge;n:numeric; c:character;l:logical; x:complex</li>
+</ul>
+<hr />
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(karate)
+karate</code></pre>
+<pre><code>## IGRAPH 4b458a1 UNW- 34 78 -- Zachary&#39;s karate club network
+## + attr: name (g/c), Citation (g/c), Author (g/c), Faction (v/n),
+## | name (v/c), label (v/c), color (v/n), weight (e/n)
+## + edges from 4b458a1 (vertex names):
+##  [1] Mr Hi  --Actor 2  Mr Hi  --Actor 3  Mr Hi  --Actor 4 
+##  [4] Mr Hi  --Actor 5  Mr Hi  --Actor 6  Mr Hi  --Actor 7 
+##  [7] Mr Hi  --Actor 8  Mr Hi  --Actor 9  Mr Hi  --Actor 11
+## [10] Mr Hi  --Actor 12 Mr Hi  --Actor 13 Mr Hi  --Actor 14
+## [13] Mr Hi  --Actor 18 Mr Hi  --Actor 20 Mr Hi  --Actor 22
+## [16] Mr Hi  --Actor 32 Actor 2--Actor 3  Actor 2--Actor 4 
+## [19] Actor 2--Actor 8  Actor 2--Actor 14 Actor 2--Actor 18
+## + ... omitted several edges</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(macaque)
+macaque</code></pre>
+<pre><code>## IGRAPH f7130f3 DN-- 45 463 -- 
+## + attr: Citation (g/c), Author (g/c), shape (v/c), name (v/c)
+## + edges from f7130f3 (vertex names):
+##  [1] V1 -&gt;V2     V1 -&gt;V3     V1 -&gt;V3A    V1 -&gt;V4     V1 -&gt;V4t   
+##  [6] V1 -&gt;MT     V1 -&gt;PO     V1 -&gt;PIP    V2 -&gt;V1     V2 -&gt;V3    
+## [11] V2 -&gt;V3A    V2 -&gt;V4     V2 -&gt;V4t    V2 -&gt;VOT    V2 -&gt;VP    
+## [16] V2 -&gt;MT     V2 -&gt;MSTd/p V2 -&gt;MSTl   V2 -&gt;PO     V2 -&gt;PIP   
+## [21] V2 -&gt;VIP    V2 -&gt;FST    V2 -&gt;FEF    V3 -&gt;V1     V3 -&gt;V2    
+## [26] V3 -&gt;V3A    V3 -&gt;V4     V3 -&gt;V4t    V3 -&gt;MT     V3 -&gt;MSTd/p
+## [31] V3 -&gt;PO     V3 -&gt;LIP    V3 -&gt;PIP    V3 -&gt;VIP    V3 -&gt;FST   
+## [36] V3 -&gt;TF     V3 -&gt;FEF    V3A-&gt;V1     V3A-&gt;V2     V3A-&gt;V3    
+## + ... omitted several edges</code></pre>
+</div>
+</div>
+<div id="built-networks-from-external-sources-basic-visualization-and-more-on-network-descriptions" class="section level2">
+<h2><span class="header-section-number">2.3</span> Built networks from external sources, basic visualization and more on network descriptions</h2>
+<div id="outline-2" class="section level3">
+<h3><span class="header-section-number">2.3.1</span> Outline</h3>
+<ul>
+<li>Get network from files (edgelist, matrix, dataframe)</li>
+<li>Visualization
+<ul>
+<li>Plotting parameters</li>
+<li>Layouts</li>
+</ul></li>
+<li>Network and node descriptions</li>
+</ul>
+</div>
+<div id="dataset" class="section level3">
+<h3><span class="header-section-number">2.3.2</span> Dataset</h3>
+<ul>
+<li>Datasets: Download the data from <a href="https://github.com/YunranChen/STA650Lab/blob/master/lab2_igraph2/gotstark_lannister.csv">my github</a>.</li>
+<li>The full dataset comes from <a href="https://github.com/mathbeveridge/asoiaf" class="uri">https://github.com/mathbeveridge/asoiaf</a></li>
+<li>Analysis on the datasets: <a href="https://www.macalester.edu/~abeverid/thrones.html" class="uri">https://www.macalester.edu/~abeverid/thrones.html</a></li>
+</ul>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-24"></span>
+<img src="images/got-network.png" alt="Network Visualization from  [abeverid](https://www.macalester.edu/~abeverid/thrones.html)" width="80%" />
+<p class="caption">
+Figure 2.2: Network Visualization from <a href="https://www.macalester.edu/~abeverid/thrones.html">abeverid</a>
+</p>
+</div>
+</div>
+<div id="get-network-from-files" class="section level3">
+<h3><span class="header-section-number">2.3.3</span> Get network from files</h3>
+<div id="creating-network" class="section level4">
+<h4><span class="header-section-number">2.3.3.1</span> Creating network</h4>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-25"></span>
+<img src="images/cnet_all.png" alt=" Introduction from  [`igraph` manual](https://sites.fas.harvard.edu/~airoldi/pub/books/BookDraft-CsardiNepuszAiroldi2016.pdf)" width="80%" />
+<p class="caption">
+Figure 2.3:  Introduction from <a href="https://sites.fas.harvard.edu/~airoldi/pub/books/BookDraft-CsardiNepuszAiroldi2016.pdf"><code>igraph</code> manual</a>
+</p>
+</div>
+<hr />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-26"></span>
+<img src="images/cnet1.png" alt=" Introduction from  [`igraph` manual](https://sites.fas.harvard.edu/~airoldi/pub/books/BookDraft-CsardiNepuszAiroldi2016.pdf)" width="80%" />
+<p class="caption">
+Figure 2.4:  Introduction from <a href="https://sites.fas.harvard.edu/~airoldi/pub/books/BookDraft-CsardiNepuszAiroldi2016.pdf"><code>igraph</code> manual</a>
+</p>
+</div>
+<hr />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-27"></span>
+<img src="images/cnet3.png" alt=" Introduction from  [`igraph` manual](https://sites.fas.harvard.edu/~airoldi/pub/books/BookDraft-CsardiNepuszAiroldi2016.pdf)" width="80%" />
+<p class="caption">
+Figure 2.5:  Introduction from <a href="https://sites.fas.harvard.edu/~airoldi/pub/books/BookDraft-CsardiNepuszAiroldi2016.pdf"><code>igraph</code> manual</a>
+</p>
+</div>
+<hr />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-28"></span>
+<img src="images/cnet2.png" alt=" Introduction from  [`igraph` manual](https://sites.fas.harvard.edu/~airoldi/pub/books/BookDraft-CsardiNepuszAiroldi2016.pdf)" width="80%" />
+<p class="caption">
+Figure 2.6:  Introduction from <a href="https://sites.fas.harvard.edu/~airoldi/pub/books/BookDraft-CsardiNepuszAiroldi2016.pdf"><code>igraph</code> manual</a>
+</p>
+</div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-29"></span>
+<img src="images/cnet4.png" alt=" Introduction from  [`igraph` manual](https://sites.fas.harvard.edu/~airoldi/pub/books/BookDraft-CsardiNepuszAiroldi2016.pdf)" width="80%" />
+<p class="caption">
+Figure 2.7:  Introduction from <a href="https://sites.fas.harvard.edu/~airoldi/pub/books/BookDraft-CsardiNepuszAiroldi2016.pdf"><code>igraph</code> manual</a>
+</p>
+</div>
+</div>
+<div id="get-network-from-files-1" class="section level4">
+<h4><span class="header-section-number">2.3.3.2</span> Get network from files</h4>
+<ul>
+<li><code>graph_from_adjacency_matrix()</code></li>
+<li><code>graph_from_edgelist()</code></li>
+<li><code>graph_from_data_frame()</code></li>
+</ul>
+</div>
+<div id="graph_from_adjacency_matrix" class="section level4">
+<h4><span class="header-section-number">2.3.3.3</span> <code>graph_from_adjacency_matrix()</code></h4>
+<p>Used for creating a small matrix.</p>
+<p>The networks in real world are usually large sparse matrix and stored as a edgelist.</p>
+<p>Binary matrix:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">2</span>)
+<span class="co">#sample from Bernoulli distribution with sample size 100. </span>
+adjm &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dv">100</span>, <span class="dt">replace=</span><span class="ot">TRUE</span>, <span class="dt">prob=</span><span class="kw">c</span>(<span class="fl">0.9</span>,<span class="fl">0.1</span>)), <span class="dt">nc=</span><span class="dv">10</span>)
+adjm</code></pre>
+<pre><code>##       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+##  [1,]    0    0    0    0    1    0    0    0    0     1
+##  [2,]    0    0    0    0    0    0    0    0    0     0
+##  [3,]    0    0    0    0    0    0    0    0    0     0
+##  [4,]    0    0    0    0    0    1    0    0    0     0
+##  [5,]    1    0    0    0    1    0    0    0    0     0
+##  [6,]    1    0    0    0    0    0    0    0    0     0
+##  [7,]    0    1    0    0    1    0    0    0    1     0
+##  [8,]    0    0    0    0    0    1    0    0    0     0
+##  [9,]    0    0    1    0    0    0    0    0    0     0
+## [10,]    0    0    0    0    0    0    0    0    0     0</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">g1 &lt;-<span class="st"> </span><span class="kw">graph_from_adjacency_matrix</span>( adjm )
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+<span class="kw">plot</span>(g1)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#default is directed</span>
+g2 &lt;-<span class="st"> </span><span class="kw">graph_from_adjacency_matrix</span>( adjm ,<span class="dt">mode =</span> <span class="st">&quot;undirected&quot;</span>)
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+<span class="kw">plot</span>(g2)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-30-2.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#get rid of the self-loop (in real-world maybe self-loop does not make any sense)</span>
+g3 &lt;-<span class="st"> </span><span class="kw">graph_from_adjacency_matrix</span>( adjm ,<span class="dt">mode =</span> <span class="st">&quot;undirected&quot;</span>,<span class="dt">diag =</span> <span class="ot">FALSE</span>)
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+<span class="kw">plot</span>(g3)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-30-3.png" width="672" /></p>
+<hr />
+<p>Sparse matrix:</p>
+<pre class="sourceCode r"><code class="sourceCode r">adjms=g1[]
+adjms</code></pre>
+<pre><code>## 10 x 10 sparse Matrix of class &quot;dgCMatrix&quot;
+##                          
+##  [1,] . . . . 1 . . . . 1
+##  [2,] . . . . . . . . . .
+##  [3,] . . . . . . . . . .
+##  [4,] . . . . . 1 . . . .
+##  [5,] 1 . . . 1 . . . . .
+##  [6,] 1 . . . . . . . . .
+##  [7,] . 1 . . 1 . . . 1 .
+##  [8,] . . . . . 1 . . . .
+##  [9,] . . 1 . . . . . . .
+## [10,] . . . . . . . . . .</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">g4=<span class="kw">graph_from_adjacency_matrix</span>(adjms)
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+<span class="kw">plot</span>(g4)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+<hr />
+<p>Weighted matrix</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
+adjmw &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">100</span>, <span class="dt">replace=</span><span class="ot">TRUE</span>,
+                      <span class="dt">prob=</span><span class="kw">c</span>(<span class="fl">0.9</span>,<span class="fl">0.02</span>,<span class="fl">0.02</span>,<span class="fl">0.02</span>,<span class="fl">0.02</span>,<span class="fl">0.02</span>)), <span class="dt">nc=</span><span class="dv">10</span>)
+adjmw</code></pre>
+<pre><code>##       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+##  [1,]    0    0    3    0    0    0    2    0    0     0
+##  [2,]    0    0    0    0    0    0    0    0    0     0
+##  [3,]    0    0    0    0    0    0    0    0    0     0
+##  [4,]    2    0    0    0    0    0    0    0    0     0
+##  [5,]    0    0    0    0    0    0    0    0    0     0
+##  [6,]    0    0    0    0    0    0    0    0    0     0
+##  [7,]    4    0    0    0    0    0    0    0    0     0
+##  [8,]    0    1    0    0    0    0    0    0    0     0
+##  [9,]    0    0    0    0    0    0    0    0    0     0
+## [10,]    0    0    0    0    0    0    0    5    0     0</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">g5 &lt;-<span class="st"> </span><span class="kw">graph_from_adjacency_matrix</span>(adjmw, <span class="dt">weighted=</span><span class="ot">TRUE</span>)
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+<span class="kw">plot</span>(g5)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r">g5</code></pre>
+<pre><code>## IGRAPH 7510dff D-W- 10 6 -- 
+## + attr: weight (e/n)
+## + edges from 7510dff:
+## [1]  1-&gt;3  1-&gt;7  4-&gt;1  7-&gt;1  8-&gt;2 10-&gt;8</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">E</span>(g5)<span class="op">$</span>weight</code></pre>
+<pre><code>## [1] 3 2 2 4 1 5</code></pre>
+<hr />
+<p>Named matrix</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rownames</span>(adjmw)=LETTERS[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]
+<span class="kw">colnames</span>(adjmw)=LETTERS[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]
+g6 &lt;-<span class="st"> </span><span class="kw">graph_from_adjacency_matrix</span>(adjmw, <span class="dt">weighted=</span><span class="ot">TRUE</span>)
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+<span class="kw">plot</span>(g6)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+</div>
+<div id="graph_from_edgelist" class="section level4">
+<h4><span class="header-section-number">2.3.3.4</span> <code>graph_from_edgelist()</code></h4>
+<p>Most network datasets are stored as edgelists.
+Input is <strong>two-column matrix</strong> with each row defining one edge.</p>
+<pre class="sourceCode r"><code class="sourceCode r">gotdf=<span class="kw">read.csv</span>(<span class="st">&quot;images/gotstark_lannister.csv&quot;</span>,<span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)
+<span class="kw">head</span>(gotdf,<span class="dv">5</span>)</code></pre>
+<pre><code>##   X     Source           Target       Type weight book source.family
+## 1 1 Arya-Stark     Benjen-Stark Undirected      3    1         Stark
+## 2 2 Arya-Stark       Bran-Stark Undirected     14    1         Stark
+## 3 3 Arya-Stark    Catelyn-Stark Undirected      5    1         Stark
+## 4 4 Arya-Stark Cersei-Lannister Undirected     12    1         Stark
+## 5 5 Arya-Stark          Desmond Undirected      3    1         Stark
+##   target.family
+## 1         Stark
+## 2         Stark
+## 3         Stark
+## 4     Lannister
+## 5          &lt;NA&gt;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
+<span class="kw">library</span>(tidyr)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">gotdf.el=gotdf<span class="op">%&gt;%</span><span class="kw">select</span>(Source,Target,weight)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(Source,Target)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">expand</span>(<span class="dt">edge=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span>weight))<span class="op">%&gt;%</span><span class="kw">select</span>(<span class="op">-</span>edge)
+<span class="kw">head</span>(gotdf.el)</code></pre>
+<pre><code>## # A tibble: 6 x 2
+## # Groups:   Source, Target [2]
+##   Source     Target      
+##   &lt;chr&gt;      &lt;chr&gt;       
+## 1 Arya-Stark Benjen-Stark
+## 2 Arya-Stark Benjen-Stark
+## 3 Arya-Stark Benjen-Stark
+## 4 Arya-Stark Bran-Stark  
+## 5 Arya-Stark Bran-Stark  
+## 6 Arya-Stark Bran-Stark</code></pre>
+<hr />
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">## input need to be a matrix</span>
+got1=<span class="kw">graph_from_edgelist</span>(gotdf.el<span class="op">%&gt;%</span><span class="kw">as.matrix</span>(),<span class="dt">directed =</span> <span class="ot">FALSE</span>)
+got1</code></pre>
+<pre><code>## IGRAPH bb37f00 UN-- 99 3374 -- 
+## + attr: name (v/c)
+## + edges from bb37f00 (vertex names):
+##  [1] Arya-Stark--Benjen-Stark  Arya-Stark--Benjen-Stark 
+##  [3] Arya-Stark--Benjen-Stark  Arya-Stark--Bran-Stark   
+##  [5] Arya-Stark--Bran-Stark    Arya-Stark--Bran-Stark   
+##  [7] Arya-Stark--Bran-Stark    Arya-Stark--Bran-Stark   
+##  [9] Arya-Stark--Bran-Stark    Arya-Stark--Bran-Stark   
+## [11] Arya-Stark--Bran-Stark    Arya-Stark--Bran-Stark   
+## [13] Arya-Stark--Bran-Stark    Arya-Stark--Bran-Stark   
+## [15] Arya-Stark--Bran-Stark    Arya-Stark--Bran-Stark   
+## + ... omitted several edges</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(got1,<span class="dt">edge.arrow.size=</span>.<span class="dv">5</span>, <span class="dt">vertex.color=</span><span class="st">&quot;gold&quot;</span>, <span class="dt">vertex.size=</span><span class="dv">3</span>, 
+     <span class="dt">vertex.frame.color=</span><span class="st">&quot;gray&quot;</span>, <span class="dt">vertex.label.color=</span><span class="st">&quot;black&quot;</span>, 
+     <span class="dt">vertex.label.cex=</span>.<span class="dv">5</span>, <span class="dt">vertex.label.dist=</span><span class="dv">2</span>, <span class="dt">edge.curved=</span><span class="fl">0.2</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+<div id="simplify-the-network" class="section level5">
+<h5><span class="header-section-number">2.3.3.4.1</span> Simplify the network</h5>
+<pre class="sourceCode r"><code class="sourceCode r">el &lt;-<span class="st"> </span><span class="kw">matrix</span>( <span class="kw">c</span>(<span class="st">&quot;foo&quot;</span>, <span class="st">&quot;bar&quot;</span>,<span class="st">&quot;foo&quot;</span>,<span class="st">&quot;bar&quot;</span>, <span class="st">&quot;bar&quot;</span>, <span class="st">&quot;foobar&quot;</span>), <span class="dt">nc =</span> <span class="dv">2</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)
+<span class="kw">graph_from_edgelist</span>(el)<span class="op">%&gt;%</span><span class="kw">plot</span>()</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">E</span>(got1)<span class="op">$</span>weight=<span class="kw">rep</span>(<span class="dv">1</span>,<span class="kw">ecount</span>(got1))
+got1s &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw">simplify</span>( got1, <span class="dt">remove.multiple =</span> T, <span class="dt">remove.loops =</span> F, 
+                 <span class="dt">edge.attr.comb=</span><span class="kw">c</span>(<span class="dt">weight=</span><span class="st">&quot;sum&quot;</span>))
+<span class="kw">plot</span>(got1s,<span class="dt">edge.arrow.size=</span>.<span class="dv">5</span>, <span class="dt">vertex.color=</span><span class="st">&quot;gold&quot;</span>, <span class="dt">vertex.size=</span><span class="dv">3</span>, 
+     <span class="dt">vertex.frame.color=</span><span class="st">&quot;gray&quot;</span>, <span class="dt">vertex.label.color=</span><span class="st">&quot;black&quot;</span>, 
+     <span class="dt">vertex.label.cex=</span>.<span class="dv">5</span>, <span class="dt">vertex.label.dist=</span><span class="dv">2</span>, <span class="dt">edge.curved=</span><span class="fl">0.5</span>,<span class="dt">layout=</span>layout_with_lgl)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+</div>
+<div id="short-name" class="section level5">
+<h5><span class="header-section-number">2.3.3.4.2</span> Short name</h5>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(stringr)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">nameshort=<span class="kw">V</span>(got1s)<span class="op">$</span>name<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">str_split</span>(.,<span class="st">&quot;-&quot;</span>,<span class="dt">simplify =</span> <span class="ot">TRUE</span>)<span class="op">%&gt;%</span>
+<span class="st">  </span>.[,<span class="dv">1</span>]
+<span class="kw">V</span>(got1s)<span class="op">$</span>name[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]</code></pre>
+<pre><code>## [1] &quot;Arya-Stark&quot;   &quot;Benjen-Stark&quot; &quot;Bran-Stark&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">nameshort[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]</code></pre>
+<pre><code>## [1] &quot;Arya&quot;   &quot;Benjen&quot; &quot;Bran&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">V</span>(got1s)<span class="op">$</span>name=nameshort
+<span class="kw">plot</span>(got1s,<span class="dt">edge.arrow.size=</span>.<span class="dv">5</span>, <span class="dt">vertex.color=</span><span class="st">&quot;gold&quot;</span>, <span class="dt">vertex.size=</span><span class="dv">3</span>, 
+     <span class="dt">vertex.frame.color=</span><span class="st">&quot;gray&quot;</span>, <span class="dt">vertex.label.color=</span><span class="st">&quot;black&quot;</span>, 
+     <span class="dt">vertex.label.cex=</span>.<span class="dv">5</span>, <span class="dt">vertex.label.dist=</span><span class="dv">2</span>, <span class="dt">edge.curved=</span><span class="fl">0.5</span>,<span class="dt">layout=</span>layout_with_lgl)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
+</div>
+</div>
+<div id="graph_from_data_frame" class="section level4">
+<h4><span class="header-section-number">2.3.3.5</span> <code>graph_from_data_frame()</code></h4>
+<p>Most common and useful.</p>
+<p>d: a data frame containing a symbolic edge list in the first two columns. Additional columns are considered as edge attributes.</p>
+<p>vertices: A data frame with vertex metadata</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(gotdf,<span class="dv">5</span>)</code></pre>
+<pre><code>##   X     Source           Target       Type weight book source.family
+## 1 1 Arya-Stark     Benjen-Stark Undirected      3    1         Stark
+## 2 2 Arya-Stark       Bran-Stark Undirected     14    1         Stark
+## 3 3 Arya-Stark    Catelyn-Stark Undirected      5    1         Stark
+## 4 4 Arya-Stark Cersei-Lannister Undirected     12    1         Stark
+## 5 5 Arya-Stark          Desmond Undirected      3    1         Stark
+##   target.family
+## 1         Stark
+## 2         Stark
+## 3         Stark
+## 4     Lannister
+## 5          &lt;NA&gt;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">gotdf=gotdf<span class="op">%&gt;%</span><span class="kw">select</span>(<span class="op">-</span>X)
+got2=<span class="kw">graph_from_data_frame</span>(<span class="dt">d=</span>gotdf,<span class="dt">directed =</span> <span class="ot">FALSE</span>)
+got2</code></pre>
+<pre><code>## IGRAPH 3eebb85 UNW- 99 238 -- 
+## + attr: name (v/c), Type (e/c), weight (e/n), book (e/n),
+## | source.family (e/c), target.family (e/c)
+## + edges from 3eebb85 (vertex names):
+##  [1] Arya-Stark--Benjen-Stark       Arya-Stark--Bran-Stark        
+##  [3] Arya-Stark--Catelyn-Stark      Arya-Stark--Cersei-Lannister  
+##  [5] Arya-Stark--Desmond            Arya-Stark--Eddard-Stark      
+##  [7] Arya-Stark--Ilyn-Payne         Arya-Stark--Jeyne-Poole       
+##  [9] Arya-Stark--Joffrey-Baratheon  Arya-Stark--Jon-Snow          
+## [11] Arya-Stark--Jory-Cassel        Arya-Stark--Meryn-Trant       
+## [13] Arya-Stark--Mordane            Arya-Stark--Mycah             
+## + ... omitted several edges</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(got2,<span class="dt">edge.arrow.size=</span>.<span class="dv">5</span>, <span class="dt">vertex.color=</span><span class="st">&quot;gold&quot;</span>, <span class="dt">vertex.size=</span><span class="dv">3</span>, 
+     <span class="dt">vertex.frame.color=</span><span class="st">&quot;gray&quot;</span>, <span class="dt">vertex.label.color=</span><span class="st">&quot;black&quot;</span>, 
+     <span class="dt">vertex.label.cex=</span>.<span class="dv">5</span>, <span class="dt">vertex.label.dist=</span><span class="dv">2</span>, <span class="dt">edge.curved=</span><span class="fl">0.5</span>,<span class="dt">layout=</span>layout_with_lgl)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
+<div id="get-dataframe-matrix-or-adgelist-from-igraph-object" class="section level5">
+<h5><span class="header-section-number">2.3.3.5.1</span> get dataframe, matrix or adgelist from igraph object</h5>
+<pre class="sourceCode r"><code class="sourceCode r">igraph<span class="op">::</span><span class="kw">as_data_frame</span>(got2)<span class="op">%&gt;%</span><span class="kw">head</span>(<span class="dv">2</span>)</code></pre>
+<pre><code>##         from           to       Type weight book source.family
+## 1 Arya-Stark Benjen-Stark Undirected      3    1         Stark
+## 2 Arya-Stark   Bran-Stark Undirected     14    1         Stark
+##   target.family
+## 1         Stark
+## 2         Stark</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as_adjacency_matrix</span>(got2)<span class="op">%&gt;%</span><span class="kw">head</span>(<span class="dv">2</span>)</code></pre>
+<pre><code>## [1] 0 1</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as_edgelist</span>(got2)<span class="op">%&gt;%</span><span class="kw">head</span>(<span class="dv">2</span>)</code></pre>
+<pre><code>##      [,1]         [,2]          
+## [1,] &quot;Arya-Stark&quot; &quot;Benjen-Stark&quot;
+## [2,] &quot;Arya-Stark&quot; &quot;Bran-Stark&quot;</code></pre>
+</div>
+<div id="read_graph-write_graph" class="section level5">
+<h5><span class="header-section-number">2.3.3.5.2</span> <code>read_graph</code>, <code>write_graph</code></h5>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">## store in txt or csv or others </span>
+<span class="kw">write_graph</span>(<span class="dt">graph =</span> got2,<span class="dt">file =</span> <span class="st">&quot;g.txt&quot;</span>,<span class="dt">format =</span> <span class="st">&quot;edgelist&quot;</span>)
+<span class="kw">read_graph</span>(<span class="dt">file =</span> <span class="st">&quot;g.txt&quot;</span>,<span class="dt">format =</span> <span class="st">&quot;edgelist&quot;</span>,<span class="dt">directed=</span>F)</code></pre>
+<pre><code>## IGRAPH 0acc1d7 U--- 99 238 -- 
+## + edges from 0acc1d7:
+##   [1] 1-- 2 1-- 3 1-- 5 1-- 6 1-- 7 1--12 1--13 1--14 1--17 1--18 1--19
+##  [12] 1--20 1--21 1--22 1--23 1--24 1--25 1--26 1--27 1--28 1--29 1--30
+##  [23] 1--31 1--32 1--33 1--34 1--35 2-- 3 2-- 6 2--13 2--15 2--21 2--28
+##  [34] 2--35 2--36 2--37 2--38 2--39 2--40 2--41 3-- 5 3-- 6 3-- 7 3--12
+##  [45] 3--13 3--14 3--15 3--20 3--21 3--22 3--27 3--28 3--29 3--33 3--35
+##  [56] 3--37 3--38 3--40 3--42 3--43 3--44 3--45 3--46 3--47 3--48 3--49
+##  [67] 3--50 3--51 3--52 3--53 4-- 7 4--11 4--27 4--28 4--52 5-- 6 5-- 7
+##  [78] 5-- 8 5--12 5--13 5--14 5--15 5--16 5--20 5--21 5--27 5--28 5--29
+##  [89] 5--38 5--40 5--43 5--46 5--51 5--54 5--55 5--56 5--57 5--58 5--59
+## + ... omitted several edges</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">## store the whole graph</span>
+<span class="kw">write_graph</span>(got2,<span class="dt">file =</span> <span class="st">&quot;gg&quot;</span>,<span class="dt">format =</span> <span class="st">&quot;pajek&quot;</span>)
+<span class="kw">read_graph</span>(<span class="dt">file=</span><span class="st">&quot;gg&quot;</span>,<span class="dt">format=</span><span class="st">&quot;pajek&quot;</span>)</code></pre>
+<pre><code>## IGRAPH aa828ed U-W- 99 238 -- 
+## + attr: weight (e/n)
+## + edges from aa828ed:
+##  [1] 1-- 2 1-- 3 1-- 5 1-- 6 1--17 1-- 7 1--18 1--19 1--20 1--21 1--22
+## [12] 1--23 1--24 1--25 1--26 1--27 1--12 1--13 1--28 1--29 1--30 1--14
+## [23] 1--31 1--32 1--33 1--34 1--35 2-- 3 2-- 6 2--36 2--37 2--21 2--38
+## [34] 2--39 2--13 2--28 2--40 2--15 2--41 2--35 3-- 5 3-- 6 3-- 7 3--42
+## [45] 3--43 3--44 3--45 3--37 3--20 3--46 3--21 3--22 3--47 3--38 3--48
+## [56] 3--49 3--27 3--50 3--51 3--52 3--12 3--13 3--28 3--29 3--14 3--53
+## [67] 3--40 3--33 3--15 3--35 4-- 7 4--11 4--27 4--52 4--28 5-- 6 5--54
+## [78] 5--55 5-- 7 5--56 5--57 5--43 5--58 5-- 8 5--20 5--46 5--21 5--59
+## + ... omitted several edges</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">got2</code></pre>
+<pre><code>## IGRAPH 3eebb85 UNW- 99 238 -- 
+## + attr: name (v/c), Type (e/c), weight (e/n), book (e/n),
+## | source.family (e/c), target.family (e/c)
+## + edges from 3eebb85 (vertex names):
+##  [1] Arya-Stark--Benjen-Stark       Arya-Stark--Bran-Stark        
+##  [3] Arya-Stark--Catelyn-Stark      Arya-Stark--Cersei-Lannister  
+##  [5] Arya-Stark--Desmond            Arya-Stark--Eddard-Stark      
+##  [7] Arya-Stark--Ilyn-Payne         Arya-Stark--Jeyne-Poole       
+##  [9] Arya-Stark--Joffrey-Baratheon  Arya-Stark--Jon-Snow          
+## [11] Arya-Stark--Jory-Cassel        Arya-Stark--Meryn-Trant       
+## [13] Arya-Stark--Mordane            Arya-Stark--Mycah             
+## + ... omitted several edges</code></pre>
+</div>
+</div>
+</div>
+<div id="visualization" class="section level3">
+<h3><span class="header-section-number">2.3.4</span> Visualization</h3>
+<ul>
+<li>Plotting parameters: mapping important attributes to visual properties</li>
+<li>Find a good layout</li>
+</ul>
+<pre class="sourceCode r"><code class="sourceCode r">?igraph.plotting</code></pre>
+<div id="plotting-parameters" class="section level4">
+<h4><span class="header-section-number">2.3.4.1</span> Plotting parameters</h4>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-46"></span>
+<img src="images/node.png" alt=" Introduction from  [Kateto tutorial](https://kateto.net/networks-r-igraph)" width="80%" />
+<p class="caption">
+Figure 2.8:  Introduction from <a href="https://kateto.net/networks-r-igraph">Kateto tutorial</a>
+</p>
+</div>
+<hr />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-47"></span>
+<img src="images/edge.png" alt=" Introduction from  [Kateto tutorial](https://kateto.net/networks-r-igraph)" width="80%" />
+<p class="caption">
+Figure 2.9:  Introduction from <a href="https://kateto.net/networks-r-igraph">Kateto tutorial</a>
+</p>
+</div>
+<hr />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-48"></span>
+<img src="images/other.png" alt=" Introduction from  [Kateto tutorial](https://kateto.net/networks-r-igraph)" width="80%" />
+<p class="caption">
+Figure 2.10:  Introduction from <a href="https://kateto.net/networks-r-igraph">Kateto tutorial</a>
+</p>
+</div>
+<hr />
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(got2, <span class="dt">vertex.color=</span><span class="st">&quot;gold&quot;</span>, <span class="dt">vertex.size=</span><span class="dv">3</span>, 
+     <span class="dt">vertex.frame.color=</span><span class="st">&quot;gray&quot;</span>, <span class="dt">vertex.label.color=</span><span class="st">&quot;black&quot;</span>, 
+     <span class="dt">vertex.label.cex=</span>.<span class="dv">5</span>, <span class="dt">vertex.label.dist=</span><span class="dv">2</span>, <span class="dt">edge.curved=</span><span class="fl">0.5</span>,<span class="dt">layout=</span>layout_with_lgl)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
+<div id="to-make-the-graph-look-nicer" class="section level5">
+<h5><span class="header-section-number">2.3.4.1.1</span> To make the graph look nicer</h5>
+<ul>
+<li>Node color: using family name</li>
+<li>Node size: degree</li>
+<li>Edge width: weight</li>
+</ul>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">## store the fullname</span>
+fullnames=<span class="kw">V</span>(got2)<span class="op">$</span>name
+fullnames[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]</code></pre>
+<pre><code>## [1] &quot;Arya-Stark&quot;   &quot;Benjen-Stark&quot; &quot;Bran-Stark&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#get family name</span>
+familynames=fullnames<span class="op">%&gt;%</span><span class="kw">str_split</span>(<span class="st">&quot;-&quot;</span>,<span class="dt">simplify =</span> <span class="ot">TRUE</span>)<span class="op">%&gt;%</span>.[,<span class="dv">2</span>]
+familynames[familynames<span class="op">==</span><span class="st">&quot;&quot;</span>]=<span class="st">&quot;None&quot;</span>
+familynames[familynames<span class="op">==</span><span class="st">&quot;(guard)&quot;</span>]=<span class="st">&quot;None&quot;</span>
+<span class="co"># add vertices attributes</span>
+<span class="kw">V</span>(got2)<span class="op">$</span>familyname=familynames
+<span class="kw">V</span>(got2)<span class="op">$</span>fullname=fullnames
+<span class="kw">V</span>(got2)<span class="op">$</span>name=nameshort <span class="co"># first name</span></code></pre>
+<hr />
+<p>Set colors and legend.</p>
+<ul>
+<li>pch: plotting symbols appearing in the legend</li>
+<li>pt.bg: background color for point</li>
+<li>cex: text size</li>
+<li>pt.cex: point size</li>
+<li>ncol: number of columns of the legend</li>
+<li>bty: “o”– rectangle box; “n” – no box</li>
+</ul>
+<pre class="sourceCode r"><code class="sourceCode r">vcol=<span class="kw">V</span>(got2)<span class="op">$</span>familyname
+vcol[(vcol<span class="op">!=</span><span class="st">&quot;Stark&quot;</span>)<span class="op">&amp;</span>(vcol<span class="op">!=</span><span class="st">&quot;Lannister&quot;</span>)]=<span class="st">&quot;gray50&quot;</span>
+vcol[vcol<span class="op">==</span><span class="st">&quot;Stark&quot;</span>]=<span class="st">&quot;tomato&quot;</span>
+vcol[vcol<span class="op">==</span><span class="st">&quot;Lannister&quot;</span>]=<span class="st">&quot;gold&quot;</span>
+<span class="kw">V</span>(got2)<span class="op">$</span>color=vcol
+<span class="kw">V</span>(got2)<span class="op">$</span>size=igraph<span class="op">::</span><span class="kw">degree</span>(got2)<span class="op">%&gt;%</span><span class="kw">log</span>()<span class="op">*</span><span class="dv">4</span>
+<span class="kw">E</span>(got2)<span class="op">$</span>width=<span class="kw">E</span>(got2)<span class="op">$</span>weight<span class="op">%&gt;%</span><span class="kw">log</span>()<span class="op">/</span><span class="dv">2</span>
+<span class="kw">plot</span>(got2, <span class="dt">vertex.label.color=</span><span class="st">&quot;black&quot;</span>, 
+     <span class="dt">vertex.label.cex=</span>.<span class="dv">5</span>, <span class="dt">vertex.label.dist=</span><span class="dv">2</span>, <span class="dt">edge.curved=</span><span class="fl">0.5</span>,<span class="dt">layout=</span>layout_with_kk)
+<span class="kw">legend</span>(<span class="st">&quot;right&quot;</span>, <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Stark&quot;</span>,<span class="st">&quot;Lannister&quot;</span>,<span class="st">&quot;Other&quot;</span>), <span class="dt">pch=</span><span class="dv">21</span>,
+       <span class="dt">col=</span><span class="kw">c</span>(<span class="st">&quot;tomato&quot;</span>,<span class="st">&quot;gold&quot;</span>,<span class="st">&quot;gray50&quot;</span>), <span class="dt">pt.bg=</span><span class="kw">c</span>(<span class="st">&quot;tomato&quot;</span>,<span class="st">&quot;gold&quot;</span>,<span class="st">&quot;gray50&quot;</span>), <span class="dt">pt.cex=</span><span class="dv">1</span>, <span class="dt">cex=</span>.<span class="dv">8</span>, <span class="dt">bty=</span><span class="st">&quot;n&quot;</span>, <span class="dt">ncol=</span><span class="dv">1</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-50-1.png" width="672" /></p>
+<hr />
+<p>Plot only labels of the nodes</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(got2, <span class="dt">vertex.shape=</span><span class="st">&quot;none&quot;</span>,<span class="dt">vertex.label.color=</span><span class="st">&quot;black&quot;</span>, 
+     <span class="dt">vertex.label.cex=</span>.<span class="dv">5</span>, <span class="dt">vertex.label.dist=</span><span class="dv">2</span>, <span class="dt">edge.curved=</span><span class="fl">0.5</span>,<span class="dt">layout=</span>layout_with_kk)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
+</div>
+</div>
+<div id="layouts" class="section level4">
+<h4><span class="header-section-number">2.3.4.2</span> Layouts</h4>
+<pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">include_graphics</span>(<span class="st">&quot;images/layouts.png&quot;</span>)</code></pre>
+<p><img src="images/layouts.png" width="850px" /></p>
+<hr />
+<p>Force-directed layouts: suitable for general, small to medium sized graphs. (computational complexity; based on physical analogies)</p>
+<ul>
+<li>layout_with_fr: Fruchterman-Reingold is one of the most used force-directed layout algorithms. Force-directed layouts try to get a nice-looking graph where edges are similar in length and cross each other as little as possible. As a result, nodes are evenly distributed through the chart area, and the layout is intuitive in that nodes which share more connections are closer to each other.</li>
+<li>layout_with_kk: Another popular force-directed algorithm that produces nice results for connected graphs is Kamada Kawai.</li>
+<li>layout_with_graphopt: …</li>
+</ul>
+<p>For large graphs:</p>
+<ul>
+<li>layout_with_lgl: The LGL algorithm is meant for large, connected graphs. Here you can also specify a root: a node that will be placed in the middle of the layout.</li>
+<li>layout_with_drl:</li>
+<li>layout_with_gfr:</li>
+</ul>
+<hr />
+<ul>
+<li>layout_with_dh:simulated annealing algorithm by Davidson and Harel</li>
+</ul>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#layout_with_dh</span>
+<span class="kw">plot</span>(got2, <span class="dt">vertex.label.color=</span><span class="st">&quot;black&quot;</span>, 
+     <span class="dt">vertex.label.cex=</span>.<span class="dv">5</span>,<span class="dt">vertex.label.dist=</span><span class="fl">0.2</span>, <span class="dt">edge.curved=</span><span class="fl">0.5</span>,<span class="dt">layout=</span>layout_with_dh)
+<span class="kw">legend</span>(<span class="st">&quot;right&quot;</span>, <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Stark&quot;</span>,<span class="st">&quot;Lannister&quot;</span>,<span class="st">&quot;Other&quot;</span>), <span class="dt">pch=</span><span class="dv">21</span>,
+       <span class="dt">col=</span><span class="kw">c</span>(<span class="st">&quot;tomato&quot;</span>,<span class="st">&quot;gold&quot;</span>,<span class="st">&quot;gray50&quot;</span>), <span class="dt">pt.bg=</span><span class="kw">c</span>(<span class="st">&quot;tomato&quot;</span>,<span class="st">&quot;gold&quot;</span>,<span class="st">&quot;gray50&quot;</span>), <span class="dt">pt.cex=</span><span class="dv">1</span>, <span class="dt">cex=</span>.<span class="dv">8</span>, <span class="dt">bty=</span><span class="st">&quot;n&quot;</span>, <span class="dt">ncol=</span><span class="dv">1</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
+<hr />
+<p>Selecting a layout automatically</p>
+<ul>
+<li>connected and vcount&lt;=100: kk</li>
+<li>vcount&lt;=1000:fr</li>
+<li>else: drl</li>
+</ul>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(got2, <span class="dt">vertex.label.color=</span><span class="st">&quot;black&quot;</span>, 
+     <span class="dt">vertex.label.cex=</span>.<span class="dv">5</span>,<span class="dt">vertex.label.dist=</span><span class="fl">0.2</span>, <span class="dt">edge.curved=</span><span class="fl">0.5</span>,<span class="dt">layout=</span><span class="kw">layout.auto</span>(got2))</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-54-1.png" width="672" /></p>
+<hr />
+<p>Without label and color the edge.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">2</span>)
+<span class="kw">plot</span>(got2, <span class="dt">vertex.shape=</span><span class="st">&quot;none&quot;</span>,<span class="dt">vertex.label.color=</span><span class="st">&quot;black&quot;</span>, 
+     <span class="dt">vertex.label.cex=</span>.<span class="dv">5</span>,<span class="dt">vertex.label.dist=</span><span class="fl">0.2</span>, <span class="dt">edge.curved=</span><span class="fl">0.5</span>,<span class="dt">layout=</span>layout_with_dh)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">##color the edge</span>
+got2</code></pre>
+<pre><code>## IGRAPH 3eebb85 UNW- 99 238 -- 
+## + attr: name (v/c), familyname (v/c), fullname (v/c), color (v/c),
+## | size (v/n), Type (e/c), weight (e/n), book (e/n), source.family
+## | (e/c), target.family (e/c), width (e/n)
+## + edges from 3eebb85 (vertex names):
+##  [1] Arya--Benjen  Arya--Bran    Arya--Cersei  Arya--Desmond Arya--Petyr  
+##  [6] Arya--Eddard  Arya--Rickon  Arya--Robb    Arya--Robert  Arya--Rodrik 
+## [11] Arya--Sandor  Arya--Sansa   Arya--Syrio   Arya--Tomard  Arya--Tommen 
+## [16] Arya--Vayon   Arya--Jory    Arya--Meryn   Arya--Yoren   Arya--Jaremy 
+## [21] Arya--Jeor    Arya--Mordane Arya--Luwin   Arya--Mance   Arya--Theon  
+## [26] Arya--Tyrion  Arya--Waymar 
+## + ... omitted several edges</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">ecol=<span class="kw">rep</span>(<span class="st">&quot;gray50&quot;</span>,<span class="kw">ecount</span>(got2))
+ecol[<span class="kw">E</span>(got2)<span class="op">$</span>source.family<span class="op">==</span><span class="st">&quot;Stark&quot;</span>]=<span class="st">&quot;tomato&quot;</span>
+ecol[<span class="kw">E</span>(got2)<span class="op">$</span>source.family<span class="op">==</span><span class="st">&quot;Lannister&quot;</span>]=<span class="st">&quot;gold&quot;</span>
+ecol[(ecol<span class="op">==</span><span class="st">&quot;tomato&quot;</span>)<span class="op">&amp;</span>(<span class="kw">E</span>(got2)<span class="op">$</span>target.family<span class="op">==</span><span class="st">&quot;Lannister&quot;</span>)<span class="op">&amp;</span>(<span class="op">!</span><span class="kw">is.na</span>(<span class="kw">E</span>(got2)<span class="op">$</span>target.family))]=<span class="st">&quot;orange&quot;</span>
+ecol[(ecol<span class="op">==</span><span class="st">&quot;gold&quot;</span>)<span class="op">&amp;</span>(<span class="kw">E</span>(got2)<span class="op">$</span>target.family<span class="op">==</span><span class="st">&quot;Stark&quot;</span>)<span class="op">&amp;</span>(<span class="op">!</span><span class="kw">is.na</span>(<span class="kw">E</span>(got2)<span class="op">$</span>target.family))]=<span class="st">&quot;orange&quot;</span>
+
+<span class="kw">set.seed</span>(<span class="dv">2</span>)
+<span class="kw">plot</span>(got2, <span class="dt">vertex.shape=</span><span class="st">&quot;none&quot;</span>,<span class="dt">vertex.label.color=</span><span class="st">&quot;black&quot;</span>, <span class="dt">edge.color=</span>ecol,
+     <span class="dt">vertex.label.cex=</span>.<span class="dv">5</span>,<span class="dt">vertex.label.dist=</span><span class="fl">0.2</span>, <span class="dt">edge.curved=</span><span class="fl">0.5</span>,<span class="dt">layout=</span>layout_with_dh)
+<span class="kw">legend</span>(<span class="st">&quot;right&quot;</span>, <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Stark&quot;</span>,<span class="st">&quot;Lannister&quot;</span>,<span class="st">&quot;Stark-Lannister&quot;</span>,<span class="st">&quot;Other&quot;</span>),
+       <span class="dt">col=</span><span class="kw">c</span>(<span class="st">&quot;tomato&quot;</span>,<span class="st">&quot;gold&quot;</span>,<span class="st">&quot;orange&quot;</span>,<span class="st">&quot;gray50&quot;</span>), <span class="dt">lty=</span><span class="kw">rep</span>(<span class="dv">1</span>,<span class="dv">4</span>), <span class="dt">cex=</span>.<span class="dv">8</span>, <span class="dt">bty=</span><span class="st">&quot;n&quot;</span>, <span class="dt">ncol=</span><span class="dv">1</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-55-2.png" width="672" /></p>
+</div>
+<div id="layout-is-not-deterministic" class="section level4">
+<h4><span class="header-section-number">2.3.4.3</span> layout is not deterministic</h4>
+<p>Different runs will result in slightly different configurations. <strong>Saving the layout</strong> or <strong>set.seed</strong> allows us to get the exact same result multiple times, which can be helpful if you want to plot the time evolution of a graph, or different relationships – and want nodes to stay in the same place in multiple plots.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
+l=<span class="kw">layout_with_dh</span>(got2)
+<span class="kw">plot</span>(got2, <span class="dt">vertex.shape=</span><span class="st">&quot;none&quot;</span>,<span class="dt">vertex.label.color=</span><span class="st">&quot;black&quot;</span>, 
+     <span class="dt">vertex.label.cex=</span>.<span class="dv">5</span>,<span class="dt">vertex.label.dist=</span><span class="fl">0.2</span>, <span class="dt">edge.curved=</span><span class="fl">0.5</span>,<span class="dt">layout=</span>l)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-56-1.png" width="672" /></p>
+<hr />
+<p>rescale</p>
+<ul>
+<li><code>norm_coords</code></li>
+<li><code>rescale=F</code></li>
+<li>can use <code>layout=l*2</code></li>
+</ul>
+<pre class="sourceCode r"><code class="sourceCode r">l=<span class="kw">layout_with_fr</span>(got2)
+l &lt;-<span class="st"> </span><span class="kw">norm_coords</span>(l, <span class="dt">ymin=</span><span class="op">-</span><span class="dv">1</span>, <span class="dt">ymax=</span><span class="dv">1</span>, <span class="dt">xmin=</span><span class="op">-</span><span class="dv">1</span>, <span class="dt">xmax=</span><span class="dv">1</span>) <span class="co">#default -- scaled</span>
+<span class="kw">plot</span>(got2, <span class="dt">vertex.shape=</span><span class="st">&quot;none&quot;</span>,<span class="dt">vertex.label.color=</span><span class="st">&quot;black&quot;</span>, 
+     <span class="dt">vertex.label.cex=</span>.<span class="dv">5</span>,<span class="dt">vertex.label.dist=</span><span class="fl">0.2</span>, <span class="dt">edge.curved=</span><span class="fl">0.5</span>,<span class="dt">layout=</span>l,<span class="dt">rescale=</span>F)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-57-1.png" width="672" /></p>
+<hr />
+<p>Will introduce interactive r packages next time.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>), <span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>))
+<span class="kw">plot</span>(got2, <span class="dt">vertex.shape=</span><span class="st">&quot;none&quot;</span>,<span class="dt">vertex.label.color=</span><span class="st">&quot;black&quot;</span>, 
+     <span class="dt">vertex.label.cex=</span>.<span class="dv">5</span>,<span class="dt">vertex.label.dist=</span><span class="fl">0.2</span>, <span class="dt">edge.curved=</span><span class="fl">0.5</span>,<span class="dt">layout=</span>l<span class="op">*</span><span class="fl">0.5</span>,<span class="dt">rescale=</span>F)
+<span class="kw">plot</span>(got2, <span class="dt">vertex.shape=</span><span class="st">&quot;none&quot;</span>,<span class="dt">vertex.label.color=</span><span class="st">&quot;black&quot;</span>, 
+     <span class="dt">vertex.label.cex=</span>.<span class="dv">5</span>,<span class="dt">vertex.label.dist=</span><span class="fl">0.2</span>, <span class="dt">edge.curved=</span><span class="fl">0.5</span>,<span class="dt">layout=</span>l<span class="op">*</span><span class="fl">0.8</span>,<span class="dt">rescale=</span>F)
+<span class="kw">plot</span>(got2, <span class="dt">vertex.shape=</span><span class="st">&quot;none&quot;</span>,<span class="dt">vertex.label.color=</span><span class="st">&quot;black&quot;</span>, 
+     <span class="dt">vertex.label.cex=</span>.<span class="dv">5</span>,<span class="dt">vertex.label.dist=</span><span class="fl">0.2</span>, <span class="dt">edge.curved=</span><span class="fl">0.5</span>,<span class="dt">layout=</span>l<span class="op">*</span><span class="dv">1</span>,<span class="dt">rescale=</span>F) 
+<span class="kw">plot</span>(got2, <span class="dt">vertex.shape=</span><span class="st">&quot;none&quot;</span>,<span class="dt">vertex.label.color=</span><span class="st">&quot;black&quot;</span>, 
+     <span class="dt">vertex.label.cex=</span>.<span class="dv">5</span>,<span class="dt">vertex.label.dist=</span><span class="fl">0.2</span>, <span class="dt">edge.curved=</span><span class="fl">0.5</span>,<span class="dt">layout=</span>l<span class="op">*</span><span class="dv">2</span>,<span class="dt">rescale=</span>F)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-58-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#dev.off()</span></code></pre>
+</div>
+</div>
+<div id="network-and-node-descriptions" class="section level3">
+<h3><span class="header-section-number">2.3.5</span> Network and node descriptions</h3>
+<hr />
+<ul>
+<li>Density: <code>edge_density</code></li>
+<li>Degree: <code>degree</code></li>
+<li>centrality and centralization:
+<ul>
+<li><code>centr_degree</code><br />
+</li>
+<li><code>closeness</code>, <code>centr_clo</code></li>
+<li><code>eigen_centrality</code>, <code>centr_eigen</code></li>
+<li><code>betweenness</code>, <code>edge_betweenness</code>, <code>centr_betw</code></li>
+</ul></li>
+<li>reciprocity,transitivity,diameter,…</li>
+</ul>
+<div id="density" class="section level4">
+<h4><span class="header-section-number">2.3.5.1</span> Density</h4>
+<p>The proportion of present edges from all possible ties.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">edge_density</span>(got2, <span class="dt">loops=</span>F)</code></pre>
+<pre><code>## [1] 0.04906205</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ecount</span>(got2)<span class="op">/</span>(<span class="kw">vcount</span>(got2)<span class="op">*</span>(<span class="kw">vcount</span>(got2)<span class="op">-</span><span class="dv">1</span>))<span class="op">*</span><span class="dv">2</span> <span class="co">#for an undirected network</span></code></pre>
+<pre><code>## [1] 0.04906205</code></pre>
+</div>
+<div id="node-degrees" class="section level4">
+<h4><span class="header-section-number">2.3.5.2</span> Node degrees</h4>
+<p>‘degree’ has a mode of ‘in’ for in-degree, ‘out’ for out-degree, and ‘all’ or ‘total’ for total degree.</p>
+<p>Notice the graph is undirected. So there is no difference under different parameter setting.</p>
+<pre class="sourceCode r"><code class="sourceCode r">deg &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw">degree</span>(got2, <span class="dt">mode=</span><span class="st">&quot;all&quot;</span>)
+<span class="kw">hist</span>(deg, <span class="dt">breaks=</span><span class="dv">1</span><span class="op">:</span><span class="kw">vcount</span>(got2)<span class="op">-</span><span class="dv">1</span>, <span class="dt">main=</span><span class="st">&quot;Histogram of node degree&quot;</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-60-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r">deg.dist &lt;-<span class="st"> </span><span class="kw">degree_distribution</span>(got2, <span class="dt">cumulative=</span>T, <span class="dt">mode=</span><span class="st">&quot;all&quot;</span>)
+<span class="kw">plot</span>( <span class="dt">x=</span><span class="dv">0</span><span class="op">:</span><span class="kw">max</span>(deg), <span class="dt">y=</span><span class="dv">1</span><span class="op">-</span>deg.dist, <span class="dt">pch=</span><span class="dv">19</span>, <span class="dt">cex=</span><span class="fl">1.2</span>, <span class="dt">col=</span><span class="st">&quot;orange&quot;</span>, 
+      <span class="dt">xlab=</span><span class="st">&quot;Degree&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Cumulative Frequency&quot;</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-60-2.png" width="672" /></p>
+</div>
+<div id="centrality-and-centralization" class="section level4">
+<h4><span class="header-section-number">2.3.5.3</span> centrality and centralization</h4>
+<p>Who is the most important character?</p>
+<ul>
+<li>Degree</li>
+<li>Closeness</li>
+<li>Eigenvector</li>
+<li>Betweeness</li>
+</ul>
+<hr />
+<p>Degree (number of ties).</p>
+<p>Normalization should be the max degree the network can get</p>
+<pre class="sourceCode r"><code class="sourceCode r">igraph<span class="op">::</span><span class="kw">degree</span>(got2, <span class="dt">mode=</span><span class="st">&quot;in&quot;</span>,<span class="dt">loops =</span> F)<span class="op">%&gt;%</span><span class="kw">sort</span>(<span class="dt">decreasing =</span> <span class="ot">TRUE</span>)<span class="op">%&gt;%</span>.[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</code></pre>
+<pre><code>##  Eddard  Cersei    Bran    Arya Desmond 
+##      56      41      32      27      27</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Notice this is undirected network, the choice of mode does not matter</span>
+<span class="kw">centr_degree</span>(got2, <span class="dt">mode=</span><span class="st">&quot;in&quot;</span>, <span class="dt">normalized=</span>T,<span class="dt">loops =</span> F)<span class="op">$</span>res<span class="op">%&gt;%</span><span class="kw">sort</span>(<span class="dt">decreasing =</span> <span class="ot">TRUE</span>)<span class="op">%&gt;%</span>.[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</code></pre>
+<pre><code>## [1] 56 41 32 27 27</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">centr_degree</span>(got2, <span class="dt">mode=</span><span class="st">&quot;all&quot;</span>, <span class="dt">normalized=</span>T,<span class="dt">loops =</span> F)<span class="op">$</span>res<span class="op">%&gt;%</span><span class="kw">sort</span>(<span class="dt">decreasing =</span> <span class="ot">TRUE</span>)<span class="op">%&gt;%</span>.[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</code></pre>
+<pre><code>## [1] 56 41 32 27 27</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Pay attention to whether allowing self-loop or not</span>
+<span class="co"># Normalization may differ due to the setting</span>
+<span class="kw">centr_degree</span>(got2, <span class="dt">mode=</span><span class="st">&quot;all&quot;</span>, <span class="dt">normalized=</span>T,<span class="dt">loops =</span> F)<span class="op">$</span>theoretical_max</code></pre>
+<pre><code>## [1] 9506</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">centr_degree</span>(got2, <span class="dt">mode=</span><span class="st">&quot;in&quot;</span>, <span class="dt">normalized=</span>T,<span class="dt">loops =</span> F)<span class="op">$</span>theoretical_max</code></pre>
+<pre><code>## [1] 9506</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">centr_degree</span>(got2, <span class="dt">mode=</span><span class="st">&quot;in&quot;</span>, <span class="dt">normalized=</span>T,<span class="dt">loops =</span> T)<span class="op">$</span>theoretical_max</code></pre>
+<pre><code>## [1] 9702</code></pre>
+<hr />
+<p>Closeness (centrality based on distance to others in the graph)
+Inverse of the node’s average geodesic distance to others in the network</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#whether to include weight or not</span>
+<span class="co">#If a graph has edge attribute weight, the weight will be automatically took into consideration</span>
+igraph<span class="op">::</span><span class="kw">closeness</span>(got2, <span class="dt">mode=</span><span class="st">&quot;all&quot;</span>, <span class="dt">weights=</span><span class="ot">NA</span>) <span class="op">%&gt;%</span><span class="kw">sort</span>(<span class="dt">decreasing =</span> <span class="ot">TRUE</span>)<span class="op">%&gt;%</span>.[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</code></pre>
+<pre><code>##      Eddard      Cersei        Bran        Arya     Desmond 
+## 0.006993007 0.006329114 0.006097561 0.005882353 0.005847953</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">igraph<span class="op">::</span><span class="kw">closeness</span>(got2, <span class="dt">mode=</span><span class="st">&quot;all&quot;</span>)<span class="op">%&gt;%</span><span class="kw">sort</span>(<span class="dt">decreasing =</span> <span class="ot">TRUE</span>)<span class="op">%&gt;%</span>.[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</code></pre>
+<pre><code>##       Eddard       Cersei       Donnel         Bran         Arya 
+## 0.0010193680 0.0010111223 0.0010070493 0.0009990010 0.0009852217</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">centr_clo</span>(got2, <span class="dt">mode=</span><span class="st">&quot;all&quot;</span>, <span class="dt">normalized=</span>T)<span class="op">$</span>res <span class="op">%&gt;%</span><span class="kw">sort</span>(<span class="dt">decreasing =</span> <span class="ot">TRUE</span>)<span class="op">%&gt;%</span>.[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</code></pre>
+<pre><code>## [1] 0.6853147 0.6202532 0.5975610 0.5764706 0.5730994</code></pre>
+<hr />
+<p>Eigenvector (centrality proportional to the sum of connection centralities)
+Values of the first eigenvector of the graph adjacency matrix</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">eigen_centrality</span>(got2, <span class="dt">directed=</span>F, <span class="dt">weights=</span><span class="ot">NA</span>)<span class="op">$</span>vector<span class="op">%&gt;%</span><span class="kw">sort</span>(<span class="dt">decreasing =</span> <span class="ot">TRUE</span>)<span class="op">%&gt;%</span>.[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</code></pre>
+<pre><code>##    Eddard    Cersei      Bran   Desmond      Arya 
+## 1.0000000 0.8163499 0.7410532 0.7276696 0.6740883</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">eigen_centrality</span>(got2, <span class="dt">directed=</span>F)<span class="op">$</span>vector<span class="op">%&gt;%</span><span class="kw">sort</span>(<span class="dt">decreasing =</span> <span class="ot">TRUE</span>)<span class="op">%&gt;%</span>.[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</code></pre>
+<pre><code>##    Eddard     Yoren   Desmond    Cersei     Vayon 
+## 1.0000000 0.8538947 0.4281666 0.3352669 0.2441671</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">centr_eigen</span>(got2, <span class="dt">directed=</span>F, <span class="dt">normalized=</span>T) <span class="op">$</span>vector<span class="op">%&gt;%</span><span class="kw">sort</span>(<span class="dt">decreasing =</span> <span class="ot">TRUE</span>)<span class="op">%&gt;%</span>.[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</code></pre>
+<pre><code>## [1] 1.0000000 0.8163499 0.7410532 0.7276696 0.6740883</code></pre>
+<hr />
+<p>Betweenness (centrality based on a broker position connecting others)
+(Number of geodesics that pass through the node or the edge)</p>
+<pre class="sourceCode r"><code class="sourceCode r">igraph<span class="op">::</span><span class="kw">betweenness</span>(got2, <span class="dt">directed=</span>F, <span class="dt">weights=</span><span class="ot">NA</span>)<span class="op">%&gt;%</span><span class="kw">sort</span>(<span class="dt">decreasing =</span> <span class="ot">TRUE</span>)<span class="op">%&gt;%</span>.[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</code></pre>
+<pre><code>##    Eddard    Cersei      Bran      Arya     Meryn 
+## 2155.2656 1554.1678  915.6561  510.5637  366.8074</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">igraph<span class="op">::</span><span class="kw">betweenness</span>(got2, <span class="dt">directed=</span>F)<span class="op">%&gt;%</span><span class="kw">sort</span>(<span class="dt">decreasing =</span> <span class="ot">TRUE</span>)<span class="op">%&gt;%</span>.[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</code></pre>
+<pre><code>##    Eddard    Cersei      Bran    Benjen      Arya 
+## 1835.5000 1483.2500 1024.8571  694.4762  689.5833</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">edge_betweenness</span>(got2, <span class="dt">directed=</span>F, <span class="dt">weights=</span><span class="ot">NA</span>)<span class="op">%&gt;%</span><span class="kw">sort</span>(<span class="dt">decreasing =</span> <span class="ot">TRUE</span>)<span class="op">%&gt;%</span>.[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</code></pre>
+<pre><code>## [1] 426.4643 271.6982 198.3379 150.0371 133.8635</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">centr_betw</span>(got2, <span class="dt">directed=</span>F, <span class="dt">normalized=</span>T)<span class="op">$</span>res<span class="op">%&gt;%</span><span class="kw">sort</span>(<span class="dt">decreasing =</span> <span class="ot">TRUE</span>)<span class="op">%&gt;%</span>.[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</code></pre>
+<pre><code>## [1] 2155.2656 1554.1678  915.6561  510.5637  366.8074</code></pre>
+</div>
+<div id="other-properties" class="section level4">
+<h4><span class="header-section-number">2.3.5.4</span> Other properties</h4>
+<ul>
+<li>transitivity</li>
+<li>reciprocity</li>
+<li>clustering coefficient</li>
+<li>…</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="paths-communitites-and-related-visualization" class="section level2">
+<h2><span class="header-section-number">2.4</span> Paths, communitites and related visualization</h2>
+<div id="outline-3" class="section level3">
+<h3><span class="header-section-number">2.4.1</span> Outline</h3>
+<ul>
+<li>R package <code>igraph</code>
+<ul>
+<li>Paths
+<ul>
+<li>Paths, distances and diameter</li>
+<li>Components</li>
+<li>Transitivity and reciprocity</li>
+<li>Max-flow and min-cut</li>
+</ul></li>
+<li>Communities
+<ul>
+<li>Pre-defined clusters</li>
+<li>Different algorithms</li>
+</ul></li>
+<li>Visualization
+<ul>
+<li>Color the paths</li>
+<li>Plotting clusters</li>
+<li>Plotting dendrograms</li>
+<li>Mark groups</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+<div id="datasets" class="section level3">
+<h3><span class="header-section-number">2.4.2</span> Datasets</h3>
+<div id="load-the-datasets" class="section level4">
+<h4><span class="header-section-number">2.4.2.1</span> Load the datasets</h4>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(USairports)
+<span class="kw">data</span>(karate)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">?USairports
+?karate</code></pre>
+</div>
+<div id="preprocess" class="section level4">
+<h4><span class="header-section-number">2.4.2.2</span> Preprocess</h4>
+<pre class="sourceCode r"><code class="sourceCode r">USairports</code></pre>
+<pre><code>## IGRAPH bf6202d DN-- 755 23473 -- US airports
+## + attr: name (g/c), name (v/c), City (v/c), Position (v/c),
+## | Carrier (e/c), Departures (e/n), Seats (e/n), Passengers (e/n),
+## | Aircraft (e/n), Distance (e/n)
+## + edges from bf6202d (vertex names):
+##  [1] BGR-&gt;JFK BGR-&gt;JFK BOS-&gt;EWR ANC-&gt;JFK JFK-&gt;ANC LAS-&gt;LAX MIA-&gt;JFK
+##  [8] EWR-&gt;ANC BJC-&gt;MIA MIA-&gt;BJC TEB-&gt;ANC JFK-&gt;LAX LAX-&gt;JFK LAX-&gt;SFO
+## [15] AEX-&gt;LAS BFI-&gt;SBA ELM-&gt;PIT GEG-&gt;SUN ICT-&gt;PBI LAS-&gt;LAX LAS-&gt;PBI
+## [22] LAS-&gt;SFO LAX-&gt;LAS PBI-&gt;AEX PBI-&gt;ICT PIT-&gt;VCT SFO-&gt;LAX VCT-&gt;DWH
+## [29] IAD-&gt;JFK ABE-&gt;CLT ABE-&gt;HPN AGS-&gt;CLT AGS-&gt;CLT AVL-&gt;CLT AVL-&gt;CLT
+## [36] AVP-&gt;CLT AVP-&gt;PHL BDL-&gt;CLT BHM-&gt;CLT BHM-&gt;CLT BNA-&gt;CLT BNA-&gt;CLT
+## + ... omitted several edges</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#should have no self-loop</span>
+<span class="kw">sum</span>(<span class="kw">which_loop</span>(USairports))</code></pre>
+<pre><code>## [1] 53</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">USairports &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw">simplify</span>(USairports, <span class="dt">remove.loops =</span> <span class="ot">TRUE</span>, <span class="dt">remove.multiple =</span> <span class="ot">FALSE</span>)
+<span class="kw">sum</span>(<span class="kw">which_loop</span>(USairports))</code></pre>
+<pre><code>## [1] 0</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#different carrier and aircraft types leading to multiple graphs</span>
+USairports[[<span class="st">&quot;RDU&quot;</span>,<span class="st">&quot;JFK&quot;</span>,edges=<span class="ot">TRUE</span>]][[<span class="dv">1</span>]][[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]]</code></pre>
+<pre><code>## + 5/23420 edges from 6c19fa2 (vertex names):
+##       tail head tid hid                      Carrier Departures Seats
+## 22271  RDU  JFK  74   4     Chautauqua Airlines Inc.         27  1350
+## 20487  RDU  JFK  74   4 American Eagle Airlines Inc.         48  2112
+## 20486  RDU  JFK  74   4 American Eagle Airlines Inc.         57  2109
+## 14914  RDU  JFK  74   4                  Comair Inc.          1    76
+## 14913  RDU  JFK  74   4                  Comair Inc.          5   250
+##       Passengers Aircraft Distance
+## 22271       1118      675      426
+## 20487       1881      676      426
+## 20486       1833      674      426
+## 14914         68      638      426
+## 14913        209      629      426</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#simplify</span>
+air &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw">simplify</span>(USairports, <span class="dt">edge.attr.comb =</span><span class="kw">list</span>(<span class="dt">Departures =</span> <span class="st">&quot;sum&quot;</span>, <span class="dt">Seats =</span> <span class="st">&quot;sum&quot;</span>, <span class="dt">Passengers =</span> <span class="st">&quot;sum&quot;</span>,<span class="dt">Distance=</span><span class="st">&quot;mean&quot;</span>, <span class="st">&quot;ignore&quot;</span>))
+air</code></pre>
+<pre><code>## IGRAPH d749d33 DN-- 755 8228 -- US airports
+## + attr: name (g/c), name (v/c), City (v/c), Position (v/c),
+## | Departures (e/n), Seats (e/n), Passengers (e/n), Distance (e/n)
+## + edges from d749d33 (vertex names):
+##  [1] BGR-&gt;BOS BGR-&gt;JFK BGR-&gt;MIA BGR-&gt;EWR BGR-&gt;DCA BGR-&gt;DTW BGR-&gt;LGA
+##  [8] BGR-&gt;PHL BGR-&gt;PIE BGR-&gt;SFB BOS-&gt;BGR BOS-&gt;JFK BOS-&gt;LAS BOS-&gt;MIA
+## [15] BOS-&gt;EWR BOS-&gt;LAX BOS-&gt;PBI BOS-&gt;PIT BOS-&gt;SFO BOS-&gt;IAD BOS-&gt;BDL
+## [22] BOS-&gt;BUF BOS-&gt;BWI BOS-&gt;CAK BOS-&gt;CLE BOS-&gt;CLT BOS-&gt;CMH BOS-&gt;CVG
+## [29] BOS-&gt;DCA BOS-&gt;DTW BOS-&gt;GSO BOS-&gt;IND BOS-&gt;LGA BOS-&gt;MDT BOS-&gt;MKE
+## [36] BOS-&gt;MSP BOS-&gt;MSY BOS-&gt;MYR BOS-&gt;ORF BOS-&gt;PHF BOS-&gt;PHL BOS-&gt;RDU
+## [43] BOS-&gt;RIC BOS-&gt;SRQ BOS-&gt;STL BOS-&gt;SYR BOS-&gt;ALB BOS-&gt;PVD BOS-&gt;ROC
+## + ... omitted several edges</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">air[[<span class="st">&quot;RDU&quot;</span>,<span class="st">&quot;JFK&quot;</span>,edges=<span class="ot">TRUE</span>]]</code></pre>
+<pre><code>## [[1]]
+## + 1/8228 edge from d749d33 (vertex names):
+## [1] RDU-&gt;JFK</code></pre>
+</div>
+</div>
+<div id="paths-distances-and-diameter" class="section level3">
+<h3><span class="header-section-number">2.4.3</span> Paths, distances and diameter</h3>
+<div id="paths" class="section level4">
+<h4><span class="header-section-number">2.4.3.1</span> Paths</h4>
+<div id="select-specific-paths" class="section level5">
+<h5><span class="header-section-number">2.4.3.1.1</span> Select specific paths</h5>
+<p>Select specific paths</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#select length 1 path</span>
+air[[from=<span class="st">&quot;RDU&quot;</span>,to=<span class="st">&quot;BOS&quot;</span>,edges=<span class="ot">TRUE</span>]]</code></pre>
+<pre><code>## [[1]]
+## + 1/8228 edge from d749d33 (vertex names):
+## [1] RDU-&gt;BOS</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># select &gt;=1 paths</span>
+flight_rdu_bos=<span class="kw">V</span>(air)[<span class="st">&quot;RDU&quot;</span>,<span class="st">&quot;JFK&quot;</span>,<span class="st">&quot;BOS&quot;</span>]
+<span class="kw">E</span>(air,<span class="dt">path=</span>flight_rdu_bos)</code></pre>
+<pre><code>## + 2/8228 edges from d749d33 (vertex names):
+## [1] RDU-&gt;JFK JFK-&gt;BOS</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#another way</span>
+<span class="kw">E</span>(air)[<span class="st">&quot;RDU&quot;</span><span class="op">%-&gt;%</span><span class="st">&quot;JFK&quot;</span>,<span class="st">&quot;JFK&quot;</span><span class="op">%-&gt;%</span><span class="st">&quot;BOS&quot;</span>]</code></pre>
+<pre><code>## + 2/8228 edges from d749d33 (vertex names):
+## [1] RDU-&gt;JFK JFK-&gt;BOS</code></pre>
+</div>
+<div id="shortest-paths" class="section level5">
+<h5><span class="header-section-number">2.4.3.1.2</span> Shortest paths</h5>
+<p>Many paths between edges. Direct flight or multiple steps.</p>
+<p>Length of path: number of edges included in a path</p>
+<p><code>shortest_paths</code>: only one of the shortest paths</p>
+<p><code>all_shortest_paths</code>: all the shortest paths; <code>nrgeo</code> is the resultant vector of values from Djikstra’s algorithm which is used to find the shortest paths.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#arkansas airport-XNA</span>
+<span class="kw">shortest_paths</span>(air,<span class="dt">from=</span><span class="st">&quot;RDU&quot;</span>,<span class="dt">to =</span> <span class="st">&quot;XNA&quot;</span>,<span class="dt">weights =</span> <span class="kw">E</span>(air)<span class="op">$</span>Distance)<span class="op">$</span>vpath</code></pre>
+<pre><code>## [[1]]
+## + 3/755 vertices, named, from d749d33:
+## [1] RDU CLT XNA</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shortest_paths</span>(air,<span class="dt">from=</span><span class="st">&quot;RDU&quot;</span>,<span class="dt">to =</span> <span class="st">&quot;XNA&quot;</span>,<span class="dt">weights =</span> <span class="ot">NA</span>)<span class="op">$</span>vpath <span class="co">#one of the shortest path</span></code></pre>
+<pre><code>## [[1]]
+## + 3/755 vertices, named, from d749d33:
+## [1] RDU LAS XNA</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shortest_paths</span>(air,<span class="dt">from=</span><span class="st">&quot;RDU&quot;</span>,<span class="dt">to =</span> <span class="st">&quot;XNA&quot;</span>,<span class="dt">mode =</span> <span class="st">&quot;in&quot;</span>,<span class="dt">weights =</span> <span class="ot">NA</span>)<span class="op">$</span>vpath <span class="co">#to</span></code></pre>
+<pre><code>## [[1]]
+## + 3/755 vertices, named, from d749d33:
+## [1] RDU BOS XNA</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shortest_paths</span>(air,<span class="dt">from=</span><span class="st">&quot;RDU&quot;</span>,<span class="dt">to =</span> <span class="st">&quot;XNA&quot;</span>,<span class="dt">mode =</span> <span class="st">&quot;out&quot;</span>,<span class="dt">weights =</span> <span class="ot">NA</span>)<span class="op">$</span>vpath <span class="co">#from</span></code></pre>
+<pre><code>## [[1]]
+## + 3/755 vertices, named, from d749d33:
+## [1] RDU LAS XNA</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shortest_paths</span>(air,<span class="dt">from=</span><span class="st">&quot;RDU&quot;</span>,<span class="dt">to =</span> <span class="st">&quot;XNA&quot;</span>,<span class="dt">mode =</span> <span class="st">&quot;all&quot;</span>,<span class="dt">weights =</span> <span class="ot">NA</span>)<span class="op">$</span>vpath <span class="co">#undirected</span></code></pre>
+<pre><code>## [[1]]
+## + 3/755 vertices, named, from d749d33:
+## [1] RDU BOS XNA</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all_shortest_paths</span>(air,<span class="dt">from=</span><span class="st">&quot;RDU&quot;</span>,<span class="dt">to =</span> <span class="st">&quot;XNA&quot;</span>,<span class="dt">weight=</span><span class="ot">NA</span>)<span class="op">$</span>res</code></pre>
+<pre><code>## [[1]]
+## + 3/755 vertices, named, from d749d33:
+## [1] RDU MEM XNA
+## 
+## [[2]]
+## + 3/755 vertices, named, from d749d33:
+## [1] RDU DFW XNA
+## 
+## [[3]]
+## + 3/755 vertices, named, from d749d33:
+## [1] RDU DEN XNA
+## 
+## [[4]]
+## + 3/755 vertices, named, from d749d33:
+## [1] RDU ATL XNA
+## 
+## [[5]]
+## + 3/755 vertices, named, from d749d33:
+## [1] RDU ORD XNA
+## 
+## [[6]]
+## + 3/755 vertices, named, from d749d33:
+## [1] RDU IAH XNA
+## 
+## [[7]]
+## + 3/755 vertices, named, from d749d33:
+## [1] RDU MSP XNA
+## 
+## [[8]]
+## + 3/755 vertices, named, from d749d33:
+## [1] RDU LGA XNA
+## 
+## [[9]]
+## + 3/755 vertices, named, from d749d33:
+## [1] RDU DTW XNA
+## 
+## [[10]]
+## + 3/755 vertices, named, from d749d33:
+## [1] RDU CVG XNA
+## 
+## [[11]]
+## + 3/755 vertices, named, from d749d33:
+## [1] RDU CLT XNA
+## 
+## [[12]]
+## + 3/755 vertices, named, from d749d33:
+## [1] RDU EWR XNA
+## 
+## [[13]]
+## + 3/755 vertices, named, from d749d33:
+## [1] RDU LAS XNA</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all_shortest_paths</span>(air,<span class="dt">from=</span><span class="st">&quot;RDU&quot;</span>,<span class="dt">to =</span> <span class="st">&quot;XNA&quot;</span>,<span class="dt">weights =</span> <span class="kw">E</span>(air)<span class="op">$</span>Distance)<span class="op">$</span>res</code></pre>
+<pre><code>## [[1]]
+## + 3/755 vertices, named, from d749d33:
+## [1] RDU CLT XNA</code></pre>
+</div>
+<div id="color-certain-paths" class="section level5">
+<h5><span class="header-section-number">2.4.3.1.3</span> Color certain paths:</h5>
+<p>Color the path from <code>Actor 33</code> to <code>Mr Hi</code> and set the width for the path.</p>
+<pre class="sourceCode r"><code class="sourceCode r">path_vk=<span class="kw">shortest_paths</span>(karate,<span class="dt">from=</span><span class="st">&quot;Actor 33&quot;</span>, <span class="dt">to=</span><span class="st">&quot;Mr Hi&quot;</span>)<span class="op">$</span>vpath[[<span class="dv">1</span>]]
+ecol=<span class="kw">rep</span>(<span class="st">&quot;gray80&quot;</span>,<span class="kw">ecount</span>(karate))
+ecol[<span class="kw">E</span>(karate,<span class="dt">path =</span> path_vk)]=<span class="st">&quot;orange&quot;</span>
+ew=<span class="kw">rep</span>(<span class="dv">1</span>,<span class="kw">ecount</span>(karate))
+ew[<span class="kw">E</span>(karate,<span class="dt">path =</span> path_vk)]=<span class="dv">3</span>
+<span class="kw">plot</span>(karate,<span class="dt">edge.color=</span>ecol,<span class="dt">edge.width=</span>ew)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-70-1.png" width="672" /></p>
+</div>
+</div>
+<div id="distance" class="section level4">
+<h4><span class="header-section-number">2.4.3.2</span> distance</h4>
+<p>Distance: length of shortest path</p>
+<p><code>distance_table</code>: The frequency of shortest path length between each pair of vertices.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">distance_table</span>(air)</code></pre>
+<pre><code>## $res
+## [1]   8228  94912 166335 163830  86263  15328   2793    291     27
+## 
+## $unconnected
+## [1] 31263</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># unconnected: the number of pairs for which the first vertex is not reachable from the second</span></code></pre>
+<hr />
+<p><code>distances</code></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">distances</span>(air,<span class="st">&quot;RDU&quot;</span>,<span class="st">&quot;XNA&quot;</span>,<span class="dt">weights =</span> <span class="ot">NA</span>) <span class="co"># not consider the weight</span></code></pre>
+<pre><code>##     XNA
+## RDU   2</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">distances</span>(air,<span class="st">&quot;RDU&quot;</span>,<span class="st">&quot;XNA&quot;</span>,<span class="dt">weights =</span>  <span class="kw">E</span>(air)<span class="op">$</span>Distance) <span class="co"># specify the weight</span></code></pre>
+<pre><code>##     XNA
+## RDU 884</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># how the function `distances` works</span>
+(<span class="kw">shortest_paths</span>(air,<span class="dt">from=</span><span class="st">&quot;RDU&quot;</span>,<span class="dt">to =</span> <span class="st">&quot;XNA&quot;</span>,<span class="dt">weights =</span> <span class="kw">E</span>(air)<span class="op">$</span>Distance)<span class="op">$</span>vpath[[<span class="dv">1</span>]])</code></pre>
+<pre><code>## + 3/755 vertices, named, from d749d33:
+## [1] RDU CLT XNA</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">E</span>(air)[<span class="st">&quot;RDU&quot;</span><span class="op">%-&gt;%</span><span class="st">&quot;CLT&quot;</span>,<span class="st">&quot;CLT&quot;</span><span class="op">%-&gt;%</span><span class="st">&quot;XNA&quot;</span>]<span class="op">$</span>Distance<span class="op">%&gt;%</span><span class="kw">sum</span>()</code></pre>
+<pre><code>## [1] 884</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#can return a distance matrix</span>
+<span class="kw">distances</span>(air,<span class="kw">c</span>(<span class="st">&quot;BOS&quot;</span>,<span class="st">&quot;JFK&quot;</span>,<span class="st">&quot;RDU&quot;</span>,<span class="st">&quot;XNA&quot;</span>),<span class="kw">c</span>(<span class="st">&quot;BOS&quot;</span>,<span class="st">&quot;JFK&quot;</span>,<span class="st">&quot;RDU&quot;</span>,<span class="st">&quot;XNA&quot;</span>),<span class="dt">weights =</span> <span class="kw">E</span>(air)<span class="op">$</span>Distance,<span class="dt">mode =</span> <span class="st">&quot;all&quot;</span>) <span class="co">#undirected</span></code></pre>
+<pre><code>##      BOS  JFK RDU  XNA
+## BOS    0  187 612 1312
+## JFK  187    0 426 1150
+## RDU  612  426   0  884
+## XNA 1312 1150 884    0</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">distances</span>(air,<span class="kw">c</span>(<span class="st">&quot;BOS&quot;</span>,<span class="st">&quot;JFK&quot;</span>,<span class="st">&quot;RDU&quot;</span>,<span class="st">&quot;XNA&quot;</span>),<span class="kw">c</span>(<span class="st">&quot;BOS&quot;</span>,<span class="st">&quot;JFK&quot;</span>,<span class="st">&quot;RDU&quot;</span>,<span class="st">&quot;XNA&quot;</span>),<span class="dt">weights =</span> <span class="kw">E</span>(air)<span class="op">$</span>Distance,<span class="dt">mode =</span> <span class="st">&quot;in&quot;</span>) <span class="co">#focus on to</span></code></pre>
+<pre><code>##      BOS  JFK RDU  XNA
+## BOS    0  187 612 1312
+## JFK  187    0 426 1150
+## RDU  612  426   0  884
+## XNA 1313 1150 884    0</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">distances</span>(air,<span class="kw">c</span>(<span class="st">&quot;BOS&quot;</span>,<span class="st">&quot;JFK&quot;</span>,<span class="st">&quot;RDU&quot;</span>,<span class="st">&quot;XNA&quot;</span>),<span class="kw">c</span>(<span class="st">&quot;BOS&quot;</span>,<span class="st">&quot;JFK&quot;</span>,<span class="st">&quot;RDU&quot;</span>,<span class="st">&quot;XNA&quot;</span>),<span class="dt">weights =</span> <span class="kw">E</span>(air)<span class="op">$</span>Distance,<span class="dt">mode =</span> <span class="st">&quot;out&quot;</span>) <span class="co">#focus on from # tranpose of mode &quot;in&quot;</span></code></pre>
+<pre><code>##      BOS  JFK RDU  XNA
+## BOS    0  187 612 1313
+## JFK  187    0 426 1150
+## RDU  612  426   0  884
+## XNA 1312 1150 884    0</code></pre>
+<hr />
+<p><code>mean_distance</code>: average path length in a graph, by calculating the shortest paths between <strong>all</strong> pairs of vertices (both ways for directed graphs). <strong>does not consider edge weights currently</strong> and uses a breadth-first search.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># connected=TRUE</span>
+<span class="kw">mean_distance</span>(air,<span class="dt">directed =</span> <span class="ot">TRUE</span>)</code></pre>
+<pre><code>## [1] 3.52743</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># How the function works</span>
+freq=<span class="kw">distance_table</span>(air)<span class="op">$</span>res<span class="op">/</span><span class="kw">sum</span>(<span class="kw">distance_table</span>(air)<span class="op">$</span>res)
+<span class="kw">sum</span>(freq<span class="op">*</span><span class="dv">1</span><span class="op">:</span><span class="dv">9</span>)</code></pre>
+<pre><code>## [1] 3.52743</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#connected=FALSE</span>
+<span class="kw">mean_distance</span>(air,<span class="dt">directed =</span> <span class="ot">TRUE</span>,<span class="dt">unconnected =</span> <span class="ot">FALSE</span>)</code></pre>
+<pre><code>## [1] 44.79658</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#How the function works</span>
+freq=<span class="kw">c</span>(<span class="kw">distance_table</span>(air)<span class="op">$</span>res,<span class="kw">distance_table</span>(air)<span class="op">$</span>unconnected)<span class="op">/</span><span class="kw">sum</span>(<span class="kw">c</span>(<span class="kw">distance_table</span>(air)<span class="op">$</span>res,<span class="kw">distance_table</span>(air)<span class="op">$</span>unconnected))
+<span class="kw">sum</span>(freq<span class="op">*</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>,<span class="kw">vcount</span>(air)))</code></pre>
+<pre><code>## [1] 44.79658</code></pre>
+</div>
+<div id="diameter" class="section level4">
+<h4><span class="header-section-number">2.4.3.3</span> Diameter</h4>
+<p>diameter: The largest distance of a graph. In the special case when some vertices are not reachable via a path from some others, returns the longest finite distance.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">diameter</span>(air)</code></pre>
+<pre><code>## [1] 9</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">diameter</span>(air,<span class="dt">weights =</span> <span class="kw">E</span>(air)<span class="op">$</span>Distance)</code></pre>
+<pre><code>## [1] 11257</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">diameter</span>(air,<span class="dt">directed =</span> <span class="ot">FALSE</span>)</code></pre>
+<pre><code>## [1] 8</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#can also specify the unconnected=TRUE/FALSE</span></code></pre>
+<div id="get-the-nodes-and-edges-of-the-airports-in-the-longest-path" class="section level5">
+<h5><span class="header-section-number">2.4.3.3.1</span> Get the nodes and edges of the airports in the longest path</h5>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#get the nodes</span>
+<span class="kw">get_diameter</span>(air,<span class="dt">weights =</span> <span class="kw">E</span>(air)<span class="op">$</span>Distance)</code></pre>
+<pre><code>## + 9/755 vertices, named, from d749d33:
+## [1] VNY ORL OPF SDF STL SFO GUM SPN TIQ</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">dia_v=<span class="kw">get_diameter</span>(air,<span class="dt">weights =</span> <span class="kw">E</span>(air)<span class="op">$</span>Distance)
+<span class="co"># information of nodes</span>
+dia_v[[]]</code></pre>
+<pre><code>## + 9/755 vertices, named, from d749d33:
+##     name              City         Position
+## 717  VNY      Van Nuys, CA N341235 W1182924
+## 713  ORL       Orlando, FL N283244 W0811959
+## 712  OPF         Miami, FL N255425 W0801642
+## 78   SDF    Louisville, KY N381028 W0854410
+## 80   STL     St. Louis, MO N384452 W0902136
+## 18   SFO San Francisco, CA N373708 W1222230
+## 178  GUM          Guam, TT N132900 E1444746
+## 180  SPN        Saipan, TT N150708 E1454346
+## 181  TIQ        Tinian, TT N145949 E1453705</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># edges</span>
+<span class="kw">E</span>(air,<span class="dt">path =</span> dia_v)</code></pre>
+<pre><code>## + 8/8228 edges from d749d33 (vertex names):
+## [1] VNY-&gt;ORL ORL-&gt;OPF OPF-&gt;SDF SDF-&gt;STL STL-&gt;SFO SFO-&gt;GUM GUM-&gt;SPN SPN-&gt;TIQ</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># info of edges</span>
+dia_e=<span class="kw">E</span>(air,<span class="dt">path =</span> dia_v)
+dia_e[[]]</code></pre>
+<pre><code>## + 8/8228 edges from d749d33 (vertex names):
+##      tail head tid hid Departures Seats Passengers Distance
+## 8184  VNY  ORL 717 713          1    12          4     2218
+## 8178  ORL  OPF 713 712          1    12          4      193
+## 8177  OPF  SDF 712  78          1    10          2      904
+## 2696  SDF  STL  78  80         60  8220       5837      254
+## 2735  STL  SFO  80  18         31  3852       2820     1736
+## 804   SFO  GUM  18 178         26 10675       9951     5812
+## 5350  GUM  SPN 178 180        164  7544       4554      129
+## 5356  SPN  TIQ 180 181        283  1698       1576       11</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">## delete the flight with passengers &lt;= 10 then recalculate the diameter</span>
+
+air_filt=<span class="kw">delete_edges</span>(air,<span class="kw">E</span>(air)[Passengers<span class="op">&lt;=</span><span class="dv">10</span>])
+<span class="kw">get_diameter</span>(air_filt,<span class="dt">weights =</span> <span class="kw">E</span>(air_filt)<span class="op">$</span>Distance)</code></pre>
+<pre><code>## + 8/755 vertices, named, from 3775b33:
+## [1] TIQ SPN GUM HNL LAX OKC NYL JQF</code></pre>
+</div>
+<div id="color-the-paths-along-the-diameter" class="section level5">
+<h5><span class="header-section-number">2.4.3.3.2</span> Color the paths along the diameter</h5>
+<p>First step is to select the edges along the path.</p>
+<p>Then just change the edge attribute.</p>
+<pre class="sourceCode r"><code class="sourceCode r">dia_vk=<span class="kw">get_diameter</span>(karate,<span class="dt">directed =</span> <span class="ot">FALSE</span>)
+ecol=<span class="kw">rep</span>(<span class="st">&quot;gray80&quot;</span>,<span class="kw">ecount</span>(karate))
+ecol[<span class="kw">E</span>(karate,<span class="dt">path =</span> dia_vk)]=<span class="st">&quot;orange&quot;</span>
+<span class="kw">plot</span>(karate,<span class="dt">edge.color=</span>ecol)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-76-1.png" width="672" /></p>
+</div>
+</div>
+</div>
+<div id="components" class="section level3">
+<h3><span class="header-section-number">2.4.4</span> Components</h3>
+<div id="components-1" class="section level4">
+<h4><span class="header-section-number">2.4.4.1</span> Components</h4>
+<p>For an undirected graph,</p>
+<p>Connected: if there is a path from any vertex to any other.</p>
+<p>Unconnected: if not connected. An unconnected graph has multiple components.</p>
+<p>Components: a maximal induced subgraph that is connected.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">is_connected</span>(air)</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">count_components</span>(air)</code></pre>
+<pre><code>## [1] 6</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#no:number of components</span>
+<span class="kw">names</span>(igraph<span class="op">::</span><span class="kw">components</span>(air))</code></pre>
+<pre><code>## [1] &quot;membership&quot; &quot;csize&quot;      &quot;no&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">igraph<span class="op">::</span><span class="kw">components</span>(air)<span class="op">$</span>csize</code></pre>
+<pre><code>## [1] 745   2   2   3   2   1</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">igraph<span class="op">::</span><span class="kw">components</span>(air)<span class="op">$</span>membership[igraph<span class="op">::</span><span class="kw">components</span>(air)<span class="op">$</span>membership<span class="op">==</span><span class="dv">6</span>]</code></pre>
+<pre><code>## DET 
+##   6</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># check whether RDU is in the largest component</span>
+<span class="kw">subcomponent</span>(air,<span class="st">&quot;RDU&quot;</span>) <span class="co">#not bad</span></code></pre>
+<pre><code>## + 745/755 vertices, named, from d749d33:
+##   [1] RDU BOS JFK LAS MIA EWR TEB PIT IAD BDL BNA BTR BWI CLE CLT CMH CVG
+##  [18] DCA DTW GPT GSO ILM IND LEX LGA MDT MKE MSP PHL STL SYR TYS MHT PVD
+##  [35] FLL MCO TPA IAH ORD CID MCI MSN SBN ATL DEN DFW MDW PHX RSW TUS ACY
+##  [52] MEM SJU UTM SWO DAL ECP EVV LAN PIA FRG ISO BGR LAX PBI SFO BUF CAK
+##  [69] MSY MYR ORF PHF RIC SRQ XNA ALB ROC SCE BHB PBG PQI AUS PDX SAN SEA
+##  [86] SLC JAX STT SJC LGB PTK PGD IAG ACK LEB MVY PVC BMG AUG HYA RKD RUT
+## [103] SLK ANC ABE AVP PWM SAV BTV SWF LWB CKB OKC HOU SAT SMF SNA BUR OAK
+## [120] EGE BQN PSE FAR FWA FOE AEX GEG ICT BHM HPN LIT SDF MAF SHV MLI OMA
+## [137] SGF TUL ABQ DSM GRR AMA LBB BOI HNL OGG ONT RNO COS ELP FAT GJT MFE
+## [154] PSP BLI EUG ATW BIL BZN DLH FSD GRB GTF IDA MOT MSO BIS GFK RAP AZA
+## + ... omitted several vertices</code></pre>
+</div>
+<div id="strongly-connected-and-weakly-connected" class="section level4">
+<h4><span class="header-section-number">2.4.4.2</span> strongly connected and weakly connected</h4>
+<p>For a directed network,</p>
+<p>weakly connected: its corresponding undirected network that ignored edge directions, is connected</p>
+<p>strongly connected: if and only if it has a directed path from each vertex to all other vertices.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">is_connected</span>(air,<span class="dt">mode =</span> <span class="st">&quot;weak&quot;</span>)</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">is_connected</span>(air,<span class="dt">mode =</span> <span class="st">&quot;strong&quot;</span>)</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">count_components</span>(air,<span class="dt">mode =</span> <span class="st">&quot;strong&quot;</span>)</code></pre>
+<pre><code>## [1] 30</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">igraph<span class="op">::</span><span class="kw">components</span>(air,<span class="dt">mode =</span> <span class="st">&quot;strong&quot;</span>)<span class="op">$</span>membership<span class="op">%&gt;%</span><span class="kw">table</span>()</code></pre>
+<pre><code>## .
+##   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18 
+##   1   1   1   1   1   1   1   1   1   1   2   1   2   1   1   2   1   1 
+##  19  20  21  22  23  24  25  26  27  28  29  30 
+##   1   1   1   1   1   1 723   1   1   1   1   1</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># check whether RDU is in the largest component</span>
+<span class="st">&quot;RDU&quot;</span><span class="op">%in%</span>(igraph<span class="op">::</span><span class="kw">components</span>(air,<span class="dt">mode =</span> <span class="st">&quot;strong&quot;</span>)<span class="op">$</span>membership[igraph<span class="op">::</span><span class="kw">components</span>(air,<span class="dt">mode =</span> <span class="st">&quot;strong&quot;</span>)<span class="op">$</span>membership<span class="op">==</span><span class="dv">25</span>]<span class="op">%&gt;%</span><span class="kw">names</span>()) <span class="co"># not bad</span></code></pre>
+<pre><code>## [1] TRUE</code></pre>
+</div>
+<div id="transitivity-and-reciprocity" class="section level4">
+<h4><span class="header-section-number">2.4.4.3</span> Transitivity and reciprocity</h4>
+<p>Network and node properties</p>
+</div>
+<div id="reciprocity" class="section level4">
+<h4><span class="header-section-number">2.4.4.4</span> Reciprocity</h4>
+<p>The proportion of reciprocated ties for a directed network</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#number of reciprocity edges divided by number of edges</span>
+<span class="kw">reciprocity</span>(air)</code></pre>
+<pre><code>## [1] 0.8762761</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="dv">2</span><span class="op">*</span><span class="kw">dyad_census</span>(air)<span class="op">$</span>mut<span class="op">/</span><span class="kw">ecount</span>(air) </code></pre>
+<pre><code>## [1] 0.8762761</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># number of mutual pairs divided by number of connected pairs</span>
+<span class="kw">reciprocity</span>(air,<span class="dt">mode =</span> <span class="st">&quot;ratio&quot;</span>)</code></pre>
+<pre><code>## [1] 0.7797967</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dyad_census</span>(air)<span class="op">$</span>mut<span class="op">/</span>(<span class="kw">dyad_census</span>(air)<span class="op">$</span>mut<span class="op">+</span><span class="kw">dyad_census</span>(air)<span class="op">$</span>asym)</code></pre>
+<pre><code>## [1] 0.7797967</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#number of pairs</span>
+<span class="kw">dyad_census</span>(air)</code></pre>
+<pre><code>## $mut
+## [1] 3605
+## 
+## $asym
+## [1] 1018
+## 
+## $null
+## [1] 280012</code></pre>
+</div>
+<div id="transitivity" class="section level4">
+<h4><span class="header-section-number">2.4.4.5</span> transitivity</h4>
+<p>global: ratio of triangles to connected triples.</p>
+<p>local: ratio of triangles to connected triples each vertex is part of.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">transitivity</span>(air,<span class="dt">type =</span> <span class="st">&quot;global&quot;</span>)</code></pre>
+<pre><code>## [1] 0.3384609</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">transitivity</span>(air,<span class="dt">type =</span> <span class="st">&quot;local&quot;</span>)[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</code></pre>
+<pre><code>## [1] 0.16842105 0.09683141 0.02803235 0.11144883 0.05888073</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">transitivity</span>(air,<span class="dt">vids =</span> <span class="kw">c</span>(<span class="st">&quot;RDU&quot;</span>,<span class="st">&quot;JFK&quot;</span>),<span class="dt">type =</span> <span class="st">&quot;local&quot;</span>) <span class="co"># specify multiple vertices</span></code></pre>
+<pre><code>## [1] 0.4803279 0.3859649</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#corresponds to different types of triples</span>
+<span class="kw">triad_census</span>(air)</code></pre>
+<pre><code>##  [1] 68169544   712579  2380343     1445     1289     2465    15322
+##  [8]    19171       91       39   114868      202      376      558
+## [15]     6422    18671</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">?triad_census</code></pre>
+</div>
+<div id="maximum-flows-and-minimum-cuts" class="section level4">
+<h4><span class="header-section-number">2.4.4.6</span> maximum flows and minimum cuts</h4>
+<p>max flow How many passengers the US airport network can transport from a given airport to another one.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">E</span>(air)[[<span class="st">&quot;BOS&quot;</span><span class="op">%-&gt;%</span><span class="st">&quot;JFK&quot;</span>]]</code></pre>
+<pre><code>## + 1/8228 edge from d749d33 (vertex names):
+##    tail head tid hid Departures Seats Passengers Distance
+## 12  BOS  JFK   2   4        491 39403      31426      187</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># use seat to present the capacity.</span>
+<span class="kw">max_flow</span>(air,<span class="st">&quot;BOS&quot;</span>,<span class="st">&quot;JFK&quot;</span>,<span class="dt">capacity =</span> <span class="kw">E</span>(air)<span class="op">$</span>Seats)<span class="op">$</span>value</code></pre>
+<pre><code>## [1] 1177758</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#capacity is for max_flow() function as default</span>
+<span class="kw">E</span>(air)<span class="op">$</span>capacity=<span class="kw">E</span>(air)<span class="op">$</span>Seats
+<span class="kw">max_flow</span>(air,<span class="st">&quot;BOS&quot;</span>,<span class="st">&quot;JFK&quot;</span>)<span class="op">$</span>value</code></pre>
+<pre><code>## [1] 1177758</code></pre>
+<hr />
+<p>min cut: the minimum <strong>number of edges</strong>, that disconnect a destination vertex from a departure vertex. In a <strong>weighted</strong> network with edge capacities the minimum cut calculates the <strong>total capacity</strong> needed to disconnect the vertex pair.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">E</span>(air)[[<span class="st">&quot;BOS&quot;</span><span class="op">%-&gt;%</span><span class="st">&quot;JFK&quot;</span>]]</code></pre>
+<pre><code>## + 1/8228 edge from d749d33 (vertex names):
+##    tail head tid hid Departures Seats Passengers Distance capacity
+## 12  BOS  JFK   2   4        491 39403      31426      187    39403</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># use seat to present the capacity.</span>
+<span class="kw">min_cut</span>(air,<span class="st">&quot;BOS&quot;</span>,<span class="st">&quot;JFK&quot;</span>,<span class="dt">capacity =</span> <span class="kw">E</span>(air)<span class="op">$</span>Seats)</code></pre>
+<pre><code>## [1] 1177758</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#capacity is for max_flow() function as default</span>
+<span class="kw">E</span>(air)<span class="op">$</span>capacity=<span class="kw">E</span>(air)<span class="op">$</span>Seats
+<span class="kw">min_cut</span>(air,<span class="st">&quot;BOS&quot;</span>,<span class="st">&quot;JFK&quot;</span>)</code></pre>
+<pre><code>## [1] 1177758</code></pre>
+<hr />
+<p>max-flow min-cut theorem: the minimum cut in a graph from a source vertex to a target vertex always <strong>equals</strong> the maximum flow between the same vertices.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">min_cut</span>(air,<span class="st">&quot;BOS&quot;</span>,<span class="st">&quot;JFK&quot;</span>,<span class="dt">capacity =</span> <span class="kw">E</span>(air)<span class="op">$</span>Seats)</code></pre>
+<pre><code>## [1] 1177758</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">max_flow</span>(air,<span class="st">&quot;BOS&quot;</span>,<span class="st">&quot;JFK&quot;</span>,<span class="dt">capacity =</span> <span class="kw">E</span>(air)<span class="op">$</span>Seats)<span class="op">$</span>value</code></pre>
+<pre><code>## [1] 1177758</code></pre>
+</div>
+</div>
+<div id="community" class="section level3">
+<h3><span class="header-section-number">2.4.5</span> Community</h3>
+<div id="make-clusters" class="section level4">
+<h4><span class="header-section-number">2.4.5.1</span> Make clusters</h4>
+<p>You can speicfy the cluster as you want.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;karate&quot;</span>)
+
+<span class="co">#ground truth</span>
+<span class="kw">V</span>(karate)<span class="op">$</span>Faction</code></pre>
+<pre><code>##  [1] 1 1 1 1 1 1 1 1 2 2 1 1 1 1 2 2 1 1 2 1 2 1 2 2 2 2 2 2 2 2 2 2 2 2</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">ground_truth=<span class="kw">make_clusters</span>(karate,<span class="kw">V</span>(karate)<span class="op">$</span>Faction)
+ground_truth</code></pre>
+<pre><code>## IGRAPH clustering unknown, groups: 2, mod: 0.37
+## + groups:
+##   $`1`
+##    [1]  1  2  3  4  5  6  7  8 11 12 13 14 17 18 20 22
+##   
+##   $`2`
+##    [1]  9 10 15 16 19 21 23 24 25 26 27 28 29 30 31 32 33 34
+## </code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#cluster by the distance</span>
+dist_memb=karate <span class="op">%&gt;%</span>
+<span class="kw">distances</span>(<span class="dt">v =</span> <span class="kw">c</span>(<span class="st">&quot;John A&quot;</span>, <span class="st">&quot;Mr Hi&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">apply</span>(<span class="dv">2</span>, which.min) <span class="op">%&gt;%</span>
+<span class="kw">make_clusters</span>(<span class="dt">graph =</span> karate)</code></pre>
+</div>
+<div id="community-detection" class="section level4">
+<h4><span class="header-section-number">2.4.5.2</span> Community detection</h4>
+<p>Different algorithm for community detection (clustering)</p>
+</div>
+<div id="girvan-newman-algorithm" class="section level4">
+<h4><span class="header-section-number">2.4.5.3</span> Girvan-Newman algorithm</h4>
+<p>Girvan-Newman algorithm (edge betweenness method): the number of shortest paths passing through an intra-community edge should be low while inter-community edges are likely to act as bottlenecks that participate in many shortest paths between vertices of different communities.</p>
+<pre class="sourceCode r"><code class="sourceCode r">dendrogram &lt;-<span class="st"> </span><span class="kw">cluster_edge_betweenness</span>(karate)</code></pre>
+<pre><code>## Warning in cluster_edge_betweenness(karate): At community.c:460 :Membership
+## vector will be selected based on the lowest modularity score.</code></pre>
+<pre><code>## Warning in cluster_edge_betweenness(karate): At community.c:467 :Modularity
+## calculation with weighted edge betweenness community detection might not
+## make sense -- modularity treats edge weights as similarities while edge
+## betwenness treats them as distances</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">dendrogram</code></pre>
+<pre><code>## IGRAPH clustering edge betweenness, groups: 6, mod: 0.35
+## + groups:
+##   $`1`
+##   [1] &quot;Mr Hi&quot;    &quot;Actor 2&quot;  &quot;Actor 4&quot;  &quot;Actor 8&quot;  &quot;Actor 12&quot; &quot;Actor 13&quot;
+##   [7] &quot;Actor 18&quot; &quot;Actor 20&quot; &quot;Actor 22&quot;
+##   
+##   $`2`
+##   [1] &quot;Actor 3&quot;  &quot;Actor 10&quot; &quot;Actor 14&quot; &quot;Actor 29&quot;
+##   
+##   $`3`
+##   [1] &quot;Actor 5&quot;  &quot;Actor 6&quot;  &quot;Actor 7&quot;  &quot;Actor 11&quot; &quot;Actor 17&quot;
+##   
+##   + ... omitted several groups/vertices</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot_dendrogram</span>(dendrogram) <span class="co"># for hierarchical structure</span></code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-85-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">membership</span>(dendrogram) <span class="co"># best cut in terms of modularity</span></code></pre>
+<pre><code>##    Mr Hi  Actor 2  Actor 3  Actor 4  Actor 5  Actor 6  Actor 7  Actor 8 
+##        1        1        2        1        3        3        3        1 
+##  Actor 9 Actor 10 Actor 11 Actor 12 Actor 13 Actor 14 Actor 15 Actor 16 
+##        4        2        3        1        1        2        4        4 
+## Actor 17 Actor 18 Actor 19 Actor 20 Actor 21 Actor 22 Actor 23 Actor 24 
+##        3        1        4        1        4        1        4        5 
+## Actor 25 Actor 26 Actor 27 Actor 28 Actor 29 Actor 30 Actor 31 Actor 32 
+##        5        5        6        5        2        6        4        4 
+## Actor 33   John A 
+##        4        4</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cut_at</span>(dendrogram,<span class="dt">no =</span> <span class="dv">2</span>) <span class="co"># cut into two groups</span></code></pre>
+<pre><code>##  [1] 2 2 1 2 2 2 2 2 1 1 2 2 2 1 1 1 2 2 1 2 1 2 1 1 1 1 1 1 1 1 1 1 1 1</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">V</span>(karate)[Faction <span class="op">==</span><span class="st"> </span><span class="dv">1</span>]<span class="op">$</span>shape &lt;-<span class="st"> &quot;circle&quot;</span>
+<span class="kw">V</span>(karate)[Faction <span class="op">==</span><span class="st"> </span><span class="dv">2</span>]<span class="op">$</span>shape &lt;-<span class="st"> &quot;square&quot;</span>
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+<span class="kw">plot</span>(dendrogram,karate)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-85-2.png" width="672" /></p>
+</div>
+<div id="exact-modularity-maximization" class="section level4">
+<h4><span class="header-section-number">2.4.5.4</span> Exact modularity maximization</h4>
+<p>Exact modularity maximization: optimization problem to maximum the modularity</p>
+<ul>
+<li><code>cluster_optimal()</code> is not available for the underlying package is removed from CRAN</li>
+<li>For large graph, apply <code>cluster_fast_greedy()</code></li>
+</ul>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#optimal=cluster_optimal(karate)</span>
+<span class="co">#set.seed(1)</span>
+<span class="co">#plot(optimal,karate)</span>
+optimal_lg=<span class="kw">cluster_fast_greedy</span>(karate)
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+<span class="kw">plot</span>(optimal_lg,karate)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-86-1.png" width="672" /></p>
+</div>
+<div id="leading-eigenvector" class="section level4">
+<h4><span class="header-section-number">2.4.5.5</span> Leading eigenvector</h4>
+<pre class="sourceCode r"><code class="sourceCode r">eigen=<span class="kw">cluster_leading_eigen</span>(karate)
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+<span class="kw">plot</span>(eigen,karate)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-87-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r">clusters &lt;-<span class="st"> </span><span class="kw">cluster_leading_eigen</span>(karate, <span class="dt">steps =</span> <span class="dv">1</span>) <span class="co">#at most two cluster</span></code></pre>
+</div>
+<div id="label-propagation-algorithm" class="section level4">
+<h4><span class="header-section-number">2.4.5.6</span> Label propagation algorithm:</h4>
+<p>The algorithm terminates when it holds for each node that it belongs to a community to which a maximum number of its neighbors also belong.</p>
+<ul>
+<li><code>fixed</code>: TRUE-label will not change.</li>
+<li><code>initial</code>: initial point.</li>
+</ul>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#non-negative values: different labels; negative values: no labels</span>
+initial=<span class="kw">rep</span>(<span class="op">-</span><span class="dv">1</span>,<span class="kw">vcount</span>(karate))
+fixed=<span class="kw">rep</span>(<span class="ot">FALSE</span>,<span class="kw">vcount</span>(karate))
+<span class="co">#need to have names</span>
+<span class="kw">names</span>(initial)=<span class="kw">names</span>(fixed)=<span class="kw">V</span>(karate)<span class="op">$</span>name 
+initial[<span class="st">&#39;Mr Hi&#39;</span>]=<span class="dv">1</span>
+initial[<span class="st">&#39;John A&#39;</span>]=<span class="dv">2</span>
+fixed[<span class="st">&#39;Mr Hi&#39;</span>]=fixed[<span class="st">&#39;John A&#39;</span>]=<span class="ot">TRUE</span>
+lab=<span class="kw">cluster_label_prop</span>(karate,<span class="dt">initial =</span> initial,<span class="dt">fixed =</span> fixed)
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+<span class="kw">plot</span>(lab,karate)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-88-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
+<span class="kw">plot</span>(ground_truth,karate)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-88-2.png" width="672" /></p>
+</div>
+<div id="other-algorithms" class="section level4">
+<h4><span class="header-section-number">2.4.5.7</span> Other algorithms:</h4>
+<p><code>cluster_spinglass</code></p>
+<p>…</p>
+</div>
+</div>
+<div id="visualization-1" class="section level3">
+<h3><span class="header-section-number">2.4.6</span> Visualization</h3>
+<div id="visulization" class="section level4">
+<h4><span class="header-section-number">2.4.6.1</span> Visulization</h4>
+<ul>
+<li>color the paths</li>
+<li>plotting clusters</li>
+<li>plotting dendrograms</li>
+<li>marked several grouping vertices</li>
+</ul>
+<p><code>plot</code> support <code>igraph</code> and other igraph objects such as <code>vertexclustering</code>, <code>vertexdendrogram</code>, …</p>
+</div>
+<div id="plotting-clusters" class="section level4">
+<h4><span class="header-section-number">2.4.6.2</span> Plotting clusters</h4>
+<p><code>plot(vertexdendrogram,igraph)</code></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
+<span class="kw">plot</span>(ground_truth,karate)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-89-1.png" width="672" /></p>
+</div>
+<div id="plotting-dendrograms" class="section level4">
+<h4><span class="header-section-number">2.4.6.3</span> Plotting dendrograms</h4>
+<p><code>plot_dendrogram(vertexdendrogram)</code></p>
+<p>Not flexible enough. Try <code>ggdendrogram()</code> in <code>ggplot2</code> package.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
+<span class="kw">plot_dendrogram</span>(dendrogram)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-90-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#labels at the same height: hang=-1</span>
+<span class="co">#cex: size of labels</span>
+<span class="kw">plot_dendrogram</span>(dendrogram,<span class="dt">hang =</span> <span class="dv">-1</span>, <span class="dt">cex =</span> <span class="fl">0.6</span>) </code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-90-2.png" width="672" /></p>
+</div>
+<div id="marked-groups" class="section level4">
+<h4><span class="header-section-number">2.4.6.4</span> marked groups</h4>
+<p><code>plot</code>:</p>
+<ul>
+<li><code>mark.group</code>: list</li>
+<li><code>mark.col</code>: vector</li>
+<li><code>mark.border</code>: vector</li>
+<li><code>mark.shape</code>: vector (smoothness of the border, range from -1 to 1)</li>
+<li><code>mark.expand</code>: vector (size of the border)</li>
+</ul>
+<pre class="sourceCode r"><code class="sourceCode r">ls=<span class="kw">list</span>(<span class="st">`</span><span class="dt">1</span><span class="st">`</span>=ground_truth[[<span class="dv">1</span>]],<span class="st">`</span><span class="dt">2</span><span class="st">`</span>=ground_truth[[<span class="dv">2</span>]])
+ls</code></pre>
+<pre><code>## $`1`
+##  [1]  1  2  3  4  5  6  7  8 11 12 13 14 17 18 20 22
+## 
+## $`2`
+##  [1]  9 10 15 16 19 21 23 24 25 26 27 28 29 30 31 32 33 34</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># other pars can be set as default</span>
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+<span class="kw">plot</span>(karate,<span class="dt">mark.groups =</span> ls)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-91-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
+<span class="kw">plot</span>(karate,<span class="dt">mark.groups =</span> ls,<span class="dt">mark.col =</span> <span class="kw">c</span>(<span class="st">&quot;lightblue&quot;</span>,<span class="st">&quot;yellow&quot;</span>),<span class="dt">mark.border =</span> <span class="kw">rainbow</span>(<span class="kw">length</span>(ls),<span class="dt">alpha=</span><span class="dv">1</span>),<span class="dt">mark.shape=</span><span class="kw">c</span>(<span class="op">-</span><span class="fl">0.5</span>,<span class="dv">1</span>),<span class="dt">mark.expand =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-91-2.png" width="672" /></p>
+</div>
+</div>
+</div>
+<div id="more-about-igraph" class="section level2">
+<h2><span class="header-section-number">2.5</span> More about <code>igraph</code></h2>
+<ul>
+<li>Epidemics on networks: compartmental models on netwoks</li>
+<li>Spectral embeddings: community detection</li>
+<li>Change-point detection in temporal graphs</li>
+<li>CLustering multiple graphs</li>
+<li>Cliques and graphlets</li>
+<li>Graphons</li>
+<li>Graph matching</li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ergm-statnet-package.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

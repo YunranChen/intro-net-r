@@ -1,0 +1,1744 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>3 ERGM (statnet Package) | Introduction to Network Analysis Using R</title>
+  <meta name="description" content="This github page provide a basic introduction on network analysis using R. The documents are based on the lab materials of STAT650 Social Network at Duke University.">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="3 ERGM (statnet Package) | Introduction to Network Analysis Using R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This github page provide a basic introduction on network analysis using R. The documents are based on the lab materials of STAT650 Social Network at Duke University." />
+  <meta name="github-repo" content="YunranChen/intro-network-R" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="3 ERGM (statnet Package) | Introduction to Network Analysis Using R" />
+  
+  <meta name="twitter:description" content="This github page provide a basic introduction on network analysis using R. The documents are based on the lab materials of STAT650 Social Network at Duke University." />
+  
+
+<meta name="author" content="Yunran Chen">
+
+
+<meta name="date" content="2019-04-27">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="igraph.html">
+<link rel="next" href="collect-network-data-and-api-requests.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.8.0/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.39.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.39.2/plotly-latest.min.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#outline"><i class="fa fa-check"></i><b>1.1</b> Outline</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#detailed-outline"><i class="fa fa-check"></i><b>1.2</b> Detailed Outline</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="igraph.html"><a href="igraph.html"><i class="fa fa-check"></i><b>2</b> <code>igraph</code> package</a><ul>
+<li class="chapter" data-level="2.1" data-path="igraph.html"><a href="igraph.html#introduction-1"><i class="fa fa-check"></i><b>2.1</b> Introduction</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="igraph.html"><a href="igraph.html#igraph-vs-statnet"><i class="fa fa-check"></i><b>2.1.1</b> <code>igraph</code> vs <code>statnet</code></a></li>
+<li class="chapter" data-level="2.1.2" data-path="igraph.html"><a href="igraph.html#references"><i class="fa fa-check"></i><b>2.1.2</b> References</a></li>
+<li class="chapter" data-level="2.1.3" data-path="igraph.html"><a href="igraph.html#preparation"><i class="fa fa-check"></i><b>2.1.3</b> Preparation</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="igraph.html"><a href="igraph.html#create-networks-and-basics-concepts"><i class="fa fa-check"></i><b>2.2</b> Create networks and basics concepts</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="igraph.html"><a href="igraph.html#outline-1"><i class="fa fa-check"></i><b>2.2.1</b> Outline</a></li>
+<li class="chapter" data-level="2.2.2" data-path="igraph.html"><a href="igraph.html#create-simple-networks"><i class="fa fa-check"></i><b>2.2.2</b> Create simple networks</a></li>
+<li class="chapter" data-level="2.2.3" data-path="igraph.html"><a href="igraph.html#creating-specific-graphs-and-graph-models"><i class="fa fa-check"></i><b>2.2.3</b> Creating specific graphs and graph models</a></li>
+<li class="chapter" data-level="2.2.4" data-path="igraph.html"><a href="igraph.html#adjustments-on-graphs"><i class="fa fa-check"></i><b>2.2.4</b> Adjustments on graphs</a></li>
+<li class="chapter" data-level="2.2.5" data-path="igraph.html"><a href="igraph.html#edge-vertex-and-network-attributes"><i class="fa fa-check"></i><b>2.2.5</b> Edge, vertex and network attributes</a></li>
+<li class="chapter" data-level="2.2.6" data-path="igraph.html"><a href="igraph.html#description-of-igraph-object"><i class="fa fa-check"></i><b>2.2.6</b> Description of igraph object</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="igraph.html"><a href="igraph.html#built-networks-from-external-sources-basic-visualization-and-more-on-network-descriptions"><i class="fa fa-check"></i><b>2.3</b> Built networks from external sources, basic visualization and more on network descriptions</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="igraph.html"><a href="igraph.html#outline-2"><i class="fa fa-check"></i><b>2.3.1</b> Outline</a></li>
+<li class="chapter" data-level="2.3.2" data-path="igraph.html"><a href="igraph.html#dataset"><i class="fa fa-check"></i><b>2.3.2</b> Dataset</a></li>
+<li class="chapter" data-level="2.3.3" data-path="igraph.html"><a href="igraph.html#get-network-from-files"><i class="fa fa-check"></i><b>2.3.3</b> Get network from files</a></li>
+<li class="chapter" data-level="2.3.4" data-path="igraph.html"><a href="igraph.html#visualization"><i class="fa fa-check"></i><b>2.3.4</b> Visualization</a></li>
+<li class="chapter" data-level="2.3.5" data-path="igraph.html"><a href="igraph.html#network-and-node-descriptions"><i class="fa fa-check"></i><b>2.3.5</b> Network and node descriptions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="igraph.html"><a href="igraph.html#paths-communitites-and-related-visualization"><i class="fa fa-check"></i><b>2.4</b> Paths, communitites and related visualization</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="igraph.html"><a href="igraph.html#outline-3"><i class="fa fa-check"></i><b>2.4.1</b> Outline</a></li>
+<li class="chapter" data-level="2.4.2" data-path="igraph.html"><a href="igraph.html#datasets"><i class="fa fa-check"></i><b>2.4.2</b> Datasets</a></li>
+<li class="chapter" data-level="2.4.3" data-path="igraph.html"><a href="igraph.html#paths-distances-and-diameter"><i class="fa fa-check"></i><b>2.4.3</b> Paths, distances and diameter</a></li>
+<li class="chapter" data-level="2.4.4" data-path="igraph.html"><a href="igraph.html#components"><i class="fa fa-check"></i><b>2.4.4</b> Components</a></li>
+<li class="chapter" data-level="2.4.5" data-path="igraph.html"><a href="igraph.html#community"><i class="fa fa-check"></i><b>2.4.5</b> Community</a></li>
+<li class="chapter" data-level="2.4.6" data-path="igraph.html"><a href="igraph.html#visualization-1"><i class="fa fa-check"></i><b>2.4.6</b> Visualization</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="igraph.html"><a href="igraph.html#more-about-igraph"><i class="fa fa-check"></i><b>2.5</b> More about <code>igraph</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html"><i class="fa fa-check"></i><b>3</b> ERGM (<code>statnet</code> Package)</a><ul>
+<li class="chapter" data-level="3.1" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#introduction-2"><i class="fa fa-check"></i><b>3.1</b> Introduction</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#outline-4"><i class="fa fa-check"></i><b>3.1.1</b> Outline</a></li>
+<li class="chapter" data-level="3.1.2" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#statnet"><i class="fa fa-check"></i><b>3.1.2</b> <code>statnet</code></a></li>
+<li class="chapter" data-level="3.1.3" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#references-1"><i class="fa fa-check"></i><b>3.1.3</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#preparation-1"><i class="fa fa-check"></i><b>3.2</b> Preparation</a></li>
+<li class="chapter" data-level="3.3" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#summary-the-network-statistics"><i class="fa fa-check"></i><b>3.3</b> <code>summary</code> the network statistics</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#dataset-1"><i class="fa fa-check"></i><b>3.3.1</b> Dataset</a></li>
+<li class="chapter" data-level="3.3.2" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#summary"><i class="fa fa-check"></i><b>3.3.2</b> <code>summary</code></a></li>
+<li class="chapter" data-level="3.3.3" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#directed-networks"><i class="fa fa-check"></i><b>3.3.3</b> directed networks</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#ergm-fit-ergm-model"><i class="fa fa-check"></i><b>3.4</b> <code>ergm</code> fit ergm model</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#ergm"><i class="fa fa-check"></i><b>3.4.1</b> ERGM</a></li>
+<li class="chapter" data-level="3.4.2" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#ergm-function."><i class="fa fa-check"></i><b>3.4.2</b> <code>ergm</code> function.</a></li>
+<li class="chapter" data-level="3.4.3" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#ergm-terms"><i class="fa fa-check"></i><b>3.4.3</b> <code>ergm-terms</code></a></li>
+<li class="chapter" data-level="3.4.4" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#missing-edges"><i class="fa fa-check"></i><b>3.4.4</b> Missing edges</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#simulate-netowrks-from-an-ergm-model-fit"><i class="fa fa-check"></i><b>3.5</b> <code>simulate</code> netowrks from an ergm model fit</a></li>
+<li class="chapter" data-level="3.6" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#check-the-goodness-of-fit"><i class="fa fa-check"></i><b>3.6</b> Check the goodness of fit</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#gof"><i class="fa fa-check"></i><b>3.6.1</b> <code>gof</code></a></li>
+<li class="chapter" data-level="3.6.2" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#mcmc.diagnostics"><i class="fa fa-check"></i><b>3.6.2</b> <code>mcmc.diagnostics</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="ergm-statnet-package.html"><a href="ergm-statnet-package.html#more-functions"><i class="fa fa-check"></i><b>3.7</b> More functions</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html"><i class="fa fa-check"></i><b>4</b> Collect network data and API requests</a><ul>
+<li class="chapter" data-level="4.1" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#several-useful-websites"><i class="fa fa-check"></i><b>4.1</b> Several useful websites</a></li>
+<li class="chapter" data-level="4.2" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#web-scraping"><i class="fa fa-check"></i><b>4.2</b> Web scraping</a></li>
+<li class="chapter" data-level="4.3" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#preparation-2"><i class="fa fa-check"></i><b>4.3</b> Preparation</a></li>
+<li class="chapter" data-level="4.4" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#twitter-api-request"><i class="fa fa-check"></i><b>4.4</b> Twitter API request</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#r-package-rtweet"><i class="fa fa-check"></i><b>4.4.1</b> R package <code>rtweet</code></a></li>
+<li class="chapter" data-level="4.4.2" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#preparation-3"><i class="fa fa-check"></i><b>4.4.2</b> Preparation</a></li>
+<li class="chapter" data-level="4.4.3" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#api-authorization"><i class="fa fa-check"></i><b>4.4.3</b> API authorization</a></li>
+<li class="chapter" data-level="4.4.4" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#rtweet"><i class="fa fa-check"></i><b>4.4.4</b> <code>rtweet</code></a></li>
+<li class="chapter" data-level="4.4.5" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#retweet-networks"><i class="fa fa-check"></i><b>4.4.5</b> Retweet networks</a></li>
+<li class="chapter" data-level="4.4.6" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#friendship-networks"><i class="fa fa-check"></i><b>4.4.6</b> Friendship networks</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#other-apis"><i class="fa fa-check"></i><b>4.5</b> Other APIs</a></li>
+<li class="chapter" data-level="4.6" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#api-request-directly-from-r"><i class="fa fa-check"></i><b>4.6</b> API request directly from R</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#introduction-3"><i class="fa fa-check"></i><b>4.6.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.6.2" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#preparation-4"><i class="fa fa-check"></i><b>4.6.2</b> preparation</a></li>
+<li class="chapter" data-level="4.6.3" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#search-people-id"><i class="fa fa-check"></i><b>4.6.3</b> search people id</a></li>
+<li class="chapter" data-level="4.6.4" data-path="collect-network-data-and-api-requests.html"><a href="collect-network-data-and-api-requests.html#search-movies-based-on-people-id"><i class="fa fa-check"></i><b>4.6.4</b> search movies based on people id</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html"><i class="fa fa-check"></i><b>5</b> Advanced Network Visualization</a><ul>
+<li class="chapter" data-level="5.1" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#introduction-4"><i class="fa fa-check"></i><b>5.1</b> Introduction</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#outline-5"><i class="fa fa-check"></i><b>5.1.1</b> Outline</a></li>
+<li class="chapter" data-level="5.1.2" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#available-r-packages-and-tutorial"><i class="fa fa-check"></i><b>5.1.2</b> Available R packages and tutorial</a></li>
+<li class="chapter" data-level="5.1.3" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#references-2"><i class="fa fa-check"></i><b>5.1.3</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#preparation-5"><i class="fa fa-check"></i><b>5.2</b> Preparation</a></li>
+<li class="chapter" data-level="5.3" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#visualization-for-static-network"><i class="fa fa-check"></i><b>5.3</b> Visualization for static network</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#hairball-plot"><i class="fa fa-check"></i><b>5.3.1</b> Hairball plot</a></li>
+<li class="chapter" data-level="5.3.2" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#heatmap"><i class="fa fa-check"></i><b>5.3.2</b> Heatmap</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#other-static-networks"><i class="fa fa-check"></i><b>5.4</b> Other static networks</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#two-mode-network"><i class="fa fa-check"></i><b>5.4.1</b> Two-mode network</a></li>
+<li class="chapter" data-level="5.4.2" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#multiple-neworks"><i class="fa fa-check"></i><b>5.4.2</b> Multiple neworks</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#ggplot2-version-for-network-visualization"><i class="fa fa-check"></i><b>5.5</b> <code>ggplot2</code> version for network visualization</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#ggnet2geomnetggnetwork"><i class="fa fa-check"></i><b>5.5.1</b> <code>ggnet2</code>,<code>geomnet</code>,<code>ggnetwork</code></a></li>
+<li class="chapter" data-level="5.5.2" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#football-data"><i class="fa fa-check"></i><b>5.5.2</b> football data</a></li>
+<li class="chapter" data-level="5.5.3" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#ggnet2"><i class="fa fa-check"></i><b>5.5.3</b> <code>ggnet2</code></a></li>
+<li class="chapter" data-level="5.5.4" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#geomnet"><i class="fa fa-check"></i><b>5.5.4</b> <code>geomnet</code></a></li>
+<li class="chapter" data-level="5.5.5" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#ggnetwork"><i class="fa fa-check"></i><b>5.5.5</b> <code>ggnetwork</code></a></li>
+<li class="chapter" data-level="5.5.6" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#extensions-of-ggnet2geomnetggnetwork"><i class="fa fa-check"></i><b>5.5.6</b> Extensions of <code>ggnet2</code>,<code>geomnet</code>,<code>ggnetwork</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#interactive-network-visualization"><i class="fa fa-check"></i><b>5.6</b> Interactive network visualization</a></li>
+<li class="chapter" data-level="5.7" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#dynamic-network"><i class="fa fa-check"></i><b>5.7</b> Dynamic network</a><ul>
+<li class="chapter" data-level="5.7.1" data-path="advanced-network-visualization.html"><a href="advanced-network-visualization.html#introduction-5"><i class="fa fa-check"></i><b>5.7.1</b> Introduction</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="amen-packages.html"><a href="amen-packages.html"><i class="fa fa-check"></i><b>6</b> <code>amen</code> packages</a><ul>
+<li class="chapter" data-level="6.1" data-path="amen-packages.html"><a href="amen-packages.html#outline-6"><i class="fa fa-check"></i><b>6.1</b> Outline</a></li>
+<li class="chapter" data-level="6.2" data-path="amen-packages.html"><a href="amen-packages.html#ame"><i class="fa fa-check"></i><b>6.2</b> <code>ame()</code></a></li>
+<li class="chapter" data-level="6.3" data-path="amen-packages.html"><a href="amen-packages.html#input-prepare-the-dataset"><i class="fa fa-check"></i><b>6.3</b> Input: prepare the dataset</a></li>
+<li class="chapter" data-level="6.4" data-path="amen-packages.html"><a href="amen-packages.html#fit-the-model-the-gaussian-ame-model-continuous-y"><i class="fa fa-check"></i><b>6.4</b> Fit the model: the Gaussian AME model (continuous Y)</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="amen-packages.html"><a href="amen-packages.html#the-gaussian-ame-model"><i class="fa fa-check"></i><b>6.4.1</b> The Gaussian AME model</a></li>
+<li class="chapter" data-level="6.4.2" data-path="amen-packages.html"><a href="amen-packages.html#social-relations-model-srm"><i class="fa fa-check"></i><b>6.4.2</b> Social relations model (SRM)</a></li>
+<li class="chapter" data-level="6.4.3" data-path="amen-packages.html"><a href="amen-packages.html#social-relations-regression-model-srrm"><i class="fa fa-check"></i><b>6.4.3</b> Social relations regression model (SRRM)</a></li>
+<li class="chapter" data-level="6.4.4" data-path="amen-packages.html"><a href="amen-packages.html#no-row-variance-column-variance-or-dyadic-correlation"><i class="fa fa-check"></i><b>6.4.4</b> No row variance, column variance or dyadic correlation</a></li>
+<li class="chapter" data-level="6.4.5" data-path="amen-packages.html"><a href="amen-packages.html#additive-and-multiplicative-effects-model-ame"><i class="fa fa-check"></i><b>6.4.5</b> additive and multiplicative effects model (ame)</a></li>
+<li class="chapter" data-level="6.4.6" data-path="amen-packages.html"><a href="amen-packages.html#circle-plot-for-estimated-latent-factor"><i class="fa fa-check"></i><b>6.4.6</b> circle plot for estimated latent factor</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="amen-packages.html"><a href="amen-packages.html#choice-of-model-in-ame-binary-ordinal-discrete-or-sparse-relations"><i class="fa fa-check"></i><b>6.5</b> Choice of <code>model</code> in <code>ame</code>: binary, ordinal, discrete or sparse relations</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="amen-packages.html"><a href="amen-packages.html#binary-outcome"><i class="fa fa-check"></i><b>6.5.1</b> binary outcome</a></li>
+<li class="chapter" data-level="6.5.2" data-path="amen-packages.html"><a href="amen-packages.html#ordinal-outcome"><i class="fa fa-check"></i><b>6.5.2</b> ordinal outcome</a></li>
+<li class="chapter" data-level="6.5.3" data-path="amen-packages.html"><a href="amen-packages.html#censored-and-fixed-rank-nomination-data"><i class="fa fa-check"></i><b>6.5.3</b> censored and fixed rank nomination data</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="amen-packages.html"><a href="amen-packages.html#symmetric-outcome-symmetrictrue"><i class="fa fa-check"></i><b>6.6</b> symmetric outcome: <code>symmetric=TRUE</code></a><ul>
+<li class="chapter" data-level="6.6.1" data-path="amen-packages.html"><a href="amen-packages.html#symmetric-outcome-symmetrictrue-1"><i class="fa fa-check"></i><b>6.6.1</b> symmetric outcome: <code>symmetric=TRUE</code></a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="amen-packages.html"><a href="amen-packages.html#ame_rep-for-longitudinal-outcome"><i class="fa fa-check"></i><b>6.7</b> <code>ame_rep()</code> for longitudinal outcome</a><ul>
+<li class="chapter" data-level="6.7.1" data-path="amen-packages.html"><a href="amen-packages.html#repeated-measures-data-longitudinal-outcome"><i class="fa fa-check"></i><b>6.7.1</b> repeated measures data: longitudinal outcome</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to Network Analysis Using R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="ergm-statnet-package" class="section level1">
+<h1><span class="header-section-number">3</span> ERGM (<code>statnet</code> Package)</h1>
+<div id="introduction-2" class="section level2">
+<h2><span class="header-section-number">3.1</span> Introduction</h2>
+<div id="outline-4" class="section level3">
+<h3><span class="header-section-number">3.1.1</span> Outline</h3>
+<p>Here we only focus on the R package <code>statnet</code> to fit ERGM.</p>
+<ul>
+<li><code>summary</code> network statistics</li>
+<li><code>ergm</code> model fitting and interpretation:</li>
+<li><code>simulate</code> network simulations based on specified model.</li>
+<li><code>gof</code>, <code>mcmc.diagnostics</code>: Goodness of fit and MCMC diagnostics</li>
+</ul>
+</div>
+<div id="statnet" class="section level3">
+<h3><span class="header-section-number">3.1.2</span> <code>statnet</code></h3>
+<p>The analytic framework is based on <strong>Exponential family Random Graph Models (ergm)</strong>.</p>
+<p><strong>statnet</strong> provides a comprehensive framework for <strong>ergm-based</strong> network modeling, including tools for:</p>
+<ul>
+<li>model estimation</li>
+<li>model-based network simulation</li>
+<li>network visualization</li>
+<li>model evaluation</li>
+</ul>
+<p>Powered by <strong>Markov chain Monte Carlo (MCMC)</strong> algorithm.</p>
+</div>
+<div id="references-1" class="section level3">
+<h3><span class="header-section-number">3.1.3</span> References</h3>
+<ul>
+<li>Official website (handbook): <a href="http://statnet.org/" class="uri">http://statnet.org/</a></li>
+<li>Tutorial: <a href="https://statnet.org/trac/raw-attachment/wiki/Sunbelt2016/ergm_tutorial.html" class="uri">https://statnet.org/trac/raw-attachment/wiki/Sunbelt2016/ergm_tutorial.html</a></li>
+<li><strong>Explore the official websites to find more info</strong></li>
+</ul>
+</div>
+</div>
+<div id="preparation-1" class="section level2">
+<h2><span class="header-section-number">3.2</span> Preparation</h2>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages(&quot;statnet&quot;)</span>
+<span class="kw">library</span>(statnet)
+<span class="kw">library</span>(dplyr)</code></pre>
+</div>
+<div id="summary-the-network-statistics" class="section level2">
+<h2><span class="header-section-number">3.3</span> <code>summary</code> the network statistics</h2>
+<div id="dataset-1" class="section level3">
+<h3><span class="header-section-number">3.3.1</span> Dataset</h3>
+<p>florentine: Florentine Family Marriage and Business Ties Data</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="dt">package=</span><span class="st">&quot;ergm&quot;</span>) <span class="co">#see all available dataset in the package</span>
+<span class="kw">data</span>(florentine) <span class="co"># load flomarriage and flobusiness data</span>
+flomarriage <span class="co"># see the details of the network</span></code></pre>
+<pre><code>##  Network attributes:
+##   vertices = 16 
+##   directed = FALSE 
+##   hyper = FALSE 
+##   loops = FALSE 
+##   multiple = FALSE 
+##   bipartite = FALSE 
+##   total edges= 20 
+##     missing edges= 0 
+##     non-missing edges= 20 
+## 
+##  Vertex attribute names: 
+##     priorates totalties vertex.names wealth 
+## 
+## No edge attributes</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(flomarriage)</code></pre>
+<pre><code>## [1] &quot;network&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(flomarriage)</code></pre>
+<pre><code>## Network attributes:
+##   vertices = 16
+##   directed = FALSE
+##   hyper = FALSE
+##   loops = FALSE
+##   multiple = FALSE
+##   bipartite = FALSE
+##  total edges = 20 
+##    missing edges = 0 
+##    non-missing edges = 20 
+##  density = 0.1666667 
+## 
+## Vertex attributes:
+## 
+##  priorates:
+##    numeric valued attribute
+##    attribute summary:
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    0.00    0.00   21.50   25.94   44.75   74.00 
+## 
+##  totalties:
+##    numeric valued attribute
+##    attribute summary:
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    1.00    4.75    9.00   13.88   15.00   54.00 
+##   vertex.names:
+##    character valued attribute
+##    16 valid vertex names
+## 
+##  wealth:
+##    numeric valued attribute
+##    attribute summary:
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    3.00   17.50   39.00   42.56   48.25  146.00 
+## 
+## No edge attributes
+## 
+## Network edgelist matrix:
+##       [,1] [,2]
+##  [1,]    1    9
+##  [2,]    2    6
+##  [3,]    2    7
+##  [4,]    2    9
+##  [5,]    3    5
+##  [6,]    3    9
+##  [7,]    4    7
+##  [8,]    4   11
+##  [9,]    4   15
+## [10,]    5   11
+## [11,]    5   15
+## [12,]    7    8
+## [13,]    7   16
+## [14,]    9   13
+## [15,]    9   14
+## [16,]    9   16
+## [17,]   10   14
+## [18,]   11   15
+## [19,]   13   15
+## [20,]   13   16</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
+<span class="kw">plot</span>(flomarriage)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-93-1.png" width="672" /></p>
+</div>
+<div id="summary" class="section level3">
+<h3><span class="header-section-number">3.3.2</span> <code>summary</code></h3>
+<p><code>summary(network-object~ergm-terms)</code>: provide the statistics of network</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(flomarriage<span class="op">~</span>edges<span class="op">+</span>triangle<span class="op">+</span><span class="kw">kstar</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)<span class="op">+</span><span class="kw">degree</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">5</span>))</code></pre>
+<pre><code>##    edges triangle   kstar1   kstar2   kstar3  degree0  degree1  degree2 
+##       20        3       40       47       34        1        4        2 
+##  degree3  degree4  degree5 
+##        6        2        0</code></pre>
+</div>
+<div id="directed-networks" class="section level3">
+<h3><span class="header-section-number">3.3.3</span> directed networks</h3>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(samplk)
+samplk3</code></pre>
+<pre><code>##  Network attributes:
+##   vertices = 18 
+##   directed = TRUE 
+##   hyper = FALSE 
+##   loops = FALSE 
+##   multiple = FALSE 
+##   bipartite = FALSE 
+##   total edges= 56 
+##     missing edges= 0 
+##     non-missing edges= 56 
+## 
+##  Vertex attribute names: 
+##     cloisterville group vertex.names 
+## 
+## No edge attributes</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
+<span class="kw">plot</span>(samplk3)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-95-1.png" width="672" /></p>
+<hr />
+<p><code>idegree</code> and <code>odegree</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(samplk3<span class="op">~</span><span class="kw">idegree</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)<span class="op">+</span><span class="kw">odegree</span>(<span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">4</span>))) <span class="co">#indegree and outdegree</span></code></pre>
+<pre><code>## idegree1 idegree2 idegree3 odegree2 odegree4 
+##        1        7        2        0        2</code></pre>
+</div>
+</div>
+<div id="ergm-fit-ergm-model" class="section level2">
+<h2><span class="header-section-number">3.4</span> <code>ergm</code> fit ergm model</h2>
+<div id="ergm" class="section level3">
+<h3><span class="header-section-number">3.4.1</span> ERGM</h3>
+<p>The general form:
+<span class="math inline">\(P(g=G)=\frac{exp(\theta&#39;T(G))}{c(\theta)}\)</span></p>
+<p>log-odds of a single edge between node <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>:
+<span class="math inline">\(logit(Y)=\theta&#39;T(G)\)</span></p>
+<p>Similar as regression:</p>
+<p><code>glm(y~x)</code> – <code>ergm(graph~terms)</code> where <code>terms</code> are <span class="math inline">\(T(\cdot)\)</span></p>
+</div>
+<div id="ergm-function." class="section level3">
+<h3><span class="header-section-number">3.4.2</span> <code>ergm</code> function.</h3>
+<ul>
+<li>Input: formula [netowrk object (adjacency matrix)] ~ [ergm-terms]</li>
+</ul>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Input</span>
+?ergm
+<span class="kw">class</span>(flomarriage)</code></pre>
+<pre><code>## [1] &quot;network&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ergm</span>(flomarriage<span class="op">~</span>edges)<span class="op">%&gt;%</span><span class="kw">summary</span>()</code></pre>
+<pre><code>## Starting maximum pseudolikelihood estimation (MPLE):</code></pre>
+<pre><code>## Evaluating the predictor and response matrix.</code></pre>
+<pre><code>## Maximizing the pseudolikelihood.</code></pre>
+<pre><code>## Finished MPLE.</code></pre>
+<pre><code>## Stopping at the initial estimate.</code></pre>
+<pre><code>## Evaluating log-likelihood at the estimate.</code></pre>
+<pre><code>## 
+## ==========================
+## Summary of model fit
+## ==========================
+## 
+## Formula:   flomarriage ~ edges
+## 
+## Iterations:  5 out of 20 
+## 
+## Monte Carlo MLE Results:
+##       Estimate Std. Error MCMC % z value Pr(&gt;|z|)    
+## edges  -1.6094     0.2449      0  -6.571   &lt;1e-04 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##      Null Deviance: 166.4  on 120  degrees of freedom
+##  Residual Deviance: 108.1  on 119  degrees of freedom
+##  
+## AIC: 110.1    BIC: 112.9    (Smaller is better.)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">mat=<span class="kw">as.sociomatrix</span>(flomarriage)
+<span class="kw">ergm</span>(mat<span class="op">~</span>edges)<span class="op">%&gt;%</span><span class="kw">summary</span>()</code></pre>
+<pre><code>## Starting maximum pseudolikelihood estimation (MPLE):
+## Evaluating the predictor and response matrix.
+## Maximizing the pseudolikelihood.
+## Finished MPLE.
+## Stopping at the initial estimate.
+## Evaluating log-likelihood at the estimate.</code></pre>
+<pre><code>## 
+## ==========================
+## Summary of model fit
+## ==========================
+## 
+## Formula:   mat ~ edges
+## 
+## Iterations:  5 out of 20 
+## 
+## Monte Carlo MLE Results:
+##       Estimate Std. Error MCMC % z value Pr(&gt;|z|)    
+## edges  -1.6094     0.1732      0  -9.292   &lt;1e-04 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##      Null Deviance: 332.7  on 240  degrees of freedom
+##  Residual Deviance: 216.3  on 239  degrees of freedom
+##  
+## AIC: 218.3    BIC: 221.8    (Smaller is better.)</code></pre>
+<hr />
+<ul>
+<li><p>Output: ergm object</p></li>
+<li><p>Method on ergm object:</p>
+<ul>
+<li>class</li>
+<li>names</li>
+<li><strong>summary</strong></li>
+<li>coef</li>
+<li>coefficients</li>
+<li>vcov</li>
+</ul></li>
+</ul>
+<pre class="sourceCode r"><code class="sourceCode r">flomodel<span class="fl">.01</span>=<span class="kw">ergm</span>(flomarriage<span class="op">~</span>edges)</code></pre>
+<pre><code>## Starting maximum pseudolikelihood estimation (MPLE):</code></pre>
+<pre><code>## Evaluating the predictor and response matrix.</code></pre>
+<pre><code>## Maximizing the pseudolikelihood.</code></pre>
+<pre><code>## Finished MPLE.</code></pre>
+<pre><code>## Stopping at the initial estimate.</code></pre>
+<pre><code>## Evaluating log-likelihood at the estimate.</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(flomodel<span class="fl">.01</span>)</code></pre>
+<pre><code>## 
+## ==========================
+## Summary of model fit
+## ==========================
+## 
+## Formula:   flomarriage ~ edges
+## 
+## Iterations:  5 out of 20 
+## 
+## Monte Carlo MLE Results:
+##       Estimate Std. Error MCMC % z value Pr(&gt;|z|)    
+## edges  -1.6094     0.2449      0  -6.571   &lt;1e-04 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##      Null Deviance: 166.4  on 120  degrees of freedom
+##  Residual Deviance: 108.1  on 119  degrees of freedom
+##  
+## AIC: 110.1    BIC: 112.9    (Smaller is better.)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(flomodel<span class="fl">.01</span>)</code></pre>
+<pre><code>## [1] &quot;ergm&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(flomodel<span class="fl">.01</span>)</code></pre>
+<pre><code>##  [1] &quot;coef&quot;         &quot;iterations&quot;   &quot;MCMCtheta&quot;    &quot;gradient&quot;    
+##  [5] &quot;hessian&quot;      &quot;covar&quot;        &quot;failure&quot;      &quot;est.cov&quot;     
+##  [9] &quot;glm&quot;          &quot;glm.null&quot;     &quot;theta1&quot;       &quot;offset&quot;      
+## [13] &quot;drop&quot;         &quot;estimable&quot;    &quot;network&quot;      &quot;reference&quot;   
+## [17] &quot;newnetwork&quot;   &quot;formula&quot;      &quot;constrained&quot;  &quot;constraints&quot; 
+## [21] &quot;target.stats&quot; &quot;etamap&quot;       &quot;target.esteq&quot; &quot;estimate&quot;    
+## [25] &quot;control&quot;      &quot;null.lik&quot;     &quot;mle.lik&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">flomodel<span class="fl">.01</span><span class="op">$</span>coef</code></pre>
+<pre><code>##     edges 
+## -1.609438</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(flomodel<span class="fl">.01</span>)</code></pre>
+<pre><code>##     edges 
+## -1.609438</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coefficients</span>(flomodel<span class="fl">.01</span>)</code></pre>
+<pre><code>## Warning: You appear to be calling coef.ergm() directly. coef.ergm() is a
+## method, and will not be exported in a future version of &#39;ergm&#39;. Use coef()
+## instead, or getS3method() if absolutely necessary.</code></pre>
+<pre><code>##     edges 
+## -1.609438</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">vcov</span>(flomodel<span class="fl">.01</span>) <span class="co">#variance-covariance matrix of the main parameters</span></code></pre>
+<pre><code>##            edges
+## edges 0.05999985</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">vcov</span>(flomodel<span class="fl">.01</span>)<span class="op">%&gt;%</span><span class="kw">sqrt</span>()</code></pre>
+<pre><code>##           edges
+## edges 0.2449487</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">vcov</span>(<span class="kw">ergm</span>(flomarriage<span class="op">~</span>edges<span class="op">+</span>triangle))</code></pre>
+<pre><code>## Starting maximum pseudolikelihood estimation (MPLE):
+## Evaluating the predictor and response matrix.
+## Maximizing the pseudolikelihood.
+## Finished MPLE.
+## Starting Monte Carlo maximum likelihood estimation (MCMLE):
+## Iteration 1 of at most 20:
+## Optimizing with step length 1.
+## The log-likelihood improved by 0.002922.
+## Step length converged once. Increasing MCMC sample size.
+## Iteration 2 of at most 20:
+## Optimizing with step length 1.
+## The log-likelihood improved by 0.0006953.
+## Step length converged twice. Stopping.
+## Finished MCMLE.
+## Evaluating log-likelihood at the estimate. Using 20 bridges: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 .
+## This model was fit using MCMC.  To examine model diagnostics and check for degeneracy, use the mcmc.diagnostics() function.</code></pre>
+<pre><code>##               edges   triangle
+## edges     0.1242829 -0.1573260
+## triangle -0.1573260  0.3539089</code></pre>
+</div>
+<div id="ergm-terms" class="section level3">
+<h3><span class="header-section-number">3.4.3</span> <code>ergm-terms</code></h3>
+<p>See the full list of <code>ergm-terms</code></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">help</span>(<span class="st">&#39;ergm-terms&#39;</span>)</code></pre>
+<div id="erdos-renyi-model-gnp-model-include-edges-term" class="section level4">
+<h4><span class="header-section-number">3.4.3.1</span> Erdos-Renyi model G(n,p) model: include <code>edges</code> term</h4>
+<p>Edge included in the graph with prob <span class="math inline">\(p\)</span>: <span class="math inline">\(Pr(A=a|p)=\prod p^{a_{ij}}(1-p)^{1-a_{ij}}\)</span></p>
+<p>Rewrite Erdos-Renyi model in ERGM form: <span class="math inline">\(T(G)=\#edges\)</span>, <span class="math inline">\(\theta=log \frac{p}{1-p}\)</span></p>
+</div>
+<div id="interpretation-of-the-parameter" class="section level4">
+<h4><span class="header-section-number">3.4.3.2</span> Interpretation of the parameter</h4>
+<p>Interpretation (similar when you interpret glm):</p>
+<ul>
+<li><p><code>edges</code>: If the number of edges increase 1, the log-odds of any edge existing is -1.6094.</p></li>
+<li><p><span class="math inline">\(p&lt;\alpha\)</span>: parameter does not equal to 0 significantly,</p></li>
+<li><p>Null Deviance: The null deviance in the ergm
+output appears to be based on an Erdos-Renyi random graph with p = 0.5.</p></li>
+<li><p>Residual Deviance: 2 times difference of loglik (saturated model - our model) (smaller is better)</p></li>
+<li><p>AIC, BIC: -loglik+penalty(#parameter)</p></li>
+</ul>
+<pre class="sourceCode r"><code class="sourceCode r">flomodel<span class="fl">.01</span>=<span class="kw">ergm</span>(flomarriage<span class="op">~</span>edges) <span class="co">#similar as regression lm(y~x)</span></code></pre>
+<pre><code>## Starting maximum pseudolikelihood estimation (MPLE):</code></pre>
+<pre><code>## Evaluating the predictor and response matrix.</code></pre>
+<pre><code>## Maximizing the pseudolikelihood.</code></pre>
+<pre><code>## Finished MPLE.</code></pre>
+<pre><code>## Stopping at the initial estimate.</code></pre>
+<pre><code>## Evaluating log-likelihood at the estimate.</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(flomodel<span class="fl">.01</span>) </code></pre>
+<pre><code>## 
+## ==========================
+## Summary of model fit
+## ==========================
+## 
+## Formula:   flomarriage ~ edges
+## 
+## Iterations:  5 out of 20 
+## 
+## Monte Carlo MLE Results:
+##       Estimate Std. Error MCMC % z value Pr(&gt;|z|)    
+## edges  -1.6094     0.2449      0  -6.571   &lt;1e-04 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##      Null Deviance: 166.4  on 120  degrees of freedom
+##  Residual Deviance: 108.1  on 119  degrees of freedom
+##  
+## AIC: 110.1    BIC: 112.9    (Smaller is better.)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">flomodel<span class="fl">.01</span><span class="op">$</span>coef<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span><span class="kw">exp</span>(flomodel<span class="fl">.01</span><span class="op">$</span>coef)) <span class="co"># prob of an edge exists</span></code></pre>
+<pre><code>##     edges 
+## -1.341198</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="dv">-2</span><span class="op">*</span>(flomodel<span class="fl">.01</span><span class="op">$</span>mle.lik)<span class="op">+</span><span class="dv">2</span> <span class="co">#AIC: -2loglik+2k</span></code></pre>
+<pre><code>## &#39;log Lik.&#39; 110.1347 (df=1)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="dv">-2</span><span class="op">*</span>(flomodel<span class="fl">.01</span><span class="op">$</span>mle.lik)<span class="op">+</span><span class="kw">log</span>(<span class="dv">16</span><span class="op">*</span><span class="dv">15</span><span class="op">/</span><span class="dv">2</span>) <span class="co">#BIC:-2loglik+klog(n)</span></code></pre>
+<pre><code>## &#39;log Lik.&#39; 112.9222 (df=1)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pchisq</span>(<span class="fl">108.1</span> , <span class="dt">df=</span><span class="dv">119</span>, <span class="dt">lower.tail=</span><span class="ot">FALSE</span>) <span class="co"># H0: our model fits well. The smaller the better. Accept H0.</span></code></pre>
+<pre><code>## [1] 0.7535728</code></pre>
+</div>
+<div id="include-triangle-terms" class="section level4">
+<h4><span class="header-section-number">3.4.3.3</span> Include <code>triangle</code> terms</h4>
+<p>Include <strong>number of triangles</strong> as a measure of <strong>clustering</strong>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">flomodel<span class="fl">.02</span>=<span class="kw">ergm</span>(flomarriage<span class="op">~</span>edges<span class="op">+</span>triangle)</code></pre>
+<pre><code>## Starting maximum pseudolikelihood estimation (MPLE):</code></pre>
+<pre><code>## Evaluating the predictor and response matrix.</code></pre>
+<pre><code>## Maximizing the pseudolikelihood.</code></pre>
+<pre><code>## Finished MPLE.</code></pre>
+<pre><code>## Starting Monte Carlo maximum likelihood estimation (MCMLE):</code></pre>
+<pre><code>## Iteration 1 of at most 20:</code></pre>
+<pre><code>## Optimizing with step length 1.</code></pre>
+<pre><code>## The log-likelihood improved by 0.00888.</code></pre>
+<pre><code>## Step length converged once. Increasing MCMC sample size.</code></pre>
+<pre><code>## Iteration 2 of at most 20:</code></pre>
+<pre><code>## Optimizing with step length 1.</code></pre>
+<pre><code>## The log-likelihood improved by 0.000148.</code></pre>
+<pre><code>## Step length converged twice. Stopping.</code></pre>
+<pre><code>## Finished MCMLE.</code></pre>
+<pre><code>## Evaluating log-likelihood at the estimate. Using 20 bridges: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 .
+## This model was fit using MCMC.  To examine model diagnostics and check for degeneracy, use the mcmc.diagnostics() function.</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(flomodel<span class="fl">.02</span>)</code></pre>
+<pre><code>## 
+## ==========================
+## Summary of model fit
+## ==========================
+## 
+## Formula:   flomarriage ~ edges + triangle
+## 
+## Iterations:  2 out of 20 
+## 
+## Monte Carlo MLE Results:
+##          Estimate Std. Error MCMC % z value Pr(&gt;|z|)    
+## edges     -1.6737     0.3578      0  -4.677   &lt;1e-04 ***
+## triangle   0.1490     0.6029      0   0.247    0.805    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##      Null Deviance: 166.4  on 120  degrees of freedom
+##  Residual Deviance: 108.1  on 118  degrees of freedom
+##  
+## AIC: 112.1    BIC: 117.6    (Smaller is better.)</code></pre>
+<ul>
+<li><p>Coefficients: -1.6744<span class="math inline">\(\times\)</span>#of edges+0.1497<span class="math inline">\(\times\)</span>#of triangles</p></li>
+<li><p><code>triangle</code> is not significant</p></li>
+<li><p>AIC, BIC: larger than that of ER model</p></li>
+</ul>
+</div>
+<div id="include-nodal-covariates-nodecov" class="section level4">
+<h4><span class="header-section-number">3.4.3.4</span> Include nodal covariates: <code>nodecov</code></h4>
+<p>Using <code>nodecov</code> to include continuous nodal covariates</p>
+<pre class="sourceCode r"><code class="sourceCode r">flomarriage</code></pre>
+<pre><code>##  Network attributes:
+##   vertices = 16 
+##   directed = FALSE 
+##   hyper = FALSE 
+##   loops = FALSE 
+##   multiple = FALSE 
+##   bipartite = FALSE 
+##   total edges= 20 
+##     missing edges= 0 
+##     non-missing edges= 20 
+## 
+##  Vertex attribute names: 
+##     priorates totalties vertex.names wealth 
+## 
+## No edge attributes</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">wealth=flomarriage <span class="op">%v%</span><span class="st"> &#39;wealth&#39;</span> <span class="co"># %v% get the vertex attributes</span>
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+<span class="kw">plot</span>(flomarriage, <span class="dt">vertex.cex=</span>wealth<span class="op">/</span><span class="dv">25</span>, <span class="dt">main=</span><span class="st">&quot;Florentine marriage by wealth&quot;</span>, <span class="dt">cex.main=</span><span class="fl">0.8</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-102-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r">flomodel<span class="fl">.03</span>=<span class="kw">ergm</span>(flomarriage<span class="op">~</span>edges<span class="op">+</span><span class="kw">nodecov</span>(<span class="st">&#39;wealth&#39;</span>))</code></pre>
+<pre><code>## Starting maximum pseudolikelihood estimation (MPLE):</code></pre>
+<pre><code>## Evaluating the predictor and response matrix.</code></pre>
+<pre><code>## Maximizing the pseudolikelihood.</code></pre>
+<pre><code>## Finished MPLE.</code></pre>
+<pre><code>## Stopping at the initial estimate.</code></pre>
+<pre><code>## Evaluating log-likelihood at the estimate.</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(flomodel<span class="fl">.03</span>)</code></pre>
+<pre><code>## 
+## ==========================
+## Summary of model fit
+## ==========================
+## 
+## Formula:   flomarriage ~ edges + nodecov(&quot;wealth&quot;)
+## 
+## Iterations:  4 out of 20 
+## 
+## Monte Carlo MLE Results:
+##                 Estimate Std. Error MCMC % z value Pr(&gt;|z|)    
+## edges          -2.594929   0.536056      0  -4.841   &lt;1e-04 ***
+## nodecov.wealth  0.010546   0.004674      0   2.256   0.0241 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##      Null Deviance: 166.4  on 120  degrees of freedom
+##  Residual Deviance: 103.1  on 118  degrees of freedom
+##  
+## AIC: 107.1    BIC: 112.7    (Smaller is better.)</code></pre>
+<p>Interpretation: -2.594929 # of edges + 0.010546 wealth of node i + 0.010546 wealth of node j</p>
+</div>
+<div id="include-transformation-of-continuous-nodal-covariates" class="section level4">
+<h4><span class="header-section-number">3.4.3.5</span> Include transformation of continuous nodal covariates</h4>
+<pre class="sourceCode r"><code class="sourceCode r">flomodel<span class="fl">.04</span>=<span class="kw">ergm</span>(flomarriage<span class="op">~</span>edges<span class="op">+</span><span class="kw">absdiff</span>(<span class="st">&quot;wealth&quot;</span>))</code></pre>
+<pre><code>## Starting maximum pseudolikelihood estimation (MPLE):</code></pre>
+<pre><code>## Evaluating the predictor and response matrix.</code></pre>
+<pre><code>## Maximizing the pseudolikelihood.</code></pre>
+<pre><code>## Finished MPLE.</code></pre>
+<pre><code>## Stopping at the initial estimate.</code></pre>
+<pre><code>## Evaluating log-likelihood at the estimate.</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(flomodel<span class="fl">.04</span>)</code></pre>
+<pre><code>## 
+## ==========================
+## Summary of model fit
+## ==========================
+## 
+## Formula:   flomarriage ~ edges + absdiff(&quot;wealth&quot;)
+## 
+## Iterations:  4 out of 20 
+## 
+## Monte Carlo MLE Results:
+##                 Estimate Std. Error MCMC % z value Pr(&gt;|z|)    
+## edges          -2.302042   0.401906      0  -5.728   &lt;1e-04 ***
+## absdiff.wealth  0.015519   0.006157      0   2.521   0.0117 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##      Null Deviance: 166.4  on 120  degrees of freedom
+##  Residual Deviance: 102.0  on 118  degrees of freedom
+##  
+## AIC: 106    BIC: 111.5    (Smaller is better.)</code></pre>
+</div>
+<div id="include-transformation-of-continuous-nodal-covariates-1" class="section level4">
+<h4><span class="header-section-number">3.4.3.6</span> Include transformation of continuous nodal covariates</h4>
+<pre class="sourceCode r"><code class="sourceCode r">flomodel<span class="fl">.05</span>=<span class="kw">ergm</span>(flomarriage<span class="op">~</span>edges<span class="op">+</span><span class="kw">nodecov</span>(<span class="st">&#39;wealth&#39;</span>)<span class="op">+</span><span class="kw">nodecov</span>(<span class="st">&#39;wealth&#39;</span>,<span class="dt">transform=</span><span class="cf">function</span>(x) x<span class="op">^</span><span class="dv">2</span>))</code></pre>
+<pre><code>## Starting maximum pseudolikelihood estimation (MPLE):</code></pre>
+<pre><code>## Evaluating the predictor and response matrix.</code></pre>
+<pre><code>## Maximizing the pseudolikelihood.</code></pre>
+<pre><code>## Finished MPLE.</code></pre>
+<pre><code>## Stopping at the initial estimate.</code></pre>
+<pre><code>## Evaluating log-likelihood at the estimate.</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(flomodel<span class="fl">.05</span>)</code></pre>
+<pre><code>## 
+## ==========================
+## Summary of model fit
+## ==========================
+## 
+## Formula:   flomarriage ~ edges + nodecov(&quot;wealth&quot;) + nodecov(&quot;wealth&quot;, transform = function(x) x^2)
+## 
+## Iterations:  4 out of 20 
+## 
+## Monte Carlo MLE Results:
+##                    Estimate Std. Error MCMC % z value Pr(&gt;|z|)   
+## edges            -2.904e+00  9.313e-01      0  -3.119  0.00182 **
+## nodecov.wealth    1.730e-02  1.695e-02      0   1.021  0.30737   
+## nodecov.wealth.1 -4.459e-05  1.073e-04      0  -0.416  0.67768   
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##      Null Deviance: 166.4  on 120  degrees of freedom
+##  Residual Deviance: 102.9  on 117  degrees of freedom
+##  
+## AIC: 108.9    BIC: 117.3    (Smaller is better.)</code></pre>
+</div>
+<div id="include-other-possible-ergm-terms" class="section level4">
+<h4><span class="header-section-number">3.4.3.7</span> Include other possible <code>ergm-terms</code></h4>
+<pre class="sourceCode r"><code class="sourceCode r">flomodel<span class="fl">.06</span>=<span class="kw">ergm</span>(flomarriage<span class="op">~</span><span class="kw">kstar</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">absdiff</span>(<span class="st">&quot;wealth&quot;</span>))</code></pre>
+<pre><code>## Starting maximum pseudolikelihood estimation (MPLE):</code></pre>
+<pre><code>## Evaluating the predictor and response matrix.</code></pre>
+<pre><code>## Maximizing the pseudolikelihood.</code></pre>
+<pre><code>## Finished MPLE.</code></pre>
+<pre><code>## Starting Monte Carlo maximum likelihood estimation (MCMLE):</code></pre>
+<pre><code>## Iteration 1 of at most 20:</code></pre>
+<pre><code>## Optimizing with step length 1.</code></pre>
+<pre><code>## The log-likelihood improved by 0.01795.</code></pre>
+<pre><code>## Step length converged once. Increasing MCMC sample size.</code></pre>
+<pre><code>## Iteration 2 of at most 20:</code></pre>
+<pre><code>## Optimizing with step length 1.</code></pre>
+<pre><code>## The log-likelihood improved by 0.001918.</code></pre>
+<pre><code>## Step length converged twice. Stopping.</code></pre>
+<pre><code>## Finished MCMLE.</code></pre>
+<pre><code>## Evaluating log-likelihood at the estimate. Using 20 bridges: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 .
+## This model was fit using MCMC.  To examine model diagnostics and check for degeneracy, use the mcmc.diagnostics() function.</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(flomodel<span class="fl">.06</span>)</code></pre>
+<pre><code>## 
+## ==========================
+## Summary of model fit
+## ==========================
+## 
+## Formula:   flomarriage ~ kstar(1:2) + absdiff(&quot;wealth&quot;)
+## 
+## Iterations:  2 out of 20 
+## 
+## Monte Carlo MLE Results:
+##                 Estimate Std. Error MCMC % z value Pr(&gt;|z|)  
+## kstar1         -0.857799   0.455348      0  -1.884   0.0596 .
+## kstar2         -0.162150   0.224192      0  -0.723   0.4695  
+## absdiff.wealth  0.019244   0.008719      0   2.207   0.0273 *
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##      Null Deviance: 166.4  on 120  degrees of freedom
+##  Residual Deviance: 101.3  on 117  degrees of freedom
+##  
+## AIC: 107.3    BIC: 115.7    (Smaller is better.)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(<span class="kw">ergm</span>(flomarriage<span class="op">~</span><span class="kw">kstar</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">absdiff</span>(<span class="st">&quot;wealth&quot;</span>)))</code></pre>
+<pre><code>## Starting maximum pseudolikelihood estimation (MPLE):
+## Evaluating the predictor and response matrix.
+## Maximizing the pseudolikelihood.
+## Finished MPLE.
+## Starting Monte Carlo maximum likelihood estimation (MCMLE):
+## Iteration 1 of at most 20:
+## Optimizing with step length 1.
+## The log-likelihood improved by 0.01691.
+## Step length converged once. Increasing MCMC sample size.
+## Iteration 2 of at most 20:
+## Optimizing with step length 1.
+## The log-likelihood improved by 0.001825.
+## Step length converged twice. Stopping.
+## Finished MCMLE.
+## Evaluating log-likelihood at the estimate. Using 20 bridges: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 .
+## This model was fit using MCMC.  To examine model diagnostics and check for degeneracy, use the mcmc.diagnostics() function.</code></pre>
+<pre><code>## 
+## ==========================
+## Summary of model fit
+## ==========================
+## 
+## Formula:   flomarriage ~ kstar(c(1, 3)) + absdiff(&quot;wealth&quot;)
+## 
+## Iterations:  2 out of 20 
+## 
+## Monte Carlo MLE Results:
+##                 Estimate Std. Error MCMC % z value Pr(&gt;|z|)    
+## kstar1         -1.054277   0.261968      0  -4.024   &lt;1e-04 ***
+## kstar3         -0.086239   0.111865      0  -0.771   0.4408    
+## absdiff.wealth  0.020937   0.009522      0   2.199   0.0279 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##      Null Deviance: 166.4  on 120  degrees of freedom
+##  Residual Deviance: 101.0  on 117  degrees of freedom
+##  
+## AIC: 107    BIC: 115.4    (Smaller is better.)</code></pre>
+</div>
+<div id="include-categorical-nodal-covariates-nodefactor" class="section level4">
+<h4><span class="header-section-number">3.4.3.8</span> Include categorical nodal covariates: <code>nodefactor</code></h4>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;faux.mesa.high&quot;</span>)
+mesa=faux.mesa.high
+mesa <span class="co"># grade, race, sex are discrete vertex attribute</span></code></pre>
+<pre><code>##  Network attributes:
+##   vertices = 205 
+##   directed = FALSE 
+##   hyper = FALSE 
+##   loops = FALSE 
+##   multiple = FALSE 
+##   bipartite = FALSE 
+##   total edges= 203 
+##     missing edges= 0 
+##     non-missing edges= 203 
+## 
+##  Vertex attribute names: 
+##     Grade Race Sex 
+## 
+## No edge attributes</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(mesa, <span class="dt">vertex.col=</span><span class="st">&#39;Grade&#39;</span>)
+<span class="kw">legend</span>(<span class="st">&#39;bottomleft&#39;</span>,<span class="dt">fill=</span><span class="dv">7</span><span class="op">:</span><span class="dv">12</span>,<span class="dt">legend=</span><span class="kw">paste</span>(<span class="st">&#39;Grade&#39;</span>,<span class="dv">7</span><span class="op">:</span><span class="dv">12</span>),<span class="dt">cex=</span><span class="fl">0.75</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-107-1.png" width="672" /></p>
+</div>
+<div id="include-discrete-nodal-covariates-nodefactor" class="section level4">
+<h4><span class="header-section-number">3.4.3.9</span> Include discrete nodal covariates: <code>nodefactor</code></h4>
+<pre class="sourceCode r"><code class="sourceCode r">fauxmodel<span class="fl">.01</span>=<span class="kw">ergm</span>(mesa <span class="op">~</span>edges <span class="op">+</span><span class="st"> </span><span class="kw">nodecov</span>(<span class="st">&#39;Grade&#39;</span>))</code></pre>
+<pre><code>## Starting maximum pseudolikelihood estimation (MPLE):</code></pre>
+<pre><code>## Evaluating the predictor and response matrix.</code></pre>
+<pre><code>## Maximizing the pseudolikelihood.</code></pre>
+<pre><code>## Finished MPLE.</code></pre>
+<pre><code>## Stopping at the initial estimate.</code></pre>
+<pre><code>## Evaluating log-likelihood at the estimate.</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(fauxmodel<span class="fl">.01</span>)</code></pre>
+<pre><code>## 
+## ==========================
+## Summary of model fit
+## ==========================
+## 
+## Formula:   mesa ~ edges + nodecov(&quot;Grade&quot;)
+## 
+## Iterations:  7 out of 20 
+## 
+## Monte Carlo MLE Results:
+##               Estimate Std. Error MCMC % z value Pr(&gt;|z|)    
+## edges         -3.64578    0.56757      0  -6.424   &lt;1e-04 ***
+## nodecov.Grade -0.05650    0.03274      0  -1.726   0.0844 .  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##      Null Deviance: 28987  on 20910  degrees of freedom
+##  Residual Deviance:  2283  on 20908  degrees of freedom
+##  
+## AIC: 2287    BIC: 2303    (Smaller is better.)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">fauxmodel<span class="fl">.02</span>=<span class="kw">ergm</span>(mesa <span class="op">~</span>edges <span class="op">+</span><span class="st"> </span><span class="kw">nodefactor</span>(<span class="st">&#39;Grade&#39;</span>))</code></pre>
+<pre><code>## Starting maximum pseudolikelihood estimation (MPLE):
+## Evaluating the predictor and response matrix.
+## Maximizing the pseudolikelihood.
+## Finished MPLE.
+## Stopping at the initial estimate.
+## Evaluating log-likelihood at the estimate.</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(fauxmodel<span class="fl">.02</span>)</code></pre>
+<pre><code>## 
+## ==========================
+## Summary of model fit
+## ==========================
+## 
+## Formula:   mesa ~ edges + nodefactor(&quot;Grade&quot;)
+## 
+## Iterations:  6 out of 20 
+## 
+## Monte Carlo MLE Results:
+##                     Estimate Std. Error MCMC % z value Pr(&gt;|z|)    
+## edges               -4.17784    0.14696      0 -28.428  &lt; 1e-04 ***
+## nodefactor.Grade.8  -0.27924    0.14209      0  -1.965  0.04938 *  
+## nodefactor.Grade.9  -0.47364    0.14912      0  -3.176  0.00149 ** 
+## nodefactor.Grade.10 -0.54653    0.18641      0  -2.932  0.00337 ** 
+## nodefactor.Grade.11 -0.19281    0.16550      0  -1.165  0.24401    
+## nodefactor.Grade.12 -0.05704    0.20739      0  -0.275  0.78330    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##      Null Deviance: 28987  on 20910  degrees of freedom
+##  Residual Deviance:  2269  on 20904  degrees of freedom
+##  
+## AIC: 2281    BIC: 2329    (Smaller is better.)</code></pre>
+</div>
+<div id="include-other-terms-eg.-homophily" class="section level4">
+<h4><span class="header-section-number">3.4.3.10</span> Include other terms: eg. <code>homophily</code></h4>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">help</span>(<span class="st">&#39;ergm-terms&#39;</span>) <span class="co"># check all the possible ergm terms</span></code></pre>
+</div>
+<div id="include-other-terms-eg.-homophily-1" class="section level4">
+<h4><span class="header-section-number">3.4.3.11</span> Include other terms: eg. <code>homophily</code></h4>
+<p><code>nodematch</code>: Uniform homophily and differential homophily</p>
+<p>uniform homophily(diff=FALSE), adds <strong>one</strong> network statistic to the model, which counts the number of edges (i,j) for which attrname(i)==attrname(j).</p>
+<p>differential homophily(diff=TRUE), <strong>p</strong>(#of unique values of the attrname attribute) network statistics are added to the model.</p>
+<p>The kth such statistic counts the number of edges (i,j) for which attrname(i) == attrname(j) == value(k), where value(k) is the kth smallest unique value of the attrname attribute.</p>
+<p>When multiple attribute names are given, the statistic counts only ties for which all of the attributes match.</p>
+<pre class="sourceCode r"><code class="sourceCode r">?nodematch
+fauxmodel<span class="fl">.03</span> &lt;-<span class="st"> </span><span class="kw">ergm</span>(mesa <span class="op">~</span>edges <span class="op">+</span><span class="st"> </span><span class="kw">nodematch</span>(<span class="st">&#39;Grade&#39;</span>,<span class="dt">diff=</span>F) )</code></pre>
+<pre><code>## Starting maximum pseudolikelihood estimation (MPLE):</code></pre>
+<pre><code>## Evaluating the predictor and response matrix.</code></pre>
+<pre><code>## Maximizing the pseudolikelihood.</code></pre>
+<pre><code>## Finished MPLE.</code></pre>
+<pre><code>## Stopping at the initial estimate.</code></pre>
+<pre><code>## Evaluating log-likelihood at the estimate.</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(fauxmodel<span class="fl">.03</span>)</code></pre>
+<pre><code>## 
+## ==========================
+## Summary of model fit
+## ==========================
+## 
+## Formula:   mesa ~ edges + nodematch(&quot;Grade&quot;, diff = F)
+## 
+## Iterations:  8 out of 20 
+## 
+## Monte Carlo MLE Results:
+##                 Estimate Std. Error MCMC % z value Pr(&gt;|z|)    
+## edges            -6.0340     0.1583      0  -38.12   &lt;1e-04 ***
+## nodematch.Grade   2.8310     0.1773      0   15.96   &lt;1e-04 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##      Null Deviance: 28987  on 20910  degrees of freedom
+##  Residual Deviance:  1940  on 20908  degrees of freedom
+##  
+## AIC: 1944    BIC: 1959    (Smaller is better.)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mixingmatrix</span>(mesa, <span class="st">&quot;Race&quot;</span>) <span class="co"># reason for Inf</span></code></pre>
+<pre><code>## Note:  Marginal totals can be misleading
+##  for undirected mixing matrices.
+##       Black Hisp NatAm Other White
+## Black     0    8    13     0     5
+## Hisp      8   53    41     1    22
+## NatAm    13   41    46     0    10
+## Other     0    1     0     0     0
+## White     5   22    10     0     4</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">fauxmodel<span class="fl">.04</span> &lt;-<span class="st"> </span><span class="kw">ergm</span>(mesa <span class="op">~</span>edges <span class="op">+</span><span class="st"> </span><span class="kw">nodematch</span>(<span class="st">&#39;Grade&#39;</span>,<span class="dt">diff=</span>T) )</code></pre>
+<pre><code>## Starting maximum pseudolikelihood estimation (MPLE):
+## Evaluating the predictor and response matrix.
+## Maximizing the pseudolikelihood.
+## Finished MPLE.
+## Stopping at the initial estimate.
+## Evaluating log-likelihood at the estimate.</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(fauxmodel<span class="fl">.04</span>)</code></pre>
+<pre><code>## 
+## ==========================
+## Summary of model fit
+## ==========================
+## 
+## Formula:   mesa ~ edges + nodematch(&quot;Grade&quot;, diff = T)
+## 
+## Iterations:  8 out of 20 
+## 
+## Monte Carlo MLE Results:
+##                    Estimate Std. Error MCMC % z value Pr(&gt;|z|)    
+## edges               -6.0340     0.1583      0 -38.117   &lt;1e-04 ***
+## nodematch.Grade.7    2.8471     0.1973      0  14.427   &lt;1e-04 ***
+## nodematch.Grade.8    2.9145     0.2381      0  12.240   &lt;1e-04 ***
+## nodematch.Grade.9    2.4385     0.2641      0   9.234   &lt;1e-04 ***
+## nodematch.Grade.10   2.5579     0.3736      0   6.846   &lt;1e-04 ***
+## nodematch.Grade.11   3.3104     0.2962      0  11.176   &lt;1e-04 ***
+## nodematch.Grade.12   3.7315     0.4565      0   8.174   &lt;1e-04 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##      Null Deviance: 28987  on 20910  degrees of freedom
+##  Residual Deviance:  1928  on 20903  degrees of freedom
+##  
+## AIC: 1942    BIC: 1998    (Smaller is better.)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">fauxmodel<span class="fl">.04</span> &lt;-<span class="st"> </span><span class="kw">ergm</span>(mesa <span class="op">~</span>edges <span class="op">+</span><span class="st"> </span><span class="kw">nodematch</span>(<span class="st">&#39;Grade&#39;</span>,<span class="dt">diff=</span>T,<span class="dt">keep=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">4</span>)) )</code></pre>
+<pre><code>## Starting maximum pseudolikelihood estimation (MPLE):
+## Evaluating the predictor and response matrix.
+## Maximizing the pseudolikelihood.
+## Finished MPLE.
+## Stopping at the initial estimate.
+## Evaluating log-likelihood at the estimate.</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(fauxmodel<span class="fl">.04</span>)</code></pre>
+<pre><code>## 
+## ==========================
+## Summary of model fit
+## ==========================
+## 
+## Formula:   mesa ~ edges + nodematch(&quot;Grade&quot;, diff = T, keep = c(2, 4))
+## 
+## Iterations:  7 out of 20 
+## 
+## Monte Carlo MLE Results:
+##                    Estimate Std. Error MCMC % z value Pr(&gt;|z|)    
+## edges              -4.80539    0.07913      0 -60.727  &lt; 1e-04 ***
+## nodematch.Grade.8   1.68584    0.19469      0   8.659  &lt; 1e-04 ***
+## nodematch.Grade.10  1.32930    0.34758      0   3.824 0.000131 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##      Null Deviance: 28987  on 20910  degrees of freedom
+##  Residual Deviance:  2225  on 20907  degrees of freedom
+##  
+## AIC: 2231    BIC: 2255    (Smaller is better.)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">fauxmodel<span class="fl">.05</span> &lt;-<span class="st"> </span><span class="kw">ergm</span>(mesa <span class="op">~</span>edges <span class="op">+</span><span class="st"> </span><span class="kw">nodematch</span>(<span class="st">&#39;Grade&#39;</span>,<span class="dt">diff=</span>T)<span class="op">+</span><span class="st"> </span><span class="kw">nodematch</span>(<span class="st">&#39;Race&#39;</span>,<span class="dt">diff=</span>T) )</code></pre>
+<pre><code>## Observed statistic(s) nodematch.Race.Black and nodematch.Race.Other are at their smallest attainable values. Their coefficients will be fixed at -Inf.
+## Starting maximum pseudolikelihood estimation (MPLE):
+## Evaluating the predictor and response matrix.
+## Maximizing the pseudolikelihood.
+## Finished MPLE.
+## Stopping at the initial estimate.
+## Evaluating log-likelihood at the estimate.</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(fauxmodel<span class="fl">.05</span>)</code></pre>
+<pre><code>## 
+## ==========================
+## Summary of model fit
+## ==========================
+## 
+## Formula:   mesa ~ edges + nodematch(&quot;Grade&quot;, diff = T) + nodematch(&quot;Race&quot;, 
+##     diff = T)
+## 
+## Iterations:  8 out of 20 
+## 
+## Monte Carlo MLE Results:
+##                      Estimate Std. Error MCMC % z value Pr(&gt;|z|)    
+## edges                 -6.2328     0.1742      0 -35.785   &lt;1e-04 ***
+## nodematch.Grade.7      2.8740     0.1981      0  14.509   &lt;1e-04 ***
+## nodematch.Grade.8      2.8788     0.2391      0  12.038   &lt;1e-04 ***
+## nodematch.Grade.9      2.4642     0.2647      0   9.310   &lt;1e-04 ***
+## nodematch.Grade.10     2.5692     0.3770      0   6.815   &lt;1e-04 ***
+## nodematch.Grade.11     3.2921     0.2978      0  11.057   &lt;1e-04 ***
+## nodematch.Grade.12     3.8376     0.4592      0   8.357   &lt;1e-04 ***
+## nodematch.Race.Black     -Inf     0.0000      0    -Inf   &lt;1e-04 ***
+## nodematch.Race.Hisp    0.0679     0.1737      0   0.391   0.6959    
+## nodematch.Race.NatAm   0.9817     0.1842      0   5.329   &lt;1e-04 ***
+## nodematch.Race.Other     -Inf     0.0000      0    -Inf   &lt;1e-04 ***
+## nodematch.Race.White   1.2685     0.5371      0   2.362   0.0182 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##      Null Deviance: 28987  on 20910  degrees of freedom
+##  Residual Deviance:  1928  on 20898  degrees of freedom
+##  
+## AIC: 1952    BIC: 2047    (Smaller is better.) 
+## 
+##  Warning: The following terms have infinite coefficient estimates:
+##   nodematch.Race.Black nodematch.Race.Other</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mixingmatrix</span>(mesa,<span class="st">&quot;Race&quot;</span>)</code></pre>
+<pre><code>## Note:  Marginal totals can be misleading
+##  for undirected mixing matrices.
+##       Black Hisp NatAm Other White
+## Black     0    8    13     0     5
+## Hisp      8   53    41     1    22
+## NatAm    13   41    46     0    10
+## Other     0    1     0     0     0
+## White     5   22    10     0     4</code></pre>
+</div>
+<div id="directed-network" class="section level4">
+<h4><span class="header-section-number">3.4.3.12</span> directed network</h4>
+<pre class="sourceCode r"><code class="sourceCode r">samplk3</code></pre>
+<pre><code>##  Network attributes:
+##   vertices = 18 
+##   directed = TRUE 
+##   hyper = FALSE 
+##   loops = FALSE 
+##   multiple = FALSE 
+##   bipartite = FALSE 
+##   total edges= 56 
+##     missing edges= 0 
+##     non-missing edges= 56 
+## 
+##  Vertex attribute names: 
+##     cloisterville group vertex.names 
+## 
+## No edge attributes</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
+<span class="kw">plot</span>(samplk3)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-111-1.png" width="672" /></p>
+</div>
+<div id="include-mutual" class="section level4">
+<h4><span class="header-section-number">3.4.3.13</span> Include <code>mutual</code></h4>
+<pre class="sourceCode r"><code class="sourceCode r">sampmodel<span class="fl">.01</span> &lt;-<span class="st"> </span><span class="kw">ergm</span>(samplk3<span class="op">~</span>edges<span class="op">+</span>mutual)</code></pre>
+<pre><code>## Starting maximum pseudolikelihood estimation (MPLE):</code></pre>
+<pre><code>## Evaluating the predictor and response matrix.</code></pre>
+<pre><code>## Maximizing the pseudolikelihood.</code></pre>
+<pre><code>## Finished MPLE.</code></pre>
+<pre><code>## Starting Monte Carlo maximum likelihood estimation (MCMLE):</code></pre>
+<pre><code>## Iteration 1 of at most 20:</code></pre>
+<pre><code>## Optimizing with step length 1.</code></pre>
+<pre><code>## The log-likelihood improved by 0.0002847.</code></pre>
+<pre><code>## Step length converged once. Increasing MCMC sample size.</code></pre>
+<pre><code>## Iteration 2 of at most 20:</code></pre>
+<pre><code>## Optimizing with step length 1.</code></pre>
+<pre><code>## The log-likelihood improved by 0.001122.</code></pre>
+<pre><code>## Step length converged twice. Stopping.</code></pre>
+<pre><code>## Finished MCMLE.</code></pre>
+<pre><code>## Evaluating log-likelihood at the estimate. Using 20 bridges: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 .
+## This model was fit using MCMC.  To examine model diagnostics and check for degeneracy, use the mcmc.diagnostics() function.</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(sampmodel<span class="fl">.01</span>)</code></pre>
+<pre><code>## 
+## ==========================
+## Summary of model fit
+## ==========================
+## 
+## Formula:   samplk3 ~ edges + mutual
+## 
+## Iterations:  2 out of 20 
+## 
+## Monte Carlo MLE Results:
+##        Estimate Std. Error MCMC % z value Pr(&gt;|z|)    
+## edges   -2.1505     0.2152      0  -9.993   &lt;1e-04 ***
+## mutual   2.2849     0.4684      0   4.878   &lt;1e-04 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##      Null Deviance: 424.2  on 306  degrees of freedom
+##  Residual Deviance: 268.0  on 304  degrees of freedom
+##  
+## AIC: 272    BIC: 279.5    (Smaller is better.)</code></pre>
+<p>Strong mutual effect.</p>
+</div>
+<div id="include-sender-receiver-mutual" class="section level4">
+<h4><span class="header-section-number">3.4.3.14</span> Include <code>sender</code>, <code>receiver</code>, <code>mutual</code></h4>
+<p>p1 model</p>
+<pre class="sourceCode r"><code class="sourceCode r">sampmodel<span class="fl">.02</span> &lt;-<span class="st"> </span><span class="kw">ergm</span>(samplk3<span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span>sender <span class="op">+</span><span class="st"> </span>receiver <span class="op">+</span><span class="st"> </span>mutual)</code></pre>
+<pre><code>## Observed statistic(s) receiver10 are at their smallest attainable values. Their coefficients will be fixed at -Inf.</code></pre>
+<pre><code>## Starting maximum pseudolikelihood estimation (MPLE):</code></pre>
+<pre><code>## Evaluating the predictor and response matrix.</code></pre>
+<pre><code>## Maximizing the pseudolikelihood.</code></pre>
+<pre><code>## Finished MPLE.</code></pre>
+<pre><code>## Starting Monte Carlo maximum likelihood estimation (MCMLE):</code></pre>
+<pre><code>## Iteration 1 of at most 20:</code></pre>
+<pre><code>## Optimizing with step length 1.</code></pre>
+<pre><code>## The log-likelihood improved by 1.081.</code></pre>
+<pre><code>## Step length converged once. Increasing MCMC sample size.</code></pre>
+<pre><code>## Iteration 2 of at most 20:</code></pre>
+<pre><code>## Optimizing with step length 1.</code></pre>
+<pre><code>## The log-likelihood improved by 0.08992.</code></pre>
+<pre><code>## Step length converged twice. Stopping.</code></pre>
+<pre><code>## Finished MCMLE.</code></pre>
+<pre><code>## Evaluating log-likelihood at the estimate. Using 20 bridges: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 .
+## This model was fit using MCMC.  To examine model diagnostics and check for degeneracy, use the mcmc.diagnostics() function.</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(sampmodel<span class="fl">.02</span>)</code></pre>
+<pre><code>## 
+## ==========================
+## Summary of model fit
+## ==========================
+## 
+## Formula:   samplk3 ~ edges + sender + receiver + mutual
+## 
+## Iterations:  2 out of 20 
+## 
+## Monte Carlo MLE Results:
+##             Estimate Std. Error MCMC % z value Pr(&gt;|z|)    
+## edges      -2.315741   0.796090      0  -2.909  0.00363 ** 
+## sender2    -0.438628   1.092996      0  -0.401  0.68819    
+## sender3     0.776450   1.093259      0   0.710  0.47757    
+## sender4    -0.008577   1.115291      0  -0.008  0.99386    
+## sender5    -0.452058   1.134888      0  -0.398  0.69039    
+## sender6     0.502989   1.095639      0   0.459  0.64617    
+## sender7    -0.252892   1.103350      0  -0.229  0.81871    
+## sender8     0.529555   1.111692      0   0.476  0.63382    
+## sender9     0.005037   1.122952      0   0.004  0.99642    
+## sender10    1.457053   1.055864      0   1.380  0.16760    
+## sender11    0.534553   1.100976      0   0.486  0.62730    
+## sender12   -0.446945   1.125660      0  -0.397  0.69133    
+## sender13    0.530122   1.107423      0   0.479  0.63215    
+## sender14    0.529945   1.117297      0   0.474  0.63528    
+## sender15    0.508301   1.123175      0   0.453  0.65087    
+## sender16    0.793735   1.081730      0   0.734  0.46309    
+## sender17    0.526922   1.107444      0   0.476  0.63422    
+## sender18    0.235750   1.103263      0   0.214  0.83079    
+## receiver2   0.772420   0.896048      0   0.862  0.38867    
+## receiver3  -0.739738   0.996962      0  -0.742  0.45809    
+## receiver4   0.017002   0.951789      0   0.018  0.98575    
+## receiver5   0.766819   0.911852      0   0.841  0.40038    
+## receiver6  -1.087262   1.114647      0  -0.975  0.32935    
+## receiver7   0.412868   0.901948      0   0.458  0.64713    
+## receiver8  -1.111177   1.098415      0  -1.012  0.31172    
+## receiver9  -0.001184   0.951954      0  -0.001  0.99901    
+## receiver10      -Inf   0.000000      0    -Inf  &lt; 1e-04 ***
+## receiver11 -1.089252   1.082136      0  -1.007  0.31414    
+## receiver12  0.755936   0.907398      0   0.833  0.40480    
+## receiver13 -1.107780   1.098538      0  -1.008  0.31326    
+## receiver14 -1.092423   1.110361      0  -0.984  0.32519    
+## receiver15 -1.111820   1.099080      0  -1.012  0.31173    
+## receiver16 -2.004070   1.347086      0  -1.488  0.13683    
+## receiver17 -1.096807   1.109898      0  -0.988  0.32305    
+## receiver18 -0.480288   1.012901      0  -0.474  0.63538    
+## mutual      3.153694   0.636817      0   4.952  &lt; 1e-04 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##      Null Deviance: 424.2  on 306  degrees of freedom
+##  Residual Deviance:   NaN  on 270  degrees of freedom
+##  
+## AIC: NaN    BIC: NaN    (Smaller is better.) 
+## 
+##  Warning: The following terms have infinite coefficient estimates:
+##   receiver10</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">sna<span class="op">::</span><span class="kw">degree</span>(samplk3,<span class="dt">cmode =</span> <span class="st">&quot;indegree&quot;</span>)</code></pre>
+<pre><code>##  [1] 4 6 3 4 6 2 5 2 4 0 2 6 2 2 2 1 2 3</code></pre>
+</div>
+<div id="other-ergm-terms" class="section level4">
+<h4><span class="header-section-number">3.4.3.15</span> Other <code>ergm-terms</code></h4>
+<p>Details of other <code>ergm-terms</code> see <a href="https://www.jstatsoft.org/article/view/v024i04" class="uri">https://www.jstatsoft.org/article/view/v024i04</a>.</p>
+</div>
+</div>
+<div id="missing-edges" class="section level3">
+<h3><span class="header-section-number">3.4.4</span> Missing edges</h3>
+<p>Make sure to set missing edges as <code>NA</code>: probability of an edge in the observed sample.</p>
+<pre class="sourceCode r"><code class="sourceCode r">missnet=flomarriage
+missnet[<span class="dv">1</span>,<span class="dv">2</span>]=missnet[<span class="dv">2</span>,<span class="dv">4</span>]=missnet[<span class="dv">5</span>,<span class="dv">6</span>]=<span class="ot">NA</span> <span class="co"># originally are 0</span>
+<span class="kw">summary</span>(<span class="kw">ergm</span>(missnet<span class="op">~</span>edges))</code></pre>
+<pre><code>## Starting maximum pseudolikelihood estimation (MPLE):</code></pre>
+<pre><code>## Evaluating the predictor and response matrix.</code></pre>
+<pre><code>## Maximizing the pseudolikelihood.</code></pre>
+<pre><code>## Finished MPLE.</code></pre>
+<pre><code>## Stopping at the initial estimate.</code></pre>
+<pre><code>## Evaluating log-likelihood at the estimate.</code></pre>
+<pre><code>## 
+## ==========================
+## Summary of model fit
+## ==========================
+## 
+## Formula:   missnet ~ edges
+## 
+## Iterations:  5 out of 20 
+## 
+## Monte Carlo MLE Results:
+##       Estimate Std. Error MCMC % z value Pr(&gt;|z|)    
+## edges  -1.5790     0.2456      0   -6.43   &lt;1e-04 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##      Null Deviance: 162.2  on 117  degrees of freedom
+##  Residual Deviance: 107.0  on 116  degrees of freedom
+##  
+## AIC: 109    BIC: 111.8    (Smaller is better.)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(<span class="kw">ergm</span>(flomarriage<span class="op">~</span>edges))</code></pre>
+<pre><code>## Starting maximum pseudolikelihood estimation (MPLE):
+## Evaluating the predictor and response matrix.
+## Maximizing the pseudolikelihood.
+## Finished MPLE.
+## Stopping at the initial estimate.
+## Evaluating log-likelihood at the estimate.</code></pre>
+<pre><code>## 
+## ==========================
+## Summary of model fit
+## ==========================
+## 
+## Formula:   flomarriage ~ edges
+## 
+## Iterations:  5 out of 20 
+## 
+## Monte Carlo MLE Results:
+##       Estimate Std. Error MCMC % z value Pr(&gt;|z|)    
+## edges  -1.6094     0.2449      0  -6.571   &lt;1e-04 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##      Null Deviance: 166.4  on 120  degrees of freedom
+##  Residual Deviance: 108.1  on 119  degrees of freedom
+##  
+## AIC: 110.1    BIC: 112.9    (Smaller is better.)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Set NA</span>
+<span class="dv">1</span><span class="op">/</span>(<span class="dv">1</span><span class="op">+</span><span class="kw">exp</span>(<span class="op">-</span>(<span class="op">-</span><span class="fl">1.5790</span>)))</code></pre>
+<pre><code>## [1] 0.1709372</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="dv">20</span><span class="op">/</span>(<span class="kw">choose</span>(<span class="dv">16</span>,<span class="dv">2</span>)<span class="op">-</span><span class="dv">3</span>)</code></pre>
+<pre><code>## [1] 0.1709402</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Set 0</span>
+<span class="dv">1</span><span class="op">/</span>(<span class="dv">1</span><span class="op">+</span><span class="kw">exp</span>(<span class="op">-</span>(<span class="op">-</span><span class="fl">1.6094</span>)))</code></pre>
+<pre><code>## [1] 0.1666719</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="dv">20</span><span class="op">/</span>(<span class="kw">choose</span>(<span class="dv">16</span>,<span class="dv">2</span>))</code></pre>
+<pre><code>## [1] 0.1666667</code></pre>
+</div>
+</div>
+<div id="simulate-netowrks-from-an-ergm-model-fit" class="section level2">
+<h2><span class="header-section-number">3.5</span> <code>simulate</code> netowrks from an ergm model fit</h2>
+<p>The ergm model defines a probability distibution across all networks of this size(#nodes fixed).</p>
+<p>Use <code>simulate(ergm-model,nsim=n)</code> to get a list of networks</p>
+<p>Use <code>summary</code> and functions that can be used to a list</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(flomodel<span class="fl">.04</span>)</code></pre>
+<pre><code>## 
+## ==========================
+## Summary of model fit
+## ==========================
+## 
+## Formula:   flomarriage ~ edges + absdiff(&quot;wealth&quot;)
+## 
+## Iterations:  4 out of 20 
+## 
+## Monte Carlo MLE Results:
+##                 Estimate Std. Error MCMC % z value Pr(&gt;|z|)    
+## edges          -2.302042   0.401906      0  -5.728   &lt;1e-04 ***
+## absdiff.wealth  0.015519   0.006157      0   2.521   0.0117 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##      Null Deviance: 166.4  on 120  degrees of freedom
+##  Residual Deviance: 102.0  on 118  degrees of freedom
+##  
+## AIC: 106    BIC: 111.5    (Smaller is better.)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">flomodel.<span class="fl">04.</span>sim &lt;-<span class="st"> </span><span class="kw">simulate</span>(flomodel<span class="fl">.04</span>, <span class="dt">nsim=</span><span class="dv">10</span>,<span class="dt">seed =</span> <span class="dv">1</span>)</code></pre>
+<pre><code>## Warning: You appear to be calling simulate.formula() directly.
+## simulate.formula() is a method, and will not be exported in a future
+## version of &#39;ergm&#39;. Use simulate() instead, or getS3method() if absolutely
+## necessary.</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(flomodel.<span class="fl">04.</span>sim)</code></pre>
+<pre><code>## [1] &quot;network.list&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(flomodel.<span class="fl">04.</span>sim)</code></pre>
+<pre><code>## Number of Networks: 10 
+## Model: flomarriage ~ edges + absdiff(&quot;wealth&quot;) 
+## Reference: ~Bernoulli 
+## Constraints: ~. 
+## Parameters:
+##          edges absdiff.wealth 
+##     -2.3020421      0.0155192 
+## 
+## Stored network statistics:
+##       edges absdiff.wealth
+##  [1,]    20           1070
+##  [2,]    22           1170
+##  [3,]    19            734
+##  [4,]    18           1123
+##  [5,]    18           1215
+##  [6,]    15            697
+##  [7,]    20           1165
+##  [8,]    31           1577
+##  [9,]    19           1138
+## [10,]    22           1136</code></pre>
+<pre><code>## Number of Networks: 10 
+## Model: flomarriage ~ edges + absdiff(&quot;wealth&quot;) 
+## Reference: ~Bernoulli 
+## Constraints: ~. 
+## Parameters:
+##          edges absdiff.wealth 
+##     -2.3020421      0.0155192</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(flomodel.<span class="fl">04.</span>sim)</code></pre>
+<pre><code>## [1] 10</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">flomodel.<span class="fl">04.</span>sim[[<span class="dv">4</span>]]</code></pre>
+<pre><code>##  Network attributes:
+##   vertices = 16 
+##   directed = FALSE 
+##   hyper = FALSE 
+##   loops = FALSE 
+##   multiple = FALSE 
+##   bipartite = FALSE 
+##   total edges= 18 
+##     missing edges= 0 
+##     non-missing edges= 18 
+## 
+##  Vertex attribute names: 
+##     priorates totalties vertex.names wealth 
+## 
+## No edge attributes</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(flomodel.<span class="fl">04.</span>sim[[<span class="dv">4</span>]], <span class="dt">label=</span> flomodel.<span class="fl">04.</span>sim[[<span class="dv">4</span>]] <span class="op">%v%</span><span class="st"> &quot;vertex.names&quot;</span>)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-115-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r">flomarriage</code></pre>
+<pre><code>##  Network attributes:
+##   vertices = 16 
+##   directed = FALSE 
+##   hyper = FALSE 
+##   loops = FALSE 
+##   multiple = FALSE 
+##   bipartite = FALSE 
+##   total edges= 20 
+##     missing edges= 0 
+##     non-missing edges= 20 
+## 
+##  Vertex attribute names: 
+##     priorates totalties vertex.names wealth 
+## 
+## No edge attributes</code></pre>
+<hr />
+<ul>
+<li><p>formula: Specify your own model</p></li>
+<li><p><code>basis</code>: initial network for MC</p></li>
+<li><p><code>control</code>: settings of MCMC</p></li>
+</ul>
+<pre class="sourceCode r"><code class="sourceCode r">basenet &lt;-<span class="st"> </span><span class="kw">network</span>(<span class="dv">16</span>,<span class="dt">density=</span><span class="fl">0.1</span>,<span class="dt">directed=</span><span class="ot">FALSE</span>)
+g.sim &lt;-<span class="st"> </span><span class="kw">simulate</span>(flomarriage <span class="op">~</span><span class="st"> </span>edges <span class="op">+</span><span class="st"> </span><span class="kw">kstar</span>(<span class="dv">2</span>), <span class="dt">nsim=</span><span class="dv">1000</span>, <span class="dt">coef=</span><span class="kw">c</span>(<span class="op">-</span><span class="fl">1.8</span>,<span class="fl">0.03</span>),
+                  <span class="dt">basis=</span>basenet, <span class="dt">control=</span><span class="kw">control.simulate</span>(<span class="dt">MCMC.burnin=</span><span class="dv">1000</span>, <span class="dt">MCMC.interval=</span><span class="dv">10</span>))
+<span class="co"># MCMC.interval: Number of proposals between sampled statistics. </span>
+<span class="kw">length</span>(g.sim)</code></pre>
+<pre><code>## [1] 1000</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">?simulate.ergm</code></pre>
+</div>
+<div id="check-the-goodness-of-fit" class="section level2">
+<h2><span class="header-section-number">3.6</span> Check the goodness of fit</h2>
+<ul>
+<li>AIC,BIC; Deviance;</li>
+<li>Goodness of fit: <code>gof</code></li>
+<li>MCMC diagnostics: <code>mcmc.diagnostics</code></li>
+</ul>
+<div id="gof" class="section level3">
+<h3><span class="header-section-number">3.6.1</span> <code>gof</code></h3>
+<p><code>gof(model~model+degree+esp+distance)</code></p>
+<p>Only four possible arguments for ergm-term:</p>
+<ul>
+<li><code>model</code>: all the terms included in the model</li>
+<li><code>degree</code>: degree (node level)</li>
+<li><code>esp</code>: edgwise share partners (edge level)</li>
+<li><code>distance</code>: geodesic distances (dyad level)</li>
+</ul>
+<p>Draw samples from the specified model, calculate the MC p-value based on the distribution generated by the samples.</p>
+<pre class="sourceCode r"><code class="sourceCode r">flo.<span class="fl">04.</span>gof.model=<span class="kw">gof</span>(flomodel<span class="fl">.04</span><span class="op">~</span>model<span class="op">+</span>degree<span class="op">+</span>esp<span class="op">+</span>distance)
+flo.<span class="fl">04.</span>gof.model</code></pre>
+<pre><code>## 
+## Goodness-of-fit for model statistics 
+## 
+##                 obs min    mean  max MC p-value
+## edges            20  12   20.22   30       1.00
+## absdiff.wealth 1146 565 1142.44 1841       0.96
+## 
+## Goodness-of-fit for degree 
+## 
+##    obs min mean max MC p-value
+## 0    1   0 1.24   5       1.00
+## 1    4   0 3.15   8       0.74
+## 2    2   0 4.51   9       0.24
+## 3    6   0 3.32   7       0.18
+## 4    2   0 2.01   6       1.00
+## 5    0   0 0.91   4       0.72
+## 6    1   0 0.50   3       0.82
+## 7    0   0 0.22   2       1.00
+## 8    0   0 0.10   1       1.00
+## 9    0   0 0.02   1       1.00
+## 10   0   0 0.02   1       1.00
+## 
+## Goodness-of-fit for edgewise shared partner 
+## 
+##      obs min  mean max MC p-value
+## esp0  12   5 12.39  23       1.00
+## esp1   7   0  5.99  14       0.94
+## esp2   1   0  1.60  12       1.00
+## esp3   0   0  0.19   4       1.00
+## esp4   0   0  0.05   1       1.00
+## 
+## Goodness-of-fit for minimum geodesic distance 
+## 
+##     obs min  mean max MC p-value
+## 1    20  12 20.22  30       1.00
+## 2    35  15 35.01  58       1.00
+## 3    32   4 26.70  41       0.58
+## 4    15   0 11.11  24       0.60
+## 5     3   0  3.35  14       1.00
+## 6     0   0  0.89  11       1.00
+## 7     0   0  0.21   6       1.00
+## 8     0   0  0.06   3       1.00
+## 9     0   0  0.02   2       1.00
+## Inf  15   0 22.43  73       1.00</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(flo.<span class="fl">04.</span>gof.model)</code></pre>
+<pre><code>##  [1] &quot;network.size&quot;   &quot;GOF&quot;            &quot;pval.model&quot;     &quot;summary.model&quot; 
+##  [5] &quot;pobs.model&quot;     &quot;psim.model&quot;     &quot;bds.model&quot;      &quot;obs.model&quot;     
+##  [9] &quot;sim.model&quot;      &quot;pval.dist&quot;      &quot;summary.dist&quot;   &quot;pobs.dist&quot;     
+## [13] &quot;psim.dist&quot;      &quot;bds.dist&quot;       &quot;obs.dist&quot;       &quot;sim.dist&quot;      
+## [17] &quot;pval.deg&quot;       &quot;summary.deg&quot;    &quot;pobs.deg&quot;       &quot;psim.deg&quot;      
+## [21] &quot;bds.deg&quot;        &quot;obs.deg&quot;        &quot;sim.deg&quot;        &quot;pval.espart&quot;   
+## [25] &quot;summary.espart&quot; &quot;pobs.espart&quot;    &quot;psim.espart&quot;    &quot;bds.espart&quot;    
+## [29] &quot;obs.espart&quot;     &quot;sim.espart&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#95% confidence interval</span>
+<span class="kw">plot</span>(flo.<span class="fl">04.</span>gof.model)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-117-1.png" width="672" /><img src="_main_files/figure-html/unnamed-chunk-117-2.png" width="672" /><img src="_main_files/figure-html/unnamed-chunk-117-3.png" width="672" /><img src="_main_files/figure-html/unnamed-chunk-117-4.png" width="672" /></p>
+</div>
+<div id="mcmc.diagnostics" class="section level3">
+<h3><span class="header-section-number">3.6.2</span> <code>mcmc.diagnostics</code></h3>
+<p>Check the MCMC</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages(&quot;latticeExtra&quot;)</span>
+
+fit &lt;-<span class="st"> </span><span class="kw">ergm</span>(flobusiness <span class="op">~</span><span class="st"> </span>edges<span class="op">+</span><span class="kw">degree</span>(<span class="dv">1</span>))</code></pre>
+<pre><code>## Starting maximum pseudolikelihood estimation (MPLE):</code></pre>
+<pre><code>## Evaluating the predictor and response matrix.</code></pre>
+<pre><code>## Maximizing the pseudolikelihood.</code></pre>
+<pre><code>## Finished MPLE.</code></pre>
+<pre><code>## Starting Monte Carlo maximum likelihood estimation (MCMLE):</code></pre>
+<pre><code>## Iteration 1 of at most 20:</code></pre>
+<pre><code>## Optimizing with step length 1.</code></pre>
+<pre><code>## The log-likelihood improved by 0.2425.</code></pre>
+<pre><code>## Step length converged once. Increasing MCMC sample size.</code></pre>
+<pre><code>## Iteration 2 of at most 20:</code></pre>
+<pre><code>## Optimizing with step length 1.</code></pre>
+<pre><code>## The log-likelihood improved by 0.001113.</code></pre>
+<pre><code>## Step length converged twice. Stopping.</code></pre>
+<pre><code>## Finished MCMLE.</code></pre>
+<pre><code>## Evaluating log-likelihood at the estimate. Using 20 bridges: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 .
+## This model was fit using MCMC.  To examine model diagnostics and check for degeneracy, use the mcmc.diagnostics() function.</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mcmc.diagnostics</span>(fit) <span class="co">#centered</span></code></pre>
+<pre><code>## Sample statistics summary:
+## 
+## Iterations = 16384:4209664
+## Thinning interval = 1024 
+## Number of chains = 1 
+## Sample size per chain = 4096 
+## 
+## 1. Empirical mean and standard deviation for each variable,
+##    plus standard error of the mean:
+## 
+##             Mean    SD Naive SE Time-series SE
+## edges   -0.12183 3.766  0.05884        0.05884
+## degree1  0.07349 1.634  0.02553        0.02553
+## 
+## 2. Quantiles for each variable:
+## 
+##         2.5% 25% 50% 75% 97.5%
+## edges     -7  -3   0   2     7
+## degree1   -4  -1   0   1     3
+## 
+## 
+## Sample statistics cross-correlations:
+##           edges degree1
+## edges    1.0000 -0.4341
+## degree1 -0.4341  1.0000
+## 
+## Sample statistics auto-correlation:
+## Chain 1 
+##                 edges      degree1
+## Lag 0     1.000000000  1.000000000
+## Lag 1024  0.006760343  0.001466041
+## Lag 2048  0.008602875 -0.006057681
+## Lag 3072 -0.018218817 -0.011568388
+## Lag 4096  0.028773889 -0.015764465
+## Lag 5120 -0.015302900 -0.004412151
+## 
+## Sample statistics burn-in diagnostic (Geweke):
+## Chain 1 
+## 
+## Fraction in 1st window = 0.1
+## Fraction in 2nd window = 0.5 
+## 
+##   edges degree1 
+##  0.9156 -0.5825 
+## 
+## Individual P-values (lower = worse):
+##     edges   degree1 
+## 0.3598522 0.5602179 
+## Joint P-value (lower = worse):  0.6503828 .</code></pre>
+<pre><code>## Warning in formals(fun): argument is not a function</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-118-1.png" width="672" /></p>
+<pre><code>## 
+## MCMC diagnostics shown here are from the last round of simulation, prior to computation of final parameter estimates. Because the final estimates are refinements of those used for this simulation run, these diagnostics may understate model performance. To directly assess the performance of the final model on in-model statistics, please use the GOF command: gof(ergmFitObject, GOF=~model).</code></pre>
+<hr />
+<p>Interpretation on <code>mcmc.diagnostics</code>:</p>
+<p>Good example.</p>
+<ul>
+<li>Mixing well: MCMC sample statistics are varying randomly around the observed values at each step</li>
+<li>Bell-shaped centered at 0. The difference between the observed and simulated values of the sample statistics have a roughly bell-shaped distribution, centered at 0.</li>
+<li>Notice the sawtooth pattern is due to the discrete values. The sawtooth pattern visible on the degree term deviation plot is due to the combination of discrete values and small range in the statistics: the observed number of degree 1 nodes is 3, and only a few discrete values are produced by the simulations.</li>
+</ul>
+<p>Bad example:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-119"></span>
+<img src="images/mcdiag.png" alt="Example from [Tutorial](https://statnet.org/trac/raw-attachment/wiki/Sunbelt2016/ergm_tutorial.html)" width="80%" />
+<p class="caption">
+Figure 3.1: Example from <a href="https://statnet.org/trac/raw-attachment/wiki/Sunbelt2016/ergm_tutorial.html">Tutorial</a>
+</p>
+</div>
+</div>
+</div>
+<div id="more-functions" class="section level2">
+<h2><span class="header-section-number">3.7</span> More functions</h2>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-120"></span>
+<img src="images/more.png" alt="Example from [Tutorial](https://statnet.org/trac/raw-attachment/wiki/Sunbelt2016/ergm_tutorial.html)" width="80%" />
+<p class="caption">
+Figure 3.2: Example from <a href="https://statnet.org/trac/raw-attachment/wiki/Sunbelt2016/ergm_tutorial.html">Tutorial</a>
+</p>
+</div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="igraph.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="collect-network-data-and-api-requests.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
