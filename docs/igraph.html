@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>2 igraph package | Introduction to Network Analysis Using R</title>
+  <title>Chapter 2 igraph package | Introduction to Network Analysis Using R</title>
   <meta name="description" content="This github page provide a basic introduction on network analysis using R. The documents are based on the lab materials of STAT650 Social Network at Duke University.">
   <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="2 igraph package | Introduction to Network Analysis Using R" />
+  <meta property="og:title" content="Chapter 2 igraph package | Introduction to Network Analysis Using R" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   <meta name="github-repo" content="YunranChen/intro-network-R" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2 igraph package | Introduction to Network Analysis Using R" />
+  <meta name="twitter:title" content="Chapter 2 igraph package | Introduction to Network Analysis Using R" />
   
   <meta name="twitter:description" content="This github page provide a basic introduction on network analysis using R. The documents are based on the lab materials of STAT650 Social Network at Duke University." />
   
@@ -25,7 +25,7 @@
 <meta name="author" content="Yunran Chen">
 
 
-<meta name="date" content="2019-04-27">
+<meta name="date" content="2019-04-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -283,7 +283,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="igraph" class="section level1">
-<h1><span class="header-section-number">2</span> <code>igraph</code> package</h1>
+<h1><span class="header-section-number">Chapter 2</span> <code>igraph</code> package</h1>
 <div id="introduction-1" class="section level2">
 <h2><span class="header-section-number">2.1</span> Introduction</h2>
 <div id="igraph-vs-statnet" class="section level3">
@@ -356,18 +356,18 @@ Figure 2.1: <code>igraph</code> versus <code>statnet</code> from <a href="http:/
 <p>an undirected graph with 3 edges:</p>
 <pre class="sourceCode r"><code class="sourceCode r">g1 &lt;-<span class="st"> </span><span class="kw">graph</span>( <span class="dt">edges=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>, <span class="dv">2</span>,<span class="dv">3</span>, <span class="dv">3</span>,<span class="dv">1</span>), <span class="dt">n=</span><span class="dv">3</span>, <span class="dt">directed=</span>F ) 
 <span class="kw">plot</span>(g1) </code></pre>
-<p><img src="_main_files/figure-html/g1-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/g1-1.png" width="672" /></p>
 <hr />
 <p>n can be greater than number of vertices in the edge list</p>
 <pre class="sourceCode r"><code class="sourceCode r">g2 &lt;-<span class="st"> </span><span class="kw">graph</span>( <span class="dt">edges=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>, <span class="dv">2</span>,<span class="dv">3</span>, <span class="dv">3</span>,<span class="dv">1</span>), <span class="dt">n=</span><span class="dv">10</span> ) <span class="co"># now with 10 vertices, and directed by default</span>
 <span class="kw">plot</span>(g2)   </code></pre>
-<p><img src="_main_files/figure-html/g2-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/g2-1.png" width="672" /></p>
 <hr />
 <p>named vertices</p>
 <pre class="sourceCode r"><code class="sourceCode r">g3 &lt;-<span class="st"> </span><span class="kw">graph</span>( <span class="kw">c</span>(<span class="st">&quot;John&quot;</span>, <span class="st">&quot;Jim&quot;</span>, <span class="st">&quot;Jim&quot;</span>, <span class="st">&quot;Jill&quot;</span>, <span class="st">&quot;Jill&quot;</span>, <span class="st">&quot;John&quot;</span>)) 
 <span class="co"># When the edge list has vertex names, the number of nodes is not needed</span>
 <span class="kw">plot</span>(g3)</code></pre>
-<p><img src="_main_files/figure-html/g3-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/g3-1.png" width="672" /></p>
 <hr />
 <p>named vertices without edges</p>
 <pre class="sourceCode r"><code class="sourceCode r">g4 &lt;-<span class="st"> </span><span class="kw">graph</span>( <span class="kw">c</span>(<span class="st">&quot;John&quot;</span>, <span class="st">&quot;Jim&quot;</span>, <span class="st">&quot;Jim&quot;</span>, <span class="st">&quot;Jack&quot;</span>, <span class="st">&quot;Jim&quot;</span>, <span class="st">&quot;Jack&quot;</span>, <span class="st">&quot;John&quot;</span>, <span class="st">&quot;John&quot;</span>), 
@@ -377,7 +377,7 @@ Figure 2.1: <code>igraph</code> versus <code>statnet</code> from <a href="http:/
 <span class="kw">plot</span>(g4, <span class="dt">edge.arrow.size=</span>.<span class="dv">5</span>, <span class="dt">vertex.color=</span><span class="st">&quot;gold&quot;</span>, <span class="dt">vertex.size=</span><span class="dv">15</span>, 
      <span class="dt">vertex.frame.color=</span><span class="st">&quot;gray&quot;</span>, <span class="dt">vertex.label.color=</span><span class="st">&quot;black&quot;</span>, 
      <span class="dt">vertex.label.cex=</span><span class="fl">1.5</span>, <span class="dt">vertex.label.dist=</span><span class="dv">2</span>, <span class="dt">edge.curved=</span><span class="fl">0.2</span>) </code></pre>
-<p><img src="_main_files/figure-html/g4-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/g4-1.png" width="672" /></p>
 </div>
 <div id="graph_from_literal" class="section level4">
 <h4><span class="header-section-number">2.2.2.2</span> <code>graph_from_literal</code></h4>
@@ -387,22 +387,22 @@ Figure 2.1: <code>igraph</code> versus <code>statnet</code> from <a href="http:/
 <li>“++” for a symmetric tie, and “:” for sets of vertices</li>
 </ul>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">graph_from_literal</span>(a<span class="op">---</span>b, b<span class="op">---</span>c)) <span class="co"># the number of dashes doesn&#39;t matter</span></code></pre>
-<p><img src="_main_files/figure-html/gfl1-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/gfl1-1.png" width="672" /></p>
 <hr />
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">graph_from_literal</span>(a<span class="op">--+</span>b, b<span class="op">+--</span>c))</code></pre>
-<p><img src="_main_files/figure-html/gfl2-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/gfl2-1.png" width="672" /></p>
 <hr />
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">graph_from_literal</span>(a<span class="op">+-+</span>b, b<span class="op">+-+</span>c)) </code></pre>
-<p><img src="_main_files/figure-html/gfl3-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/gfl3-1.png" width="672" /></p>
 <hr />
 <p>a:b:c using colon to connect abc as a whole group.
 Each vertex within group a:b:c is connected to each vertex within group c:d:e</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">graph_from_literal</span>(a<span class="op">:</span>b<span class="op">:</span>c<span class="op">---</span>c<span class="op">:</span>d<span class="op">:</span>e))</code></pre>
-<p><img src="_main_files/figure-html/gfl4-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/gfl4-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">graph_from_literal</span>(a<span class="op">--</span>b<span class="op">:</span>c<span class="op">:</span>d))</code></pre>
-<p><img src="_main_files/figure-html/gfl4-2.png" width="672" /></p>
+<p><img src="docs_files/figure-html/gfl4-2.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">graph_from_literal</span>(a<span class="op">:</span>e<span class="op">--</span>b<span class="op">:</span>c<span class="op">:</span>d))</code></pre>
-<p><img src="_main_files/figure-html/gfl4-3.png" width="672" /></p>
+<p><img src="docs_files/figure-html/gfl4-3.png" width="672" /></p>
 </div>
 </div>
 <div id="creating-specific-graphs-and-graph-models" class="section level3">
@@ -429,32 +429,32 @@ Each vertex within group a:b:c is connected to each vertex within group c:d:e</p
 <h4><span class="header-section-number">2.2.3.1</span> Empty graph</h4>
 <pre class="sourceCode r"><code class="sourceCode r">eg &lt;-<span class="st"> </span><span class="kw">make_empty_graph</span>(<span class="dv">40</span>)
 <span class="kw">plot</span>(eg, <span class="dt">vertex.size=</span><span class="dv">10</span>, <span class="dt">vertex.label=</span><span class="ot">NA</span>)</code></pre>
-<p><img src="_main_files/figure-html/eg-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/eg-1.png" width="672" /></p>
 </div>
 <div id="full-graph" class="section level4">
 <h4><span class="header-section-number">2.2.3.2</span> Full graph</h4>
 <pre class="sourceCode r"><code class="sourceCode r">fg &lt;-<span class="st"> </span><span class="kw">make_full_graph</span>(<span class="dv">40</span>)
 <span class="kw">plot</span>(fg, <span class="dt">vertex.size=</span><span class="dv">10</span>, <span class="dt">vertex.label=</span><span class="ot">NA</span>)</code></pre>
-<p><img src="_main_files/figure-html/fg-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/fg-1.png" width="672" /></p>
 </div>
 <div id="tree-graph" class="section level4">
 <h4><span class="header-section-number">2.2.3.3</span> Tree graph</h4>
 <pre class="sourceCode r"><code class="sourceCode r">tr &lt;-<span class="st"> </span><span class="kw">make_tree</span>(<span class="dv">40</span>, <span class="dt">children =</span> <span class="dv">3</span>, <span class="dt">mode =</span> <span class="st">&quot;undirected&quot;</span>)
 
 <span class="kw">plot</span>(tr, <span class="dt">vertex.size=</span><span class="dv">10</span>, <span class="dt">vertex.label=</span><span class="ot">NA</span>) </code></pre>
-<p><img src="_main_files/figure-html/tr-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/tr-1.png" width="672" /></p>
 </div>
 <div id="star-graph" class="section level4">
 <h4><span class="header-section-number">2.2.3.4</span> Star graph</h4>
 <pre class="sourceCode r"><code class="sourceCode r">st &lt;-<span class="st"> </span><span class="kw">make_star</span>(<span class="dv">40</span>)
 <span class="kw">plot</span>(st, <span class="dt">vertex.size=</span><span class="dv">10</span>, <span class="dt">vertex.label=</span><span class="ot">NA</span>) </code></pre>
-<p><img src="_main_files/figure-html/st-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/st-1.png" width="672" /></p>
 </div>
 <div id="ring-graph" class="section level4">
 <h4><span class="header-section-number">2.2.3.5</span> Ring graph</h4>
 <pre class="sourceCode r"><code class="sourceCode r">rn &lt;-<span class="st"> </span><span class="kw">make_ring</span>(<span class="dv">40</span>)
 <span class="kw">plot</span>(rn, <span class="dt">vertex.size=</span><span class="dv">10</span>, <span class="dt">vertex.label=</span><span class="ot">NA</span>)</code></pre>
-<p><img src="_main_files/figure-html/rn-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/rn-1.png" width="672" /></p>
 </div>
 <div id="erdos-renyi-random-graph" class="section level4">
 <h4><span class="header-section-number">2.2.3.6</span> Erdos-Renyi random graph</h4>
@@ -462,13 +462,13 @@ Each vertex within group a:b:c is connected to each vertex within group c:d:e</p
 <pre class="sourceCode r"><code class="sourceCode r">er &lt;-<span class="st"> </span><span class="kw">sample_gnm</span>(<span class="dt">n=</span><span class="dv">100</span>, <span class="dt">m=</span><span class="dv">40</span>) <span class="co">####can also use erdos.renyi.game</span>
 <span class="co">## options include directed= and loops=</span>
 <span class="kw">plot</span>(er, <span class="dt">vertex.size=</span><span class="dv">6</span>, <span class="dt">vertex.label=</span><span class="ot">NA</span>)  </code></pre>
-<p><img src="_main_files/figure-html/er-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/er-1.png" width="672" /></p>
 </div>
 <div id="erdos-renyi-with-gnp-specification" class="section level4">
 <h4><span class="header-section-number">2.2.3.7</span> Erdos-Renyi with G(n,p) specification</h4>
 <pre class="sourceCode r"><code class="sourceCode r">er &lt;-<span class="st"> </span><span class="kw">sample_gnp</span>(<span class="dt">n=</span><span class="dv">100</span>, <span class="dt">p=</span>.<span class="dv">02</span>) <span class="co">####can also use erdos.renyi.game</span>
 <span class="kw">plot</span>(er, <span class="dt">vertex.size=</span><span class="dv">6</span>, <span class="dt">vertex.label=</span><span class="ot">NA</span>)  </code></pre>
-<p><img src="_main_files/figure-html/er1-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/er1-1.png" width="672" /></p>
 </div>
 </div>
 <div id="adjustments-on-graphs" class="section level3">
@@ -486,7 +486,7 @@ Each vertex within group a:b:c is connected to each vertex within group c:d:e</p
 <pre class="sourceCode r"><code class="sourceCode r">kite &lt;-<span class="st"> </span><span class="kw">make_empty_graph</span>(<span class="dt">directed =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">vertices</span>(LETTERS[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]) <span class="op">+</span>
 <span class="kw">edges</span>(<span class="st">&#39;A&#39;</span>,<span class="st">&#39;B&#39;</span>, <span class="st">&#39;B&#39;</span>,<span class="st">&#39;D&#39;</span>, <span class="st">&#39;C&#39;</span>,<span class="st">&#39;D&#39;</span>, <span class="st">&#39;D&#39;</span>,<span class="st">&#39;E&#39;</span>, <span class="st">&#39;E&#39;</span>,<span class="st">&#39;G&#39;</span>, <span class="st">&#39;F&#39;</span>,<span class="st">&#39;G&#39;</span>, <span class="st">&#39;G&#39;</span>,<span class="st">&#39;H&#39;</span>, <span class="st">&#39;H&#39;</span>,<span class="st">&#39;I&#39;</span>, <span class="st">&#39;I&#39;</span>,<span class="st">&#39;J&#39;</span>)
 <span class="kw">plot</span>(kite)</code></pre>
-<p><img src="_main_files/figure-html/kite-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/kite-1.png" width="672" /></p>
 </div>
 <div id="igraph-object-as-a-matrix" class="section level4">
 <h4><span class="header-section-number">2.2.4.2</span> igraph object as a matrix</h4>
@@ -566,27 +566,27 @@ kite[]</code></pre>
 <h4><span class="header-section-number">2.2.4.3</span> rewiring a graph</h4>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
 <span class="kw">plot</span>(rn, <span class="dt">vertex.size=</span><span class="dv">10</span>, <span class="dt">vertex.label=</span><span class="ot">NA</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <hr />
 <p>‘each_edge()’ is a rewiring method that changes the edge endpoints to a new vertex with a probability ‘prob’. And the new vertex is random variable distributed uniformly.</p>
 <pre class="sourceCode r"><code class="sourceCode r">rn.rewired &lt;-<span class="st"> </span><span class="kw">rewire</span>(rn, <span class="kw">each_edge</span>(<span class="dt">prob=</span><span class="fl">0.1</span>))
 <span class="kw">plot</span>(rn.rewired, <span class="dt">vertex.size=</span><span class="dv">10</span>, <span class="dt">vertex.label=</span><span class="ot">NA</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <hr />
 <p>Rewire to connect vertices to other vertices at a certain distance.</p>
 <pre class="sourceCode r"><code class="sourceCode r">rn.neigh =<span class="st"> </span><span class="kw">connect.neighborhood</span>(rn, <span class="dv">5</span>)
 <span class="kw">plot</span>(rn.neigh, <span class="dt">vertex.size=</span><span class="dv">8</span>, <span class="dt">vertex.label=</span><span class="ot">NA</span>) </code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r">g &lt;-<span class="st"> </span><span class="kw">make_ring</span>(<span class="dv">10</span>)
 <span class="kw">plot</span>(g)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-5-2.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-5-2.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r">g &lt;-<span class="st"> </span><span class="kw">connect</span>(g, <span class="dv">2</span>)
 <span class="kw">plot</span>(g)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-5-3.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-5-3.png" width="672" /></p>
 <hr />
 <p>combine graphs</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(rn <span class="op">%du%</span><span class="st"> </span>tr, <span class="dt">vertex.size=</span><span class="dv">10</span>, <span class="dt">vertex.label=</span><span class="ot">NA</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 </div>
 </div>
 <div id="edge-vertex-and-network-attributes" class="section level3">
@@ -601,13 +601,13 @@ kite[]</code></pre>
 <div id="consider-edge-vertex-as-sequences" class="section level4">
 <h4><span class="header-section-number">2.2.5.1</span> consider edge, vertex as sequences</h4>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(g4)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <hr />
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">E</span>(g4) <span class="co">#edge list</span></code></pre>
-<pre><code>## + 4/4 edges from 8ae939e (vertex names):
+<pre><code>## + 4/4 edges from 562dd0e (vertex names):
 ## [1] John-&gt;Jim  Jim -&gt;Jack Jim -&gt;Jack John-&gt;John</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">V</span>(g4) <span class="co">#vertex list</span></code></pre>
-<pre><code>## + 7/7 vertices, named, from 8ae939e:
+<pre><code>## + 7/7 vertices, named, from 562dd0e:
 ## [1] John     Jim      Jack     Jesse    Janis    Jennifer Justin</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ecount</span>(g4) <span class="co"># count</span></code></pre>
 <pre><code>## [1] 4</code></pre>
@@ -616,28 +616,28 @@ kite[]</code></pre>
 <hr />
 <p>refer vertex and edges</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">V</span>(g4)[<span class="kw">c</span>(<span class="st">&quot;John&quot;</span>,<span class="st">&quot;Jim&quot;</span>)]</code></pre>
-<pre><code>## + 2/7 vertices, named, from 8ae939e:
+<pre><code>## + 2/7 vertices, named, from 562dd0e:
 ## [1] John Jim</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">V</span>(g4)[<span class="kw">nei</span>(<span class="st">&quot;Jim&quot;</span>)] <span class="co"># neighbors of Jim</span></code></pre>
-<pre><code>## + 2/7 vertices, named, from 8ae939e:
+<pre><code>## + 2/7 vertices, named, from 562dd0e:
 ## [1] John Jack</code></pre>
 <hr />
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">E</span>(g4)[<span class="kw">c</span>(<span class="st">&quot;John|Jim&quot;</span>,<span class="st">&quot;Jim|Jack&quot;</span>)]</code></pre>
-<pre><code>## + 2/4 edges from 8ae939e (vertex names):
+<pre><code>## + 2/4 edges from 562dd0e (vertex names):
 ## [1] John-&gt;Jim  Jim -&gt;Jack</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">E</span>(g4,<span class="dt">path =</span> <span class="kw">c</span>(<span class="st">&quot;John&quot;</span>,<span class="st">&quot;Jim&quot;</span>,<span class="st">&quot;Jack&quot;</span>))</code></pre>
-<pre><code>## + 2/4 edges from 8ae939e (vertex names):
+<pre><code>## + 2/4 edges from 562dd0e (vertex names):
 ## [1] John-&gt;Jim  Jim -&gt;Jack</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">E</span>(g4)[ <span class="st">&quot;John&quot;</span> <span class="op">%--%</span><span class="st"> &quot;Jack&quot;</span> ]</code></pre>
-<pre><code>## + 0/4 edges from 8ae939e (vertex names):</code></pre>
+<pre><code>## + 0/4 edges from 562dd0e (vertex names):</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">E</span>(g4)[ <span class="st">&quot;Jim&quot;</span> <span class="op">%-&gt;%</span><span class="st"> &quot;Jack&quot;</span> ]</code></pre>
-<pre><code>## + 2/4 edges from 8ae939e (vertex names):
+<pre><code>## + 2/4 edges from 562dd0e (vertex names):
 ## [1] Jim-&gt;Jack Jim-&gt;Jack</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">E</span>(g4)[ <span class="kw">from</span>(<span class="st">&quot;Jim&quot;</span>) ]</code></pre>
-<pre><code>## + 2/4 edges from 8ae939e (vertex names):
+<pre><code>## + 2/4 edges from 562dd0e (vertex names):
 ## [1] Jim-&gt;Jack Jim-&gt;Jack</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">E</span>(g4)[ <span class="kw">to</span>(<span class="st">&quot;Jim&quot;</span>) ]</code></pre>
-<pre><code>## + 1/4 edge from 8ae939e (vertex names):
+<pre><code>## + 1/4 edge from 562dd0e (vertex names):
 ## [1] John-&gt;Jim</code></pre>
 </div>
 <div id="consider-the-network-as-matrix" class="section level4">
@@ -691,32 +691,32 @@ kite[]</code></pre>
 <div id="neighbors" class="section level4">
 <h4><span class="header-section-number">2.2.5.3</span> neighbors</h4>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">neighbors</span>(g4,<span class="st">&quot;Jim&quot;</span>)</code></pre>
-<pre><code>## + 2/7 vertices, named, from 8ae939e:
+<pre><code>## + 2/7 vertices, named, from 562dd0e:
 ## [1] Jack Jack</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">g4[[<span class="st">&quot;Jim&quot;</span>]]</code></pre>
 <pre><code>## $Jim
-## + 2/7 vertices, named, from 8ae939e:
+## + 2/7 vertices, named, from 562dd0e:
 ## [1] Jack Jack</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">g4[[<span class="kw">c</span>(<span class="st">&quot;Jim&quot;</span>,<span class="st">&quot;John&quot;</span>)]] <span class="co">#works for multiple vertices</span></code></pre>
 <pre><code>## $Jim
-## + 2/7 vertices, named, from 8ae939e:
+## + 2/7 vertices, named, from 562dd0e:
 ## [1] Jack Jack
 ## 
 ## $John
-## + 2/7 vertices, named, from 8ae939e:
+## + 2/7 vertices, named, from 562dd0e:
 ## [1] John Jim</code></pre>
 <hr />
 <pre class="sourceCode r"><code class="sourceCode r">g4[[<span class="st">&quot;Jim&quot;</span>,]]</code></pre>
 <pre><code>## $Jim
-## + 2/7 vertices, named, from 8ae939e:
+## + 2/7 vertices, named, from 562dd0e:
 ## [1] Jack Jack</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">g4[[,<span class="st">&quot;Jim&quot;</span>]]</code></pre>
 <pre><code>## $Jim
-## + 1/7 vertex, named, from 8ae939e:
+## + 1/7 vertex, named, from 562dd0e:
 ## [1] John</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">g4[[,<span class="st">&quot;Jim&quot;</span>,edges=<span class="ot">TRUE</span>]]</code></pre>
 <pre><code>## $Jim
-## + 1/4 edge from 8ae939e (vertex names):
+## + 1/4 edge from 562dd0e (vertex names):
 ## [1] John-&gt;Jim</code></pre>
 </div>
 <div id="attributes-vertex-attributes-edge-attributes-graph-attributes" class="section level4">
@@ -764,16 +764,16 @@ g4 &lt;-<span class="st"> </span><span class="kw">delete_graph_attr</span>(g4, <
 <p>Make use of these attributes</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(g4, <span class="dt">edge.arrow.size=</span>.<span class="dv">5</span>, <span class="dt">vertex.label.color=</span><span class="st">&quot;black&quot;</span>, <span class="dt">vertex.label.dist=</span><span class="fl">1.5</span>,
      <span class="dt">vertex.color=</span><span class="kw">as.factor</span>(<span class="kw">V</span>(g4)<span class="op">$</span>gender) )</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 <hr />
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(g4, <span class="dt">edge.arrow.size=</span>.<span class="dv">5</span>, <span class="dt">vertex.label.color=</span><span class="st">&quot;black&quot;</span>, <span class="dt">vertex.label.dist=</span><span class="fl">1.5</span>,
      <span class="dt">vertex.color=</span><span class="kw">c</span>( <span class="st">&quot;pink&quot;</span>, <span class="st">&quot;skyblue&quot;</span>)[<span class="dv">1</span><span class="op">+</span>(<span class="kw">V</span>(g4)<span class="op">$</span>gender<span class="op">==</span><span class="st">&quot;male&quot;</span>)] ) </code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co">#consider as a sequence</span></code></pre>
 <hr />
 <p>attributes can be combined</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(g4)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r">g4s &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw">simplify</span>( g4, <span class="dt">remove.multiple =</span> T, <span class="dt">remove.loops =</span> F, 
                  <span class="dt">edge.attr.comb=</span><span class="kw">c</span>(<span class="dt">weight=</span><span class="st">&quot;sum&quot;</span>, <span class="dt">type=</span><span class="st">&quot;ignore&quot;</span>) )
 <span class="co">#specifies what to do with edge attributes, if remove.multiple=TRUE. In this case many edges might be mapped to a single one in the new graph, and their attributes are combined.</span>
@@ -795,9 +795,9 @@ g4 &lt;-<span class="st"> </span><span class="kw">delete_graph_attr</span>(g4, <
 <h3><span class="header-section-number">2.2.6</span> Description of igraph object</h3>
 <hr />
 <pre class="sourceCode r"><code class="sourceCode r">g4s</code></pre>
-<pre><code>## IGRAPH df94000 DNW- 7 3 -- Email Network
+<pre><code>## IGRAPH 6cadc8c DNW- 7 3 -- Email Network
 ## + attr: name (g/c), name (v/c), gender (v/c), weight (e/n)
-## + edges from df94000 (vertex names):
+## + edges from 6cadc8c (vertex names):
 ## [1] John-&gt;John John-&gt;Jim  Jim -&gt;Jack</code></pre>
 <ul>
 <li>D or U, for a directed or undirected graph</li>
@@ -935,17 +935,17 @@ adjm</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">g1 &lt;-<span class="st"> </span><span class="kw">graph_from_adjacency_matrix</span>( adjm )
 <span class="kw">set.seed</span>(<span class="dv">1</span>)
 <span class="kw">plot</span>(g1)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co">#default is directed</span>
 g2 &lt;-<span class="st"> </span><span class="kw">graph_from_adjacency_matrix</span>( adjm ,<span class="dt">mode =</span> <span class="st">&quot;undirected&quot;</span>)
 <span class="kw">set.seed</span>(<span class="dv">1</span>)
 <span class="kw">plot</span>(g2)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-30-2.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-30-2.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co">#get rid of the self-loop (in real-world maybe self-loop does not make any sense)</span>
 g3 &lt;-<span class="st"> </span><span class="kw">graph_from_adjacency_matrix</span>( adjm ,<span class="dt">mode =</span> <span class="st">&quot;undirected&quot;</span>,<span class="dt">diag =</span> <span class="ot">FALSE</span>)
 <span class="kw">set.seed</span>(<span class="dv">1</span>)
 <span class="kw">plot</span>(g3)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-30-3.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-30-3.png" width="672" /></p>
 <hr />
 <p>Sparse matrix:</p>
 <pre class="sourceCode r"><code class="sourceCode r">adjms=g1[]
@@ -965,7 +965,7 @@ adjms</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">g4=<span class="kw">graph_from_adjacency_matrix</span>(adjms)
 <span class="kw">set.seed</span>(<span class="dv">1</span>)
 <span class="kw">plot</span>(g4)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
 <hr />
 <p>Weighted matrix</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
@@ -986,11 +986,11 @@ adjmw</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">g5 &lt;-<span class="st"> </span><span class="kw">graph_from_adjacency_matrix</span>(adjmw, <span class="dt">weighted=</span><span class="ot">TRUE</span>)
 <span class="kw">set.seed</span>(<span class="dv">1</span>)
 <span class="kw">plot</span>(g5)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r">g5</code></pre>
-<pre><code>## IGRAPH 7510dff D-W- 10 6 -- 
+<pre><code>## IGRAPH 6f0feb3 D-W- 10 6 -- 
 ## + attr: weight (e/n)
-## + edges from 7510dff:
+## + edges from 6f0feb3:
 ## [1]  1-&gt;3  1-&gt;7  4-&gt;1  7-&gt;1  8-&gt;2 10-&gt;8</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">E</span>(g5)<span class="op">$</span>weight</code></pre>
 <pre><code>## [1] 3 2 2 4 1 5</code></pre>
@@ -1001,7 +1001,7 @@ adjmw</code></pre>
 g6 &lt;-<span class="st"> </span><span class="kw">graph_from_adjacency_matrix</span>(adjmw, <span class="dt">weighted=</span><span class="ot">TRUE</span>)
 <span class="kw">set.seed</span>(<span class="dv">1</span>)
 <span class="kw">plot</span>(g6)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
 </div>
 <div id="graph_from_edgelist" class="section level4">
 <h4><span class="header-section-number">2.3.3.4</span> <code>graph_from_edgelist()</code></h4>
@@ -1041,9 +1041,9 @@ Input is <strong>two-column matrix</strong> with each row defining one edge.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co">## input need to be a matrix</span>
 got1=<span class="kw">graph_from_edgelist</span>(gotdf.el<span class="op">%&gt;%</span><span class="kw">as.matrix</span>(),<span class="dt">directed =</span> <span class="ot">FALSE</span>)
 got1</code></pre>
-<pre><code>## IGRAPH bb37f00 UN-- 99 3374 -- 
+<pre><code>## IGRAPH bdd718b UN-- 99 3374 -- 
 ## + attr: name (v/c)
-## + edges from bb37f00 (vertex names):
+## + edges from bdd718b (vertex names):
 ##  [1] Arya-Stark--Benjen-Stark  Arya-Stark--Benjen-Stark 
 ##  [3] Arya-Stark--Benjen-Stark  Arya-Stark--Bran-Stark   
 ##  [5] Arya-Stark--Bran-Stark    Arya-Stark--Bran-Stark   
@@ -1056,19 +1056,19 @@ got1</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(got1,<span class="dt">edge.arrow.size=</span>.<span class="dv">5</span>, <span class="dt">vertex.color=</span><span class="st">&quot;gold&quot;</span>, <span class="dt">vertex.size=</span><span class="dv">3</span>, 
      <span class="dt">vertex.frame.color=</span><span class="st">&quot;gray&quot;</span>, <span class="dt">vertex.label.color=</span><span class="st">&quot;black&quot;</span>, 
      <span class="dt">vertex.label.cex=</span>.<span class="dv">5</span>, <span class="dt">vertex.label.dist=</span><span class="dv">2</span>, <span class="dt">edge.curved=</span><span class="fl">0.2</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
 <div id="simplify-the-network" class="section level5">
 <h5><span class="header-section-number">2.3.3.4.1</span> Simplify the network</h5>
 <pre class="sourceCode r"><code class="sourceCode r">el &lt;-<span class="st"> </span><span class="kw">matrix</span>( <span class="kw">c</span>(<span class="st">&quot;foo&quot;</span>, <span class="st">&quot;bar&quot;</span>,<span class="st">&quot;foo&quot;</span>,<span class="st">&quot;bar&quot;</span>, <span class="st">&quot;bar&quot;</span>, <span class="st">&quot;foobar&quot;</span>), <span class="dt">nc =</span> <span class="dv">2</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)
 <span class="kw">graph_from_edgelist</span>(el)<span class="op">%&gt;%</span><span class="kw">plot</span>()</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">E</span>(got1)<span class="op">$</span>weight=<span class="kw">rep</span>(<span class="dv">1</span>,<span class="kw">ecount</span>(got1))
 got1s &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw">simplify</span>( got1, <span class="dt">remove.multiple =</span> T, <span class="dt">remove.loops =</span> F, 
                  <span class="dt">edge.attr.comb=</span><span class="kw">c</span>(<span class="dt">weight=</span><span class="st">&quot;sum&quot;</span>))
 <span class="kw">plot</span>(got1s,<span class="dt">edge.arrow.size=</span>.<span class="dv">5</span>, <span class="dt">vertex.color=</span><span class="st">&quot;gold&quot;</span>, <span class="dt">vertex.size=</span><span class="dv">3</span>, 
      <span class="dt">vertex.frame.color=</span><span class="st">&quot;gray&quot;</span>, <span class="dt">vertex.label.color=</span><span class="st">&quot;black&quot;</span>, 
      <span class="dt">vertex.label.cex=</span>.<span class="dv">5</span>, <span class="dt">vertex.label.dist=</span><span class="dv">2</span>, <span class="dt">edge.curved=</span><span class="fl">0.5</span>,<span class="dt">layout=</span>layout_with_lgl)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
 </div>
 <div id="short-name" class="section level5">
 <h5><span class="header-section-number">2.3.3.4.2</span> Short name</h5>
@@ -1084,7 +1084,7 @@ got1s &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class=
 <span class="kw">plot</span>(got1s,<span class="dt">edge.arrow.size=</span>.<span class="dv">5</span>, <span class="dt">vertex.color=</span><span class="st">&quot;gold&quot;</span>, <span class="dt">vertex.size=</span><span class="dv">3</span>, 
      <span class="dt">vertex.frame.color=</span><span class="st">&quot;gray&quot;</span>, <span class="dt">vertex.label.color=</span><span class="st">&quot;black&quot;</span>, 
      <span class="dt">vertex.label.cex=</span>.<span class="dv">5</span>, <span class="dt">vertex.label.dist=</span><span class="dv">2</span>, <span class="dt">edge.curved=</span><span class="fl">0.5</span>,<span class="dt">layout=</span>layout_with_lgl)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
 </div>
 </div>
 <div id="graph_from_data_frame" class="section level4">
@@ -1108,10 +1108,10 @@ got1s &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class=
 <pre class="sourceCode r"><code class="sourceCode r">gotdf=gotdf<span class="op">%&gt;%</span><span class="kw">select</span>(<span class="op">-</span>X)
 got2=<span class="kw">graph_from_data_frame</span>(<span class="dt">d=</span>gotdf,<span class="dt">directed =</span> <span class="ot">FALSE</span>)
 got2</code></pre>
-<pre><code>## IGRAPH 3eebb85 UNW- 99 238 -- 
+<pre><code>## IGRAPH 21f2988 UNW- 99 238 -- 
 ## + attr: name (v/c), Type (e/c), weight (e/n), book (e/n),
 ## | source.family (e/c), target.family (e/c)
-## + edges from 3eebb85 (vertex names):
+## + edges from 21f2988 (vertex names):
 ##  [1] Arya-Stark--Benjen-Stark       Arya-Stark--Bran-Stark        
 ##  [3] Arya-Stark--Catelyn-Stark      Arya-Stark--Cersei-Lannister  
 ##  [5] Arya-Stark--Desmond            Arya-Stark--Eddard-Stark      
@@ -1123,7 +1123,7 @@ got2</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(got2,<span class="dt">edge.arrow.size=</span>.<span class="dv">5</span>, <span class="dt">vertex.color=</span><span class="st">&quot;gold&quot;</span>, <span class="dt">vertex.size=</span><span class="dv">3</span>, 
      <span class="dt">vertex.frame.color=</span><span class="st">&quot;gray&quot;</span>, <span class="dt">vertex.label.color=</span><span class="st">&quot;black&quot;</span>, 
      <span class="dt">vertex.label.cex=</span>.<span class="dv">5</span>, <span class="dt">vertex.label.dist=</span><span class="dv">2</span>, <span class="dt">edge.curved=</span><span class="fl">0.5</span>,<span class="dt">layout=</span>layout_with_lgl)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
 <div id="get-dataframe-matrix-or-adgelist-from-igraph-object" class="section level5">
 <h5><span class="header-section-number">2.3.3.5.1</span> get dataframe, matrix or adgelist from igraph object</h5>
 <pre class="sourceCode r"><code class="sourceCode r">igraph<span class="op">::</span><span class="kw">as_data_frame</span>(got2)<span class="op">%&gt;%</span><span class="kw">head</span>(<span class="dv">2</span>)</code></pre>
@@ -1145,8 +1145,8 @@ got2</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co">## store in txt or csv or others </span>
 <span class="kw">write_graph</span>(<span class="dt">graph =</span> got2,<span class="dt">file =</span> <span class="st">&quot;g.txt&quot;</span>,<span class="dt">format =</span> <span class="st">&quot;edgelist&quot;</span>)
 <span class="kw">read_graph</span>(<span class="dt">file =</span> <span class="st">&quot;g.txt&quot;</span>,<span class="dt">format =</span> <span class="st">&quot;edgelist&quot;</span>,<span class="dt">directed=</span>F)</code></pre>
-<pre><code>## IGRAPH 0acc1d7 U--- 99 238 -- 
-## + edges from 0acc1d7:
+<pre><code>## IGRAPH 99ad3df U--- 99 238 -- 
+## + edges from 99ad3df:
 ##   [1] 1-- 2 1-- 3 1-- 5 1-- 6 1-- 7 1--12 1--13 1--14 1--17 1--18 1--19
 ##  [12] 1--20 1--21 1--22 1--23 1--24 1--25 1--26 1--27 1--28 1--29 1--30
 ##  [23] 1--31 1--32 1--33 1--34 1--35 2-- 3 2-- 6 2--13 2--15 2--21 2--28
@@ -1160,9 +1160,9 @@ got2</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co">## store the whole graph</span>
 <span class="kw">write_graph</span>(got2,<span class="dt">file =</span> <span class="st">&quot;gg&quot;</span>,<span class="dt">format =</span> <span class="st">&quot;pajek&quot;</span>)
 <span class="kw">read_graph</span>(<span class="dt">file=</span><span class="st">&quot;gg&quot;</span>,<span class="dt">format=</span><span class="st">&quot;pajek&quot;</span>)</code></pre>
-<pre><code>## IGRAPH aa828ed U-W- 99 238 -- 
+<pre><code>## IGRAPH 6586ad6 U-W- 99 238 -- 
 ## + attr: weight (e/n)
-## + edges from aa828ed:
+## + edges from 6586ad6:
 ##  [1] 1-- 2 1-- 3 1-- 5 1-- 6 1--17 1-- 7 1--18 1--19 1--20 1--21 1--22
 ## [12] 1--23 1--24 1--25 1--26 1--27 1--12 1--13 1--28 1--29 1--30 1--14
 ## [23] 1--31 1--32 1--33 1--34 1--35 2-- 3 2-- 6 2--36 2--37 2--21 2--38
@@ -1173,10 +1173,10 @@ got2</code></pre>
 ## [78] 5--55 5-- 7 5--56 5--57 5--43 5--58 5-- 8 5--20 5--46 5--21 5--59
 ## + ... omitted several edges</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">got2</code></pre>
-<pre><code>## IGRAPH 3eebb85 UNW- 99 238 -- 
+<pre><code>## IGRAPH 21f2988 UNW- 99 238 -- 
 ## + attr: name (v/c), Type (e/c), weight (e/n), book (e/n),
 ## | source.family (e/c), target.family (e/c)
-## + edges from 3eebb85 (vertex names):
+## + edges from 21f2988 (vertex names):
 ##  [1] Arya-Stark--Benjen-Stark       Arya-Stark--Bran-Stark        
 ##  [3] Arya-Stark--Catelyn-Stark      Arya-Stark--Cersei-Lannister  
 ##  [5] Arya-Stark--Desmond            Arya-Stark--Eddard-Stark      
@@ -1221,7 +1221,7 @@ Figure 2.10:  Introduction from <a href="https://kateto.net/networks-r-igraph">K
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(got2, <span class="dt">vertex.color=</span><span class="st">&quot;gold&quot;</span>, <span class="dt">vertex.size=</span><span class="dv">3</span>, 
      <span class="dt">vertex.frame.color=</span><span class="st">&quot;gray&quot;</span>, <span class="dt">vertex.label.color=</span><span class="st">&quot;black&quot;</span>, 
      <span class="dt">vertex.label.cex=</span>.<span class="dv">5</span>, <span class="dt">vertex.label.dist=</span><span class="dv">2</span>, <span class="dt">edge.curved=</span><span class="fl">0.5</span>,<span class="dt">layout=</span>layout_with_lgl)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
 <div id="to-make-the-graph-look-nicer" class="section level5">
 <h5><span class="header-section-number">2.3.4.1.1</span> To make the graph look nicer</h5>
 <ul>
@@ -1262,12 +1262,12 @@ vcol[vcol<span class="op">==</span><span class="st">&quot;Lannister&quot;</span>
      <span class="dt">vertex.label.cex=</span>.<span class="dv">5</span>, <span class="dt">vertex.label.dist=</span><span class="dv">2</span>, <span class="dt">edge.curved=</span><span class="fl">0.5</span>,<span class="dt">layout=</span>layout_with_kk)
 <span class="kw">legend</span>(<span class="st">&quot;right&quot;</span>, <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Stark&quot;</span>,<span class="st">&quot;Lannister&quot;</span>,<span class="st">&quot;Other&quot;</span>), <span class="dt">pch=</span><span class="dv">21</span>,
        <span class="dt">col=</span><span class="kw">c</span>(<span class="st">&quot;tomato&quot;</span>,<span class="st">&quot;gold&quot;</span>,<span class="st">&quot;gray50&quot;</span>), <span class="dt">pt.bg=</span><span class="kw">c</span>(<span class="st">&quot;tomato&quot;</span>,<span class="st">&quot;gold&quot;</span>,<span class="st">&quot;gray50&quot;</span>), <span class="dt">pt.cex=</span><span class="dv">1</span>, <span class="dt">cex=</span>.<span class="dv">8</span>, <span class="dt">bty=</span><span class="st">&quot;n&quot;</span>, <span class="dt">ncol=</span><span class="dv">1</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-50-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-50-1.png" width="672" /></p>
 <hr />
 <p>Plot only labels of the nodes</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(got2, <span class="dt">vertex.shape=</span><span class="st">&quot;none&quot;</span>,<span class="dt">vertex.label.color=</span><span class="st">&quot;black&quot;</span>, 
      <span class="dt">vertex.label.cex=</span>.<span class="dv">5</span>, <span class="dt">vertex.label.dist=</span><span class="dv">2</span>, <span class="dt">edge.curved=</span><span class="fl">0.5</span>,<span class="dt">layout=</span>layout_with_kk)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
 </div>
 </div>
 <div id="layouts" class="section level4">
@@ -1296,7 +1296,7 @@ vcol[vcol<span class="op">==</span><span class="st">&quot;Lannister&quot;</span>
      <span class="dt">vertex.label.cex=</span>.<span class="dv">5</span>,<span class="dt">vertex.label.dist=</span><span class="fl">0.2</span>, <span class="dt">edge.curved=</span><span class="fl">0.5</span>,<span class="dt">layout=</span>layout_with_dh)
 <span class="kw">legend</span>(<span class="st">&quot;right&quot;</span>, <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Stark&quot;</span>,<span class="st">&quot;Lannister&quot;</span>,<span class="st">&quot;Other&quot;</span>), <span class="dt">pch=</span><span class="dv">21</span>,
        <span class="dt">col=</span><span class="kw">c</span>(<span class="st">&quot;tomato&quot;</span>,<span class="st">&quot;gold&quot;</span>,<span class="st">&quot;gray50&quot;</span>), <span class="dt">pt.bg=</span><span class="kw">c</span>(<span class="st">&quot;tomato&quot;</span>,<span class="st">&quot;gold&quot;</span>,<span class="st">&quot;gray50&quot;</span>), <span class="dt">pt.cex=</span><span class="dv">1</span>, <span class="dt">cex=</span>.<span class="dv">8</span>, <span class="dt">bty=</span><span class="st">&quot;n&quot;</span>, <span class="dt">ncol=</span><span class="dv">1</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
 <hr />
 <p>Selecting a layout automatically</p>
 <ul>
@@ -1306,20 +1306,20 @@ vcol[vcol<span class="op">==</span><span class="st">&quot;Lannister&quot;</span>
 </ul>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(got2, <span class="dt">vertex.label.color=</span><span class="st">&quot;black&quot;</span>, 
      <span class="dt">vertex.label.cex=</span>.<span class="dv">5</span>,<span class="dt">vertex.label.dist=</span><span class="fl">0.2</span>, <span class="dt">edge.curved=</span><span class="fl">0.5</span>,<span class="dt">layout=</span><span class="kw">layout.auto</span>(got2))</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-54-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-54-1.png" width="672" /></p>
 <hr />
 <p>Without label and color the edge.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">2</span>)
 <span class="kw">plot</span>(got2, <span class="dt">vertex.shape=</span><span class="st">&quot;none&quot;</span>,<span class="dt">vertex.label.color=</span><span class="st">&quot;black&quot;</span>, 
      <span class="dt">vertex.label.cex=</span>.<span class="dv">5</span>,<span class="dt">vertex.label.dist=</span><span class="fl">0.2</span>, <span class="dt">edge.curved=</span><span class="fl">0.5</span>,<span class="dt">layout=</span>layout_with_dh)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co">##color the edge</span>
 got2</code></pre>
-<pre><code>## IGRAPH 3eebb85 UNW- 99 238 -- 
+<pre><code>## IGRAPH 21f2988 UNW- 99 238 -- 
 ## + attr: name (v/c), familyname (v/c), fullname (v/c), color (v/c),
 ## | size (v/n), Type (e/c), weight (e/n), book (e/n), source.family
 ## | (e/c), target.family (e/c), width (e/n)
-## + edges from 3eebb85 (vertex names):
+## + edges from 21f2988 (vertex names):
 ##  [1] Arya--Benjen  Arya--Bran    Arya--Cersei  Arya--Desmond Arya--Petyr  
 ##  [6] Arya--Eddard  Arya--Rickon  Arya--Robb    Arya--Robert  Arya--Rodrik 
 ## [11] Arya--Sandor  Arya--Sansa   Arya--Syrio   Arya--Tomard  Arya--Tommen 
@@ -1338,7 +1338,7 @@ ecol[(ecol<span class="op">==</span><span class="st">&quot;gold&quot;</span>)<sp
      <span class="dt">vertex.label.cex=</span>.<span class="dv">5</span>,<span class="dt">vertex.label.dist=</span><span class="fl">0.2</span>, <span class="dt">edge.curved=</span><span class="fl">0.5</span>,<span class="dt">layout=</span>layout_with_dh)
 <span class="kw">legend</span>(<span class="st">&quot;right&quot;</span>, <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Stark&quot;</span>,<span class="st">&quot;Lannister&quot;</span>,<span class="st">&quot;Stark-Lannister&quot;</span>,<span class="st">&quot;Other&quot;</span>),
        <span class="dt">col=</span><span class="kw">c</span>(<span class="st">&quot;tomato&quot;</span>,<span class="st">&quot;gold&quot;</span>,<span class="st">&quot;orange&quot;</span>,<span class="st">&quot;gray50&quot;</span>), <span class="dt">lty=</span><span class="kw">rep</span>(<span class="dv">1</span>,<span class="dv">4</span>), <span class="dt">cex=</span>.<span class="dv">8</span>, <span class="dt">bty=</span><span class="st">&quot;n&quot;</span>, <span class="dt">ncol=</span><span class="dv">1</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-55-2.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-55-2.png" width="672" /></p>
 </div>
 <div id="layout-is-not-deterministic" class="section level4">
 <h4><span class="header-section-number">2.3.4.3</span> layout is not deterministic</h4>
@@ -1347,7 +1347,7 @@ ecol[(ecol<span class="op">==</span><span class="st">&quot;gold&quot;</span>)<sp
 l=<span class="kw">layout_with_dh</span>(got2)
 <span class="kw">plot</span>(got2, <span class="dt">vertex.shape=</span><span class="st">&quot;none&quot;</span>,<span class="dt">vertex.label.color=</span><span class="st">&quot;black&quot;</span>, 
      <span class="dt">vertex.label.cex=</span>.<span class="dv">5</span>,<span class="dt">vertex.label.dist=</span><span class="fl">0.2</span>, <span class="dt">edge.curved=</span><span class="fl">0.5</span>,<span class="dt">layout=</span>l)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-56-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-56-1.png" width="672" /></p>
 <hr />
 <p>rescale</p>
 <ul>
@@ -1359,7 +1359,7 @@ l=<span class="kw">layout_with_dh</span>(got2)
 l &lt;-<span class="st"> </span><span class="kw">norm_coords</span>(l, <span class="dt">ymin=</span><span class="op">-</span><span class="dv">1</span>, <span class="dt">ymax=</span><span class="dv">1</span>, <span class="dt">xmin=</span><span class="op">-</span><span class="dv">1</span>, <span class="dt">xmax=</span><span class="dv">1</span>) <span class="co">#default -- scaled</span>
 <span class="kw">plot</span>(got2, <span class="dt">vertex.shape=</span><span class="st">&quot;none&quot;</span>,<span class="dt">vertex.label.color=</span><span class="st">&quot;black&quot;</span>, 
      <span class="dt">vertex.label.cex=</span>.<span class="dv">5</span>,<span class="dt">vertex.label.dist=</span><span class="fl">0.2</span>, <span class="dt">edge.curved=</span><span class="fl">0.5</span>,<span class="dt">layout=</span>l,<span class="dt">rescale=</span>F)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-57-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-57-1.png" width="672" /></p>
 <hr />
 <p>Will introduce interactive r packages next time.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>), <span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>))
@@ -1371,7 +1371,7 @@ l &lt;-<span class="st"> </span><span class="kw">norm_coords</span>(l, <span cla
      <span class="dt">vertex.label.cex=</span>.<span class="dv">5</span>,<span class="dt">vertex.label.dist=</span><span class="fl">0.2</span>, <span class="dt">edge.curved=</span><span class="fl">0.5</span>,<span class="dt">layout=</span>l<span class="op">*</span><span class="dv">1</span>,<span class="dt">rescale=</span>F) 
 <span class="kw">plot</span>(got2, <span class="dt">vertex.shape=</span><span class="st">&quot;none&quot;</span>,<span class="dt">vertex.label.color=</span><span class="st">&quot;black&quot;</span>, 
      <span class="dt">vertex.label.cex=</span>.<span class="dv">5</span>,<span class="dt">vertex.label.dist=</span><span class="fl">0.2</span>, <span class="dt">edge.curved=</span><span class="fl">0.5</span>,<span class="dt">layout=</span>l<span class="op">*</span><span class="dv">2</span>,<span class="dt">rescale=</span>F)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-58-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-58-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co">#dev.off()</span></code></pre>
 </div>
 </div>
@@ -1405,11 +1405,11 @@ l &lt;-<span class="st"> </span><span class="kw">norm_coords</span>(l, <span cla
 <p>Notice the graph is undirected. So there is no difference under different parameter setting.</p>
 <pre class="sourceCode r"><code class="sourceCode r">deg &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw">degree</span>(got2, <span class="dt">mode=</span><span class="st">&quot;all&quot;</span>)
 <span class="kw">hist</span>(deg, <span class="dt">breaks=</span><span class="dv">1</span><span class="op">:</span><span class="kw">vcount</span>(got2)<span class="op">-</span><span class="dv">1</span>, <span class="dt">main=</span><span class="st">&quot;Histogram of node degree&quot;</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-60-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-60-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r">deg.dist &lt;-<span class="st"> </span><span class="kw">degree_distribution</span>(got2, <span class="dt">cumulative=</span>T, <span class="dt">mode=</span><span class="st">&quot;all&quot;</span>)
 <span class="kw">plot</span>( <span class="dt">x=</span><span class="dv">0</span><span class="op">:</span><span class="kw">max</span>(deg), <span class="dt">y=</span><span class="dv">1</span><span class="op">-</span>deg.dist, <span class="dt">pch=</span><span class="dv">19</span>, <span class="dt">cex=</span><span class="fl">1.2</span>, <span class="dt">col=</span><span class="st">&quot;orange&quot;</span>, 
       <span class="dt">xlab=</span><span class="st">&quot;Degree&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Cumulative Frequency&quot;</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-60-2.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-60-2.png" width="672" /></p>
 </div>
 <div id="centrality-and-centralization" class="section level4">
 <h4><span class="header-section-number">2.3.5.3</span> centrality and centralization</h4>
@@ -1549,7 +1549,7 @@ Values of the first eigenvector of the graph adjacency matrix</p>
 <pre><code>## [1] 0</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co">#different carrier and aircraft types leading to multiple graphs</span>
 USairports[[<span class="st">&quot;RDU&quot;</span>,<span class="st">&quot;JFK&quot;</span>,edges=<span class="ot">TRUE</span>]][[<span class="dv">1</span>]][[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]]</code></pre>
-<pre><code>## + 5/23420 edges from 6c19fa2 (vertex names):
+<pre><code>## + 5/23420 edges from 1fcdaeb (vertex names):
 ##       tail head tid hid                      Carrier Departures Seats
 ## 22271  RDU  JFK  74   4     Chautauqua Airlines Inc.         27  1350
 ## 20487  RDU  JFK  74   4 American Eagle Airlines Inc.         48  2112
@@ -1565,10 +1565,10 @@ USairports[[<span class="st">&quot;RDU&quot;</span>,<span class="st">&quot;JFK&q
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co">#simplify</span>
 air &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw">simplify</span>(USairports, <span class="dt">edge.attr.comb =</span><span class="kw">list</span>(<span class="dt">Departures =</span> <span class="st">&quot;sum&quot;</span>, <span class="dt">Seats =</span> <span class="st">&quot;sum&quot;</span>, <span class="dt">Passengers =</span> <span class="st">&quot;sum&quot;</span>,<span class="dt">Distance=</span><span class="st">&quot;mean&quot;</span>, <span class="st">&quot;ignore&quot;</span>))
 air</code></pre>
-<pre><code>## IGRAPH d749d33 DN-- 755 8228 -- US airports
+<pre><code>## IGRAPH 0073656 DN-- 755 8228 -- US airports
 ## + attr: name (g/c), name (v/c), City (v/c), Position (v/c),
 ## | Departures (e/n), Seats (e/n), Passengers (e/n), Distance (e/n)
-## + edges from d749d33 (vertex names):
+## + edges from 0073656 (vertex names):
 ##  [1] BGR-&gt;BOS BGR-&gt;JFK BGR-&gt;MIA BGR-&gt;EWR BGR-&gt;DCA BGR-&gt;DTW BGR-&gt;LGA
 ##  [8] BGR-&gt;PHL BGR-&gt;PIE BGR-&gt;SFB BOS-&gt;BGR BOS-&gt;JFK BOS-&gt;LAS BOS-&gt;MIA
 ## [15] BOS-&gt;EWR BOS-&gt;LAX BOS-&gt;PBI BOS-&gt;PIT BOS-&gt;SFO BOS-&gt;IAD BOS-&gt;BDL
@@ -1579,7 +1579,7 @@ air</code></pre>
 ## + ... omitted several edges</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">air[[<span class="st">&quot;RDU&quot;</span>,<span class="st">&quot;JFK&quot;</span>,edges=<span class="ot">TRUE</span>]]</code></pre>
 <pre><code>## [[1]]
-## + 1/8228 edge from d749d33 (vertex names):
+## + 1/8228 edge from 0073656 (vertex names):
 ## [1] RDU-&gt;JFK</code></pre>
 </div>
 </div>
@@ -1593,16 +1593,16 @@ air</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co">#select length 1 path</span>
 air[[from=<span class="st">&quot;RDU&quot;</span>,to=<span class="st">&quot;BOS&quot;</span>,edges=<span class="ot">TRUE</span>]]</code></pre>
 <pre><code>## [[1]]
-## + 1/8228 edge from d749d33 (vertex names):
+## + 1/8228 edge from 0073656 (vertex names):
 ## [1] RDU-&gt;BOS</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># select &gt;=1 paths</span>
 flight_rdu_bos=<span class="kw">V</span>(air)[<span class="st">&quot;RDU&quot;</span>,<span class="st">&quot;JFK&quot;</span>,<span class="st">&quot;BOS&quot;</span>]
 <span class="kw">E</span>(air,<span class="dt">path=</span>flight_rdu_bos)</code></pre>
-<pre><code>## + 2/8228 edges from d749d33 (vertex names):
+<pre><code>## + 2/8228 edges from 0073656 (vertex names):
 ## [1] RDU-&gt;JFK JFK-&gt;BOS</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co">#another way</span>
 <span class="kw">E</span>(air)[<span class="st">&quot;RDU&quot;</span><span class="op">%-&gt;%</span><span class="st">&quot;JFK&quot;</span>,<span class="st">&quot;JFK&quot;</span><span class="op">%-&gt;%</span><span class="st">&quot;BOS&quot;</span>]</code></pre>
-<pre><code>## + 2/8228 edges from d749d33 (vertex names):
+<pre><code>## + 2/8228 edges from 0073656 (vertex names):
 ## [1] RDU-&gt;JFK JFK-&gt;BOS</code></pre>
 </div>
 <div id="shortest-paths" class="section level5">
@@ -1614,79 +1614,79 @@ flight_rdu_bos=<span class="kw">V</span>(air)[<span class="st">&quot;RDU&quot;</
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co">#arkansas airport-XNA</span>
 <span class="kw">shortest_paths</span>(air,<span class="dt">from=</span><span class="st">&quot;RDU&quot;</span>,<span class="dt">to =</span> <span class="st">&quot;XNA&quot;</span>,<span class="dt">weights =</span> <span class="kw">E</span>(air)<span class="op">$</span>Distance)<span class="op">$</span>vpath</code></pre>
 <pre><code>## [[1]]
-## + 3/755 vertices, named, from d749d33:
+## + 3/755 vertices, named, from 0073656:
 ## [1] RDU CLT XNA</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shortest_paths</span>(air,<span class="dt">from=</span><span class="st">&quot;RDU&quot;</span>,<span class="dt">to =</span> <span class="st">&quot;XNA&quot;</span>,<span class="dt">weights =</span> <span class="ot">NA</span>)<span class="op">$</span>vpath <span class="co">#one of the shortest path</span></code></pre>
 <pre><code>## [[1]]
-## + 3/755 vertices, named, from d749d33:
+## + 3/755 vertices, named, from 0073656:
 ## [1] RDU LAS XNA</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shortest_paths</span>(air,<span class="dt">from=</span><span class="st">&quot;RDU&quot;</span>,<span class="dt">to =</span> <span class="st">&quot;XNA&quot;</span>,<span class="dt">mode =</span> <span class="st">&quot;in&quot;</span>,<span class="dt">weights =</span> <span class="ot">NA</span>)<span class="op">$</span>vpath <span class="co">#to</span></code></pre>
 <pre><code>## [[1]]
-## + 3/755 vertices, named, from d749d33:
+## + 3/755 vertices, named, from 0073656:
 ## [1] RDU BOS XNA</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shortest_paths</span>(air,<span class="dt">from=</span><span class="st">&quot;RDU&quot;</span>,<span class="dt">to =</span> <span class="st">&quot;XNA&quot;</span>,<span class="dt">mode =</span> <span class="st">&quot;out&quot;</span>,<span class="dt">weights =</span> <span class="ot">NA</span>)<span class="op">$</span>vpath <span class="co">#from</span></code></pre>
 <pre><code>## [[1]]
-## + 3/755 vertices, named, from d749d33:
+## + 3/755 vertices, named, from 0073656:
 ## [1] RDU LAS XNA</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shortest_paths</span>(air,<span class="dt">from=</span><span class="st">&quot;RDU&quot;</span>,<span class="dt">to =</span> <span class="st">&quot;XNA&quot;</span>,<span class="dt">mode =</span> <span class="st">&quot;all&quot;</span>,<span class="dt">weights =</span> <span class="ot">NA</span>)<span class="op">$</span>vpath <span class="co">#undirected</span></code></pre>
 <pre><code>## [[1]]
-## + 3/755 vertices, named, from d749d33:
+## + 3/755 vertices, named, from 0073656:
 ## [1] RDU BOS XNA</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all_shortest_paths</span>(air,<span class="dt">from=</span><span class="st">&quot;RDU&quot;</span>,<span class="dt">to =</span> <span class="st">&quot;XNA&quot;</span>,<span class="dt">weight=</span><span class="ot">NA</span>)<span class="op">$</span>res</code></pre>
 <pre><code>## [[1]]
-## + 3/755 vertices, named, from d749d33:
+## + 3/755 vertices, named, from 0073656:
 ## [1] RDU MEM XNA
 ## 
 ## [[2]]
-## + 3/755 vertices, named, from d749d33:
+## + 3/755 vertices, named, from 0073656:
 ## [1] RDU DFW XNA
 ## 
 ## [[3]]
-## + 3/755 vertices, named, from d749d33:
+## + 3/755 vertices, named, from 0073656:
 ## [1] RDU DEN XNA
 ## 
 ## [[4]]
-## + 3/755 vertices, named, from d749d33:
+## + 3/755 vertices, named, from 0073656:
 ## [1] RDU ATL XNA
 ## 
 ## [[5]]
-## + 3/755 vertices, named, from d749d33:
+## + 3/755 vertices, named, from 0073656:
 ## [1] RDU ORD XNA
 ## 
 ## [[6]]
-## + 3/755 vertices, named, from d749d33:
+## + 3/755 vertices, named, from 0073656:
 ## [1] RDU IAH XNA
 ## 
 ## [[7]]
-## + 3/755 vertices, named, from d749d33:
+## + 3/755 vertices, named, from 0073656:
 ## [1] RDU MSP XNA
 ## 
 ## [[8]]
-## + 3/755 vertices, named, from d749d33:
+## + 3/755 vertices, named, from 0073656:
 ## [1] RDU LGA XNA
 ## 
 ## [[9]]
-## + 3/755 vertices, named, from d749d33:
+## + 3/755 vertices, named, from 0073656:
 ## [1] RDU DTW XNA
 ## 
 ## [[10]]
-## + 3/755 vertices, named, from d749d33:
+## + 3/755 vertices, named, from 0073656:
 ## [1] RDU CVG XNA
 ## 
 ## [[11]]
-## + 3/755 vertices, named, from d749d33:
+## + 3/755 vertices, named, from 0073656:
 ## [1] RDU CLT XNA
 ## 
 ## [[12]]
-## + 3/755 vertices, named, from d749d33:
+## + 3/755 vertices, named, from 0073656:
 ## [1] RDU EWR XNA
 ## 
 ## [[13]]
-## + 3/755 vertices, named, from d749d33:
+## + 3/755 vertices, named, from 0073656:
 ## [1] RDU LAS XNA</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all_shortest_paths</span>(air,<span class="dt">from=</span><span class="st">&quot;RDU&quot;</span>,<span class="dt">to =</span> <span class="st">&quot;XNA&quot;</span>,<span class="dt">weights =</span> <span class="kw">E</span>(air)<span class="op">$</span>Distance)<span class="op">$</span>res</code></pre>
 <pre><code>## [[1]]
-## + 3/755 vertices, named, from d749d33:
+## + 3/755 vertices, named, from 0073656:
 ## [1] RDU CLT XNA</code></pre>
 </div>
 <div id="color-certain-paths" class="section level5">
@@ -1698,7 +1698,7 @@ ecol[<span class="kw">E</span>(karate,<span class="dt">path =</span> path_vk)]=<
 ew=<span class="kw">rep</span>(<span class="dv">1</span>,<span class="kw">ecount</span>(karate))
 ew[<span class="kw">E</span>(karate,<span class="dt">path =</span> path_vk)]=<span class="dv">3</span>
 <span class="kw">plot</span>(karate,<span class="dt">edge.color=</span>ecol,<span class="dt">edge.width=</span>ew)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-70-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-70-1.png" width="672" /></p>
 </div>
 </div>
 <div id="distance" class="section level4">
@@ -1722,7 +1722,7 @@ ew[<span class="kw">E</span>(karate,<span class="dt">path =</span> path_vk)]=<sp
 ## RDU 884</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># how the function `distances` works</span>
 (<span class="kw">shortest_paths</span>(air,<span class="dt">from=</span><span class="st">&quot;RDU&quot;</span>,<span class="dt">to =</span> <span class="st">&quot;XNA&quot;</span>,<span class="dt">weights =</span> <span class="kw">E</span>(air)<span class="op">$</span>Distance)<span class="op">$</span>vpath[[<span class="dv">1</span>]])</code></pre>
-<pre><code>## + 3/755 vertices, named, from d749d33:
+<pre><code>## + 3/755 vertices, named, from 0073656:
 ## [1] RDU CLT XNA</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">E</span>(air)[<span class="st">&quot;RDU&quot;</span><span class="op">%-&gt;%</span><span class="st">&quot;CLT&quot;</span>,<span class="st">&quot;CLT&quot;</span><span class="op">%-&gt;%</span><span class="st">&quot;XNA&quot;</span>]<span class="op">$</span>Distance<span class="op">%&gt;%</span><span class="kw">sum</span>()</code></pre>
 <pre><code>## [1] 884</code></pre>
@@ -1776,12 +1776,12 @@ freq=<span class="kw">c</span>(<span class="kw">distance_table</span>(air)<span 
 <h5><span class="header-section-number">2.4.3.3.1</span> Get the nodes and edges of the airports in the longest path</h5>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co">#get the nodes</span>
 <span class="kw">get_diameter</span>(air,<span class="dt">weights =</span> <span class="kw">E</span>(air)<span class="op">$</span>Distance)</code></pre>
-<pre><code>## + 9/755 vertices, named, from d749d33:
+<pre><code>## + 9/755 vertices, named, from 0073656:
 ## [1] VNY ORL OPF SDF STL SFO GUM SPN TIQ</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">dia_v=<span class="kw">get_diameter</span>(air,<span class="dt">weights =</span> <span class="kw">E</span>(air)<span class="op">$</span>Distance)
 <span class="co"># information of nodes</span>
 dia_v[[]]</code></pre>
-<pre><code>## + 9/755 vertices, named, from d749d33:
+<pre><code>## + 9/755 vertices, named, from 0073656:
 ##     name              City         Position
 ## 717  VNY      Van Nuys, CA N341235 W1182924
 ## 713  ORL       Orlando, FL N283244 W0811959
@@ -1794,12 +1794,12 @@ dia_v[[]]</code></pre>
 ## 181  TIQ        Tinian, TT N145949 E1453705</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># edges</span>
 <span class="kw">E</span>(air,<span class="dt">path =</span> dia_v)</code></pre>
-<pre><code>## + 8/8228 edges from d749d33 (vertex names):
+<pre><code>## + 8/8228 edges from 0073656 (vertex names):
 ## [1] VNY-&gt;ORL ORL-&gt;OPF OPF-&gt;SDF SDF-&gt;STL STL-&gt;SFO SFO-&gt;GUM GUM-&gt;SPN SPN-&gt;TIQ</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># info of edges</span>
 dia_e=<span class="kw">E</span>(air,<span class="dt">path =</span> dia_v)
 dia_e[[]]</code></pre>
-<pre><code>## + 8/8228 edges from d749d33 (vertex names):
+<pre><code>## + 8/8228 edges from 0073656 (vertex names):
 ##      tail head tid hid Departures Seats Passengers Distance
 ## 8184  VNY  ORL 717 713          1    12          4     2218
 ## 8178  ORL  OPF 713 712          1    12          4      193
@@ -1813,7 +1813,7 @@ dia_e[[]]</code></pre>
 
 air_filt=<span class="kw">delete_edges</span>(air,<span class="kw">E</span>(air)[Passengers<span class="op">&lt;=</span><span class="dv">10</span>])
 <span class="kw">get_diameter</span>(air_filt,<span class="dt">weights =</span> <span class="kw">E</span>(air_filt)<span class="op">$</span>Distance)</code></pre>
-<pre><code>## + 8/755 vertices, named, from 3775b33:
+<pre><code>## + 8/755 vertices, named, from 5611041:
 ## [1] TIQ SPN GUM HNL LAX OKC NYL JQF</code></pre>
 </div>
 <div id="color-the-paths-along-the-diameter" class="section level5">
@@ -1824,7 +1824,7 @@ air_filt=<span class="kw">delete_edges</span>(air,<span class="kw">E</span>(air)
 ecol=<span class="kw">rep</span>(<span class="st">&quot;gray80&quot;</span>,<span class="kw">ecount</span>(karate))
 ecol[<span class="kw">E</span>(karate,<span class="dt">path =</span> dia_vk)]=<span class="st">&quot;orange&quot;</span>
 <span class="kw">plot</span>(karate,<span class="dt">edge.color=</span>ecol)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-76-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-76-1.png" width="672" /></p>
 </div>
 </div>
 </div>
@@ -1850,7 +1850,7 @@ ecol[<span class="kw">E</span>(karate,<span class="dt">path =</span> dia_vk)]=<s
 ##   6</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># check whether RDU is in the largest component</span>
 <span class="kw">subcomponent</span>(air,<span class="st">&quot;RDU&quot;</span>) <span class="co">#not bad</span></code></pre>
-<pre><code>## + 745/755 vertices, named, from d749d33:
+<pre><code>## + 745/755 vertices, named, from 0073656:
 ##   [1] RDU BOS JFK LAS MIA EWR TEB PIT IAD BDL BNA BTR BWI CLE CLT CMH CVG
 ##  [18] DCA DTW GPT GSO ILM IND LEX LGA MDT MKE MSP PHL STL SYR TYS MHT PVD
 ##  [35] FLL MCO TPA IAH ORD CID MCI MSN SBN ATL DEN DFW MDW PHX RSW TUS ACY
@@ -1933,7 +1933,7 @@ ecol[<span class="kw">E</span>(karate,<span class="dt">path =</span> dia_vk)]=<s
 <h4><span class="header-section-number">2.4.4.6</span> maximum flows and minimum cuts</h4>
 <p>max flow How many passengers the US airport network can transport from a given airport to another one.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">E</span>(air)[[<span class="st">&quot;BOS&quot;</span><span class="op">%-&gt;%</span><span class="st">&quot;JFK&quot;</span>]]</code></pre>
-<pre><code>## + 1/8228 edge from d749d33 (vertex names):
+<pre><code>## + 1/8228 edge from 0073656 (vertex names):
 ##    tail head tid hid Departures Seats Passengers Distance
 ## 12  BOS  JFK   2   4        491 39403      31426      187</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># use seat to present the capacity.</span>
@@ -1946,7 +1946,7 @@ ecol[<span class="kw">E</span>(karate,<span class="dt">path =</span> dia_vk)]=<s
 <hr />
 <p>min cut: the minimum <strong>number of edges</strong>, that disconnect a destination vertex from a departure vertex. In a <strong>weighted</strong> network with edge capacities the minimum cut calculates the <strong>total capacity</strong> needed to disconnect the vertex pair.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">E</span>(air)[[<span class="st">&quot;BOS&quot;</span><span class="op">%-&gt;%</span><span class="st">&quot;JFK&quot;</span>]]</code></pre>
-<pre><code>## + 1/8228 edge from d749d33 (vertex names):
+<pre><code>## + 1/8228 edge from 0073656 (vertex names):
 ##    tail head tid hid Departures Seats Passengers Distance capacity
 ## 12  BOS  JFK   2   4        491 39403      31426      187    39403</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># use seat to present the capacity.</span>
@@ -2019,7 +2019,7 @@ dist_memb=karate <span class="op">%&gt;%</span>
 ##   
 ##   + ... omitted several groups/vertices</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot_dendrogram</span>(dendrogram) <span class="co"># for hierarchical structure</span></code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-85-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-85-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">membership</span>(dendrogram) <span class="co"># best cut in terms of modularity</span></code></pre>
 <pre><code>##    Mr Hi  Actor 2  Actor 3  Actor 4  Actor 5  Actor 6  Actor 7  Actor 8 
 ##        1        1        2        1        3        3        3        1 
@@ -2037,7 +2037,7 @@ dist_memb=karate <span class="op">%&gt;%</span>
 <span class="kw">V</span>(karate)[Faction <span class="op">==</span><span class="st"> </span><span class="dv">2</span>]<span class="op">$</span>shape &lt;-<span class="st"> &quot;square&quot;</span>
 <span class="kw">set.seed</span>(<span class="dv">1</span>)
 <span class="kw">plot</span>(dendrogram,karate)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-85-2.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-85-2.png" width="672" /></p>
 </div>
 <div id="exact-modularity-maximization" class="section level4">
 <h4><span class="header-section-number">2.4.5.4</span> Exact modularity maximization</h4>
@@ -2052,14 +2052,14 @@ dist_memb=karate <span class="op">%&gt;%</span>
 optimal_lg=<span class="kw">cluster_fast_greedy</span>(karate)
 <span class="kw">set.seed</span>(<span class="dv">1</span>)
 <span class="kw">plot</span>(optimal_lg,karate)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-86-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-86-1.png" width="672" /></p>
 </div>
 <div id="leading-eigenvector" class="section level4">
 <h4><span class="header-section-number">2.4.5.5</span> Leading eigenvector</h4>
 <pre class="sourceCode r"><code class="sourceCode r">eigen=<span class="kw">cluster_leading_eigen</span>(karate)
 <span class="kw">set.seed</span>(<span class="dv">1</span>)
 <span class="kw">plot</span>(eigen,karate)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-87-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-87-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r">clusters &lt;-<span class="st"> </span><span class="kw">cluster_leading_eigen</span>(karate, <span class="dt">steps =</span> <span class="dv">1</span>) <span class="co">#at most two cluster</span></code></pre>
 </div>
 <div id="label-propagation-algorithm" class="section level4">
@@ -2080,10 +2080,10 @@ fixed[<span class="st">&#39;Mr Hi&#39;</span>]=fixed[<span class="st">&#39;John 
 lab=<span class="kw">cluster_label_prop</span>(karate,<span class="dt">initial =</span> initial,<span class="dt">fixed =</span> fixed)
 <span class="kw">set.seed</span>(<span class="dv">1</span>)
 <span class="kw">plot</span>(lab,karate)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-88-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-88-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
 <span class="kw">plot</span>(ground_truth,karate)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-88-2.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-88-2.png" width="672" /></p>
 </div>
 <div id="other-algorithms" class="section level4">
 <h4><span class="header-section-number">2.4.5.7</span> Other algorithms:</h4>
@@ -2108,7 +2108,7 @@ lab=<span class="kw">cluster_label_prop</span>(karate,<span class="dt">initial =
 <p><code>plot(vertexdendrogram,igraph)</code></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
 <span class="kw">plot</span>(ground_truth,karate)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-89-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-89-1.png" width="672" /></p>
 </div>
 <div id="plotting-dendrograms" class="section level4">
 <h4><span class="header-section-number">2.4.6.3</span> Plotting dendrograms</h4>
@@ -2116,11 +2116,11 @@ lab=<span class="kw">cluster_label_prop</span>(karate,<span class="dt">initial =
 <p>Not flexible enough. Try <code>ggdendrogram()</code> in <code>ggplot2</code> package.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
 <span class="kw">plot_dendrogram</span>(dendrogram)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-90-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-90-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co">#labels at the same height: hang=-1</span>
 <span class="co">#cex: size of labels</span>
 <span class="kw">plot_dendrogram</span>(dendrogram,<span class="dt">hang =</span> <span class="dv">-1</span>, <span class="dt">cex =</span> <span class="fl">0.6</span>) </code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-90-2.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-90-2.png" width="672" /></p>
 </div>
 <div id="marked-groups" class="section level4">
 <h4><span class="header-section-number">2.4.6.4</span> marked groups</h4>
@@ -2142,10 +2142,10 @@ ls</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># other pars can be set as default</span>
 <span class="kw">set.seed</span>(<span class="dv">1</span>)
 <span class="kw">plot</span>(karate,<span class="dt">mark.groups =</span> ls)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-91-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-91-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
 <span class="kw">plot</span>(karate,<span class="dt">mark.groups =</span> ls,<span class="dt">mark.col =</span> <span class="kw">c</span>(<span class="st">&quot;lightblue&quot;</span>,<span class="st">&quot;yellow&quot;</span>),<span class="dt">mark.border =</span> <span class="kw">rainbow</span>(<span class="kw">length</span>(ls),<span class="dt">alpha=</span><span class="dv">1</span>),<span class="dt">mark.shape=</span><span class="kw">c</span>(<span class="op">-</span><span class="fl">0.5</span>,<span class="dv">1</span>),<span class="dt">mark.expand =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-91-2.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-91-2.png" width="672" /></p>
 </div>
 </div>
 </div>

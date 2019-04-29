@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>3 ERGM (statnet Package) | Introduction to Network Analysis Using R</title>
+  <title>Chapter 3 ERGM (statnet Package) | Introduction to Network Analysis Using R</title>
   <meta name="description" content="This github page provide a basic introduction on network analysis using R. The documents are based on the lab materials of STAT650 Social Network at Duke University.">
   <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="3 ERGM (statnet Package) | Introduction to Network Analysis Using R" />
+  <meta property="og:title" content="Chapter 3 ERGM (statnet Package) | Introduction to Network Analysis Using R" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   <meta name="github-repo" content="YunranChen/intro-network-R" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="3 ERGM (statnet Package) | Introduction to Network Analysis Using R" />
+  <meta name="twitter:title" content="Chapter 3 ERGM (statnet Package) | Introduction to Network Analysis Using R" />
   
   <meta name="twitter:description" content="This github page provide a basic introduction on network analysis using R. The documents are based on the lab materials of STAT650 Social Network at Duke University." />
   
@@ -25,7 +25,7 @@
 <meta name="author" content="Yunran Chen">
 
 
-<meta name="date" content="2019-04-27">
+<meta name="date" content="2019-04-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -283,7 +283,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="ergm-statnet-package" class="section level1">
-<h1><span class="header-section-number">3</span> ERGM (<code>statnet</code> Package)</h1>
+<h1><span class="header-section-number">Chapter 3</span> ERGM (<code>statnet</code> Package)</h1>
 <div id="introduction-2" class="section level2">
 <h2><span class="header-section-number">3.1</span> Introduction</h2>
 <div id="outline-4" class="section level3">
@@ -320,8 +320,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="preparation-1" class="section level2">
 <h2><span class="header-section-number">3.2</span> Preparation</h2>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages(&quot;statnet&quot;)</span>
-<span class="kw">library</span>(statnet)
-<span class="kw">library</span>(dplyr)</code></pre>
+<span class="kw">library</span>(statnet)</code></pre>
+<pre><code>##                Installed  ReposVer Built  
+## network        &quot;1.13.0.1&quot; &quot;1.15&quot;   &quot;3.5.0&quot;
+## networkDynamic &quot;0.9.0&quot;    &quot;0.10.0&quot; &quot;3.5.0&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)</code></pre>
 </div>
 <div id="summary-the-network-statistics" class="section level2">
 <h2><span class="header-section-number">3.3</span> <code>summary</code> the network statistics</h2>
@@ -410,7 +413,7 @@ flomarriage <span class="co"># see the details of the network</span></code></pre
 ## [20,]   13   16</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
 <span class="kw">plot</span>(flomarriage)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-93-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-93-1.png" width="672" /></p>
 </div>
 <div id="summary" class="section level3">
 <h3><span class="header-section-number">3.3.2</span> <code>summary</code></h3>
@@ -442,7 +445,7 @@ samplk3</code></pre>
 ## No edge attributes</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
 <span class="kw">plot</span>(samplk3)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-95-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-95-1.png" width="672" /></p>
 <hr />
 <p><code>idegree</code> and <code>odegree</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(samplk3<span class="op">~</span><span class="kw">idegree</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)<span class="op">+</span><span class="kw">odegree</span>(<span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">4</span>))) <span class="co">#indegree and outdegree</span></code></pre>
@@ -738,7 +741,7 @@ output appears to be based on an Erdos-Renyi random graph with p = 0.5.</p></li>
 <pre class="sourceCode r"><code class="sourceCode r">wealth=flomarriage <span class="op">%v%</span><span class="st"> &#39;wealth&#39;</span> <span class="co"># %v% get the vertex attributes</span>
 <span class="kw">set.seed</span>(<span class="dv">1</span>)
 <span class="kw">plot</span>(flomarriage, <span class="dt">vertex.cex=</span>wealth<span class="op">/</span><span class="dv">25</span>, <span class="dt">main=</span><span class="st">&quot;Florentine marriage by wealth&quot;</span>, <span class="dt">cex.main=</span><span class="fl">0.8</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-102-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-102-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r">flomodel<span class="fl">.03</span>=<span class="kw">ergm</span>(flomarriage<span class="op">~</span>edges<span class="op">+</span><span class="kw">nodecov</span>(<span class="st">&#39;wealth&#39;</span>))</code></pre>
 <pre><code>## Starting maximum pseudolikelihood estimation (MPLE):</code></pre>
 <pre><code>## Evaluating the predictor and response matrix.</code></pre>
@@ -934,7 +937,7 @@ mesa <span class="co"># grade, race, sex are discrete vertex attribute</span></c
 ## No edge attributes</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(mesa, <span class="dt">vertex.col=</span><span class="st">&#39;Grade&#39;</span>)
 <span class="kw">legend</span>(<span class="st">&#39;bottomleft&#39;</span>,<span class="dt">fill=</span><span class="dv">7</span><span class="op">:</span><span class="dv">12</span>,<span class="dt">legend=</span><span class="kw">paste</span>(<span class="st">&#39;Grade&#39;</span>,<span class="dv">7</span><span class="op">:</span><span class="dv">12</span>),<span class="dt">cex=</span><span class="fl">0.75</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-107-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-107-1.png" width="672" /></p>
 </div>
 <div id="include-discrete-nodal-covariates-nodefactor" class="section level4">
 <h4><span class="header-section-number">3.4.3.9</span> Include discrete nodal covariates: <code>nodefactor</code></h4>
@@ -1183,7 +1186,7 @@ fauxmodel<span class="fl">.03</span> &lt;-<span class="st"> </span><span class="
 ## No edge attributes</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
 <span class="kw">plot</span>(samplk3)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-111-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-111-1.png" width="672" /></p>
 </div>
 <div id="include-mutual" class="section level4">
 <h4><span class="header-section-number">3.4.3.13</span> Include <code>mutual</code></h4>
@@ -1463,7 +1466,7 @@ missnet[<span class="dv">1</span>,<span class="dv">2</span>]=missnet[<span class
 ## 
 ## No edge attributes</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(flomodel.<span class="fl">04.</span>sim[[<span class="dv">4</span>]], <span class="dt">label=</span> flomodel.<span class="fl">04.</span>sim[[<span class="dv">4</span>]] <span class="op">%v%</span><span class="st"> &quot;vertex.names&quot;</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-115-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-115-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r">flomarriage</code></pre>
 <pre><code>##  Network attributes:
 ##   vertices = 16 
@@ -1569,7 +1572,7 @@ flo.<span class="fl">04.</span>gof.model</code></pre>
 ## [29] &quot;obs.espart&quot;     &quot;sim.espart&quot;</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co">#95% confidence interval</span>
 <span class="kw">plot</span>(flo.<span class="fl">04.</span>gof.model)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-117-1.png" width="672" /><img src="_main_files/figure-html/unnamed-chunk-117-2.png" width="672" /><img src="_main_files/figure-html/unnamed-chunk-117-3.png" width="672" /><img src="_main_files/figure-html/unnamed-chunk-117-4.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-117-1.png" width="672" /><img src="docs_files/figure-html/unnamed-chunk-117-2.png" width="672" /><img src="docs_files/figure-html/unnamed-chunk-117-3.png" width="672" /><img src="docs_files/figure-html/unnamed-chunk-117-4.png" width="672" /></p>
 </div>
 <div id="mcmc.diagnostics" class="section level3">
 <h3><span class="header-section-number">3.6.2</span> <code>mcmc.diagnostics</code></h3>
@@ -1644,7 +1647,7 @@ fit &lt;-<span class="st"> </span><span class="kw">ergm</span>(flobusiness <span
 ## 0.3598522 0.5602179 
 ## Joint P-value (lower = worse):  0.6503828 .</code></pre>
 <pre><code>## Warning in formals(fun): argument is not a function</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-118-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-118-1.png" width="672" /></p>
 <pre><code>## 
 ## MCMC diagnostics shown here are from the last round of simulation, prior to computation of final parameter estimates. Because the final estimates are refinements of those used for this simulation run, these diagnostics may understate model performance. To directly assess the performance of the final model on in-model statistics, please use the GOF command: gof(ergmFitObject, GOF=~model).</code></pre>
 <hr />

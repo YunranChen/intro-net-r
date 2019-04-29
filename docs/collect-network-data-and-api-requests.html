@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>4 Collect network data and API requests | Introduction to Network Analysis Using R</title>
+  <title>Chapter 4 Collect network data and API requests | Introduction to Network Analysis Using R</title>
   <meta name="description" content="This github page provide a basic introduction on network analysis using R. The documents are based on the lab materials of STAT650 Social Network at Duke University.">
   <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="4 Collect network data and API requests | Introduction to Network Analysis Using R" />
+  <meta property="og:title" content="Chapter 4 Collect network data and API requests | Introduction to Network Analysis Using R" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   <meta name="github-repo" content="YunranChen/intro-network-R" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4 Collect network data and API requests | Introduction to Network Analysis Using R" />
+  <meta name="twitter:title" content="Chapter 4 Collect network data and API requests | Introduction to Network Analysis Using R" />
   
   <meta name="twitter:description" content="This github page provide a basic introduction on network analysis using R. The documents are based on the lab materials of STAT650 Social Network at Duke University." />
   
@@ -25,7 +25,7 @@
 <meta name="author" content="Yunran Chen">
 
 
-<meta name="date" content="2019-04-27">
+<meta name="date" content="2019-04-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -283,7 +283,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="collect-network-data-and-api-requests" class="section level1">
-<h1><span class="header-section-number">4</span> Collect network data and API requests</h1>
+<h1><span class="header-section-number">Chapter 4</span> Collect network data and API requests</h1>
 <div id="several-useful-websites" class="section level2">
 <h2><span class="header-section-number">4.1</span> Several useful websites</h2>
 <ul>
@@ -441,17 +441,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## Searching for tweets...
 ## Finished collecting tweets!</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">rt</code></pre>
-<pre><code>## # A tibble: 8 x 88
+<pre><code>## # A tibble: 6 x 88
 ##   user_id status_id created_at          screen_name text  source
 ##   &lt;chr&gt;   &lt;chr&gt;     &lt;dttm&gt;              &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt; 
-## 1 227299… 11222551… 2019-04-27 21:44:10 PSheppardTV &quot;For… Twitt…
-## 2 282827… 11222551… 2019-04-27 21:44:10 mkthomas    @Aly… Twitt…
-## 3 246839… 11222551… 2019-04-27 21:44:10 JeffTeichr… @Fir… Twitt…
-## 4 193587… 11222551… 2019-04-27 21:44:10 7thgatefil… &quot;In … Twitt…
-## 5 744894… 11222551… 2019-04-27 21:44:10 Cascada57   By r… Twitt…
-## 6 864062… 11222551… 2019-04-27 21:44:10 Rowdystyle… Rais… Twitt…
-## 7 319082… 11222551… 2019-04-27 21:44:10 stemcellpa… &quot;Ave… Twitt…
-## 8 110678… 11222551… 2019-04-27 21:44:10 SHERIFFPT   &quot;\&quot;L… Twitt…
+## 1 160955… 11229473… 2019-04-29 19:34:39 Ireneruby0… BREA… Twitt…
+## 2 106135… 11229473… 2019-04-29 19:34:39 MikeBisson8 &quot;Joe… Twitt…
+## 3 104652… 11229473… 2019-04-29 19:34:39 g_twang     @den… Twitt…
+## 4 305775… 11229473… 2019-04-29 19:34:39 EternalNik… At t… Twitt…
+## 5 726916… 11229473… 2019-04-29 19:34:39 Warakuna    &quot;@St… Twitt…
+## 6 106948… 11229473… 2019-04-29 19:34:39 DianeGroot… &quot;Rab… Twitt…
 ## # … with 82 more variables: display_text_width &lt;dbl&gt;,
 ## #   reply_to_status_id &lt;chr&gt;, reply_to_user_id &lt;chr&gt;,
 ## #   reply_to_screen_name &lt;chr&gt;, is_quote &lt;lgl&gt;, is_retweet &lt;lgl&gt;,
@@ -478,7 +476,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## #   place_name &lt;chr&gt;, place_full_name &lt;chr&gt;, place_type &lt;chr&gt;,
 ## #   country &lt;chr&gt;, country_code &lt;chr&gt;, geo_coords &lt;list&gt;,
 ## #   coords_coords &lt;list&gt;, bbox_coords &lt;list&gt;, status_url &lt;chr&gt;,
-## #   name &lt;chr&gt;, location &lt;chr&gt;, description &lt;chr&gt;, url &lt;chr&gt;,
+## #   name &lt;chr&gt;, location &lt;chr&gt;, description &lt;chr&gt;, url &lt;lgl&gt;,
 ## #   protected &lt;lgl&gt;, followers_count &lt;int&gt;, friends_count &lt;int&gt;,
 ## #   listed_count &lt;int&gt;, statuses_count &lt;int&gt;, favourites_count &lt;int&gt;,
 ## #   account_created_at &lt;dttm&gt;, verified &lt;lgl&gt;, profile_url &lt;chr&gt;,
@@ -612,7 +610,7 @@ rt &lt;-<span class="st"> </span><span class="kw">search_tweets</span>(
 ## [19] &quot;profile_background_url&quot; &quot;profile_image_url&quot;</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co">## plot time series (if ggplot2 is installed)</span>
 <span class="kw">ts_plot</span>(rt) <span class="co">#Duke vs No. 16 Louisville</span></code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-125-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-125-1.png" width="672" /></p>
 </div>
 <div id="search_tweets2" class="section level4">
 <h4><span class="header-section-number">4.4.4.2</span> <code>search_tweets2</code></h4>
@@ -627,39 +625,40 @@ rt &lt;-<span class="st"> </span><span class="kw">search_tweets</span>(
 <pre><code>## Searching for tweets...</code></pre>
 <pre><code>## Finished collecting tweets!</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">st2<span class="op">$</span>query</code></pre>
-<pre><code>##  [1] &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot;
-##  [4] &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot;
-##  [7] &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot;
-## [10] &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot;
-## [13] &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot;
-## [16] &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot;
-## [19] &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot;
-## [22] &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot;
-## [25] &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot;
-## [28] &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot;
-## [31] &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot;
-## [34] &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot;
-## [37] &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot;
-## [40] &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot;
-## [43] &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot;
-## [46] &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot;
-## [49] &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot; &quot;rstats OR python&quot;
-## [52] &quot;rstats OR python&quot; &quot;rstats OR python&quot; &quot;rstats OR python&quot;
-## [55] &quot;rstats OR python&quot; &quot;rstats OR python&quot; &quot;rstats OR python&quot;
-## [58] &quot;rstats OR python&quot; &quot;rstats OR python&quot; &quot;rstats OR python&quot;
-## [61] &quot;rstats OR python&quot; &quot;rstats OR python&quot; &quot;rstats OR python&quot;
-## [64] &quot;rstats OR python&quot; &quot;rstats OR python&quot; &quot;rstats OR python&quot;
-## [67] &quot;rstats OR python&quot; &quot;rstats OR python&quot; &quot;rstats OR python&quot;
-## [70] &quot;rstats OR python&quot; &quot;rstats OR python&quot; &quot;rstats OR python&quot;
-## [73] &quot;rstats OR python&quot; &quot;rstats OR python&quot; &quot;rstats OR python&quot;
-## [76] &quot;rstats OR python&quot; &quot;rstats OR python&quot; &quot;rstats OR python&quot;
-## [79] &quot;rstats OR python&quot; &quot;rstats OR python&quot; &quot;rstats OR python&quot;
-## [82] &quot;rstats OR python&quot; &quot;rstats OR python&quot; &quot;rstats OR python&quot;
-## [85] &quot;rstats OR python&quot; &quot;rstats OR python&quot; &quot;rstats OR python&quot;
-## [88] &quot;rstats OR python&quot; &quot;rstats OR python&quot; &quot;rstats OR python&quot;
-## [91] &quot;rstats OR python&quot; &quot;rstats OR python&quot; &quot;rstats OR python&quot;
-## [94] &quot;rstats OR python&quot; &quot;rstats OR python&quot; &quot;rstats OR python&quot;
-## [97] &quot;rstats OR python&quot;</code></pre>
+<pre><code>##   [1] &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot;
+##   [4] &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot;
+##   [7] &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot;
+##  [10] &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot;
+##  [13] &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot;
+##  [16] &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot;
+##  [19] &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot;
+##  [22] &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot;
+##  [25] &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot;
+##  [28] &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot;
+##  [31] &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot;
+##  [34] &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot;
+##  [37] &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot;
+##  [40] &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot;
+##  [43] &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot;
+##  [46] &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot;
+##  [49] &quot;\&quot;data science\&quot;&quot; &quot;\&quot;data science\&quot;&quot; &quot;rstats OR python&quot;
+##  [52] &quot;rstats OR python&quot; &quot;rstats OR python&quot; &quot;rstats OR python&quot;
+##  [55] &quot;rstats OR python&quot; &quot;rstats OR python&quot; &quot;rstats OR python&quot;
+##  [58] &quot;rstats OR python&quot; &quot;rstats OR python&quot; &quot;rstats OR python&quot;
+##  [61] &quot;rstats OR python&quot; &quot;rstats OR python&quot; &quot;rstats OR python&quot;
+##  [64] &quot;rstats OR python&quot; &quot;rstats OR python&quot; &quot;rstats OR python&quot;
+##  [67] &quot;rstats OR python&quot; &quot;rstats OR python&quot; &quot;rstats OR python&quot;
+##  [70] &quot;rstats OR python&quot; &quot;rstats OR python&quot; &quot;rstats OR python&quot;
+##  [73] &quot;rstats OR python&quot; &quot;rstats OR python&quot; &quot;rstats OR python&quot;
+##  [76] &quot;rstats OR python&quot; &quot;rstats OR python&quot; &quot;rstats OR python&quot;
+##  [79] &quot;rstats OR python&quot; &quot;rstats OR python&quot; &quot;rstats OR python&quot;
+##  [82] &quot;rstats OR python&quot; &quot;rstats OR python&quot; &quot;rstats OR python&quot;
+##  [85] &quot;rstats OR python&quot; &quot;rstats OR python&quot; &quot;rstats OR python&quot;
+##  [88] &quot;rstats OR python&quot; &quot;rstats OR python&quot; &quot;rstats OR python&quot;
+##  [91] &quot;rstats OR python&quot; &quot;rstats OR python&quot; &quot;rstats OR python&quot;
+##  [94] &quot;rstats OR python&quot; &quot;rstats OR python&quot; &quot;rstats OR python&quot;
+##  [97] &quot;rstats OR python&quot; &quot;rstats OR python&quot; &quot;rstats OR python&quot;
+## [100] &quot;rstats OR python&quot;</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(st2)</code></pre>
 <pre><code>##  [1] &quot;user_id&quot;                 &quot;status_id&quot;              
 ##  [3] &quot;created_at&quot;              &quot;screen_name&quot;            
@@ -724,11 +723,11 @@ rt &lt;-<span class="st"> </span><span class="kw">search_tweets</span>(
     <span class="dt">subtitle =</span> <span class="st">&quot;Twitter status (tweet) counts aggregated using three-hour intervals&quot;</span>,
     <span class="dt">caption =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">Source: Data collected from Twitter&#39;s REST API via rtweet&quot;</span>
   )</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-127-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-127-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># an example using `groupby` with ggplot2</span>
 <span class="kw">ts_plot</span>(rt_dmbb<span class="op">%&gt;%</span>dplyr<span class="op">::</span><span class="kw">group_by</span>(is_quote), <span class="st">&quot;3 hours&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="co"># a ggplot object</span>
 <span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">theme_minimal</span>()</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-127-2.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-127-2.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages(&quot;maps&quot;)</span>
 <span class="co">## create lat/lng variables using all available tweet and profile geo-location data</span>
 rt_dmbbll &lt;-<span class="st"> </span><span class="kw">lat_lng</span>(rt_dmbb)
@@ -740,7 +739,7 @@ maps<span class="op">::</span><span class="kw">map</span>(<span class="st">&quot
 
 <span class="co">## plot lat and lng points onto state map</span>
 <span class="kw">with</span>(rt_dmbbll, <span class="kw">points</span>(lng, lat, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">.75</span>, <span class="dt">col =</span> <span class="kw">rgb</span>(<span class="dv">0</span>, <span class="fl">.3</span>, <span class="fl">.7</span>, <span class="fl">.75</span>)))</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-128-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-128-1.png" width="672" /></p>
 </div>
 <div id="stream_tweets" class="section level4">
 <h4><span class="header-section-number">4.4.4.4</span> <code>stream_tweets</code></h4>
@@ -767,38 +766,38 @@ rt &lt;-<span class="st"> </span><span class="kw">stream_tweets</span>(<span cla
 <pre><code>## 
  Found 500 records...
  Found 1000 records...
- Found 1068 records...
- Imported 1068 records. Simplifying...</code></pre>
+ Found 1118 records...
+ Imported 1118 records. Simplifying...</code></pre>
 <pre><code>## closing file input connection.</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nrow</span>(rt)</code></pre>
-<pre><code>## [1] 1068</code></pre>
+<pre><code>## [1] 1118</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">rt &lt;-<span class="st"> </span><span class="kw">stream_tweets</span>(<span class="st">&quot;duke,bluedevil,unc&quot;</span>)</code></pre>
 <pre><code>## Streaming tweets for 30 seconds...</code></pre>
 <pre><code>## Finished streaming tweets!</code></pre>
 <pre><code>## opening file input connection.</code></pre>
 <pre><code>## 
- Found 22 records...
- Imported 22 records. Simplifying...</code></pre>
+ Found 21 records...
+ Imported 21 records. Simplifying...</code></pre>
 <pre><code>## closing file input connection.</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nrow</span>(rt)</code></pre>
-<pre><code>## [1] 22</code></pre>
+<pre><code>## [1] 21</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">rt</code></pre>
-<pre><code>## # A tibble: 22 x 88
+<pre><code>## # A tibble: 21 x 88
 ##    user_id status_id created_at          screen_name text  source
 ##    &lt;chr&gt;   &lt;chr&gt;     &lt;dttm&gt;              &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt; 
-##  1 486993… 11222553… 2019-04-27 21:45:02 siddiue_1   It’s… Twitt…
-##  2 206063… 11222553… 2019-04-27 21:45:02 SunnyAtThe… &quot;New… Twitt…
-##  3 224166… 11222553… 2019-04-27 21:45:03 Ballout_za… &quot;Goi… Twitt…
-##  4 372574… 11222553… 2019-04-27 21:45:06 INBulldogR… &quot;We … Faceb…
-##  5 419144… 11222553… 2019-04-27 21:45:07 Connected_… &quot;Goi… Twitt…
-##  6 419144… 11222554… 2019-04-27 21:45:26 Connected_… Roun… Twitt…
-##  7 515705… 11222553… 2019-04-27 21:45:08 lovinglake  &quot;New… Twitt…
-##  8 705320… 11222554… 2019-04-27 21:45:12 dainerrr8   New … Twitt…
-##  9 110939… 11222554… 2019-04-27 21:45:13 dullncorin… Glad… Twitt…
-## 10 304450… 11222554… 2019-04-27 21:45:13 sayragonza… It’s… Twitt…
-## # … with 12 more rows, and 82 more variables: display_text_width &lt;dbl&gt;,
-## #   reply_to_status_id &lt;chr&gt;, reply_to_user_id &lt;chr&gt;,
-## #   reply_to_screen_name &lt;chr&gt;, is_quote &lt;lgl&gt;, is_retweet &lt;lgl&gt;,
+##  1 970417… 11229475… 2019-04-29 19:35:28 GunnerSava… &quot;A C… Twitt…
+##  2 556456… 11229475… 2019-04-29 19:35:29 CadenceMag… “To … Twitt…
+##  3 110557… 11229475… 2019-04-29 19:35:30 lydiawood2… MY D… Twitt…
+##  4 108921… 11229475… 2019-04-29 19:35:31 unicornmnfs &quot;/un… unico…
+##  5 998333… 11229475… 2019-04-29 19:35:32 KatieFLeli… &quot;For… Twitt…
+##  6 956004… 11229475… 2019-04-29 19:35:33 jodi_poll   &quot;For… Twitt…
+##  7 838102… 11229475… 2019-04-29 19:35:34 72ElCamino  &quot;For… Twitt…
+##  8 203445… 11229475… 2019-04-29 19:35:37 SCantojr    Mond… WordP…
+##  9 847396… 11229475… 2019-04-29 19:35:38 JacksonWor… &quot;A f… Twitt…
+## 10 944091… 11229475… 2019-04-29 19:35:41 paosalazar… &quot;Ple… Twitt…
+## # … with 11 more rows, and 82 more variables: display_text_width &lt;dbl&gt;,
+## #   reply_to_status_id &lt;lgl&gt;, reply_to_user_id &lt;lgl&gt;,
+## #   reply_to_screen_name &lt;lgl&gt;, is_quote &lt;lgl&gt;, is_retweet &lt;lgl&gt;,
 ## #   favorite_count &lt;int&gt;, retweet_count &lt;int&gt;, hashtags &lt;list&gt;,
 ## #   symbols &lt;list&gt;, urls_url &lt;list&gt;, urls_t.co &lt;list&gt;,
 ## #   urls_expanded_url &lt;list&gt;, media_url &lt;list&gt;, media_t.co &lt;list&gt;,
@@ -845,24 +844,24 @@ djt1 &lt;-<span class="st"> </span><span class="kw">parse_stream</span>(<span cl
 <pre><code>## 
  Found 500 records...
  Found 1000 records...
- Found 1244 records...
- Imported 1244 records. Simplifying...</code></pre>
+ Found 1074 records...
+ Imported 1074 records. Simplifying...</code></pre>
 <pre><code>## closing file input connection.</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">djt1</code></pre>
-<pre><code>## # A tibble: 1,244 x 88
+<pre><code>## # A tibble: 1,074 x 88
 ##    user_id status_id created_at          screen_name text  source
 ##    &lt;chr&gt;   &lt;chr&gt;     &lt;dttm&gt;              &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt; 
-##  1 826425… 11222554… 2019-04-27 21:45:28 Elohim_Gad… &quot;Thi… Twitt…
-##  2 752949… 11222554… 2019-04-27 21:45:28 hoy2_hoy    She’… Twitt…
-##  3 101924… 11222554… 2019-04-27 21:45:28 arrugas12   &quot;Am … Twitt…
-##  4 149655… 11222554… 2019-04-27 21:45:28 cat7912     &quot;Hea… Twitt…
-##  5 498330… 11222554… 2019-04-27 21:45:28 xa_nico     Cong… Twitt…
-##  6 978023… 11222554… 2019-04-27 21:45:28 Dkrennrepc… Espa… Twitt…
-##  7 909335… 11222554… 2019-04-27 21:45:28 genoveva_s… &quot;Cru… Twitt…
-##  8 404802… 11222554… 2019-04-27 21:45:28 Pritz56Cla… Exac… Twitt…
-##  9 111638… 11222554… 2019-04-27 21:45:28 Oscarchars9 I wo… Twitt…
-## 10 323348… 11222554… 2019-04-27 21:45:29 wilkin_mol… @Ken… Twitt…
-## # … with 1,234 more rows, and 82 more variables: display_text_width &lt;dbl&gt;,
+##  1 307027… 11229476… 2019-04-29 19:35:57 fairess369  @rea… Twitt…
+##  2 307027… 11229478… 2019-04-29 19:36:49 fairess369  @rea… Twitt…
+##  3 307027… 11229477… 2019-04-29 19:36:10 fairess369  @rea… Twitt…
+##  4 307027… 11229479… 2019-04-29 19:36:58 fairess369  @rea… Twitt…
+##  5 997309… 11229476… 2019-04-29 19:35:57 devereauxh… Best… Twitt…
+##  6 924353… 11229476… 2019-04-29 19:35:57 RepCabreado Los … Twitt…
+##  7 244991… 11229476… 2019-04-29 19:35:57 MsAvaArmst… Trea… Twitt…
+##  8 975817… 11229476… 2019-04-29 19:35:57 hill_rb     @Kel… Twitt…
+##  9 210528… 11229476… 2019-04-29 19:35:57 kefish      &quot;NEW… Twitt…
+## 10 114935… 11229476… 2019-04-29 19:35:57 1JaimeLee   &quot;A $… Twitt…
+## # … with 1,064 more rows, and 82 more variables: display_text_width &lt;dbl&gt;,
 ## #   reply_to_status_id &lt;chr&gt;, reply_to_user_id &lt;chr&gt;,
 ## #   reply_to_screen_name &lt;chr&gt;, is_quote &lt;lgl&gt;, is_retweet &lt;lgl&gt;,
 ## #   favorite_count &lt;int&gt;, retweet_count &lt;int&gt;, hashtags &lt;list&gt;,
@@ -912,7 +911,7 @@ djt1 &lt;-<span class="st"> </span><span class="kw">parse_stream</span>(<span cl
 <pre><code>## Searching for tweets...</code></pre>
 <pre><code>## Finished collecting tweets!</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nrow</span>(rt_duke)</code></pre>
-<pre><code>## [1] 902</code></pre>
+<pre><code>## [1] 936</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(rt_duke)</code></pre>
 <pre><code>##  [1] &quot;user_id&quot;                 &quot;status_id&quot;              
 ##  [3] &quot;created_at&quot;              &quot;screen_name&quot;            
@@ -966,22 +965,22 @@ igra_duke=<span class="kw">graph_from_data_frame</span>(netdfr)<span class="co">
 igra_duke_s &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw">simplify</span>( igra_duke, <span class="dt">remove.multiple =</span> T, <span class="dt">remove.loops =</span> F, 
                  <span class="dt">edge.attr.comb=</span><span class="kw">c</span>(<span class="dt">weight=</span><span class="st">&quot;sum&quot;</span>))
 igra_duke_s</code></pre>
-<pre><code>## IGRAPH 495b8da DNW- 582 512 -- 
+<pre><code>## IGRAPH 34c93fb DNW- 524 420 -- 
 ## + attr: name (v/c), weight (e/n)
-## + edges from 495b8da (vertex names):
-##  [1] SirKevinJ_     -&gt;rhj_24324      TanyaAn83350700-&gt;ravenec       
-##  [3] kiasuchick     -&gt;JohnFischesser Dukeu1         -&gt;rhj_24324     
-##  [5] dukefan0101    -&gt;rhj_24324      edgysam        -&gt;edgysam       
-##  [7] misiloma       -&gt;CGrotjohn      gnidazfiled    -&gt;wcelsberry    
-##  [9] RANBOY_D_Go    -&gt;rhj_24324      AlanaFi75297926-&gt;W110dat       
-## [11] breedarreime   -&gt;unsoldado05    Godswarrior1993-&gt;PatChiesa     
-## [13] KimWendel      -&gt;PatChiesa      potato_wizard44-&gt;rhj_24324     
-## [15] EarlClausen_   -&gt;rhj_24324      Dwomack_8      -&gt;rhj_24324     
+## + edges from 34c93fb (vertex names):
+##  [1] kenfranck000000-&gt;kenfranck000000 SportsTrebuchet-&gt;CoverTwoShow   
+##  [3] PJordanFootball-&gt;CoverTwoShow    CoachHarakel   -&gt;CoachMerrittJMU
+##  [5] budawamaai     -&gt;tv_gikuyu       Its_Jaleel     -&gt;DukeBlueUpdates
+##  [7] Its_Jaleel     -&gt;rhj_24324       moyocoyotzinnow-&gt;JoeFisherTV    
+##  [9] verliaglorol   -&gt;huber_logan     ajanoly        -&gt;pallabghosh    
+## [11] BleedBlue4lif5 -&gt;MattLombardoNFL bcarrasco09_   -&gt;MattLombardoNFL
+## [13] Sultanama1     -&gt;pallabghosh     Wildaaja9      -&gt;pallabghosh    
+## [15] Berguzarhalitl1-&gt;pallabghosh     Rezekiamelia11 -&gt;pallabghosh    
 ## + ... omitted several edges</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(igra_duke_s,<span class="dt">vertex.color=</span><span class="st">&quot;gold&quot;</span>, <span class="dt">vertex.size=</span><span class="kw">log</span>(igraph<span class="op">::</span><span class="kw">degree</span>(igra_duke_s))<span class="op">*</span><span class="dv">3</span><span class="op">+</span><span class="dv">1</span>, 
      <span class="dt">vertex.frame.color=</span><span class="st">&quot;gray&quot;</span>, <span class="dt">vertex.label.color=</span><span class="st">&quot;black&quot;</span>, 
      <span class="dt">vertex.label.cex=</span><span class="kw">log</span>(igraph<span class="op">::</span><span class="kw">degree</span>(igra_duke_s))<span class="op">*</span><span class="fl">0.2+0.1</span>, <span class="dt">vertex.label.dist=</span><span class="dv">2</span>, <span class="dt">edge.curved=</span><span class="fl">0.5</span>,<span class="dt">edge.arrow.size=</span>.<span class="dv">2</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-130-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-130-1.png" width="672" /></p>
 </div>
 <div id="friendship-networks" class="section level3">
 <h3><span class="header-section-number">4.4.6</span> Friendship networks</h3>
@@ -1012,16 +1011,16 @@ info.following</code></pre>
 <pre><code>## # A tibble: 290 x 88
 ##    user_id status_id created_at          screen_name text  source
 ##    &lt;chr&gt;   &lt;chr&gt;     &lt;dttm&gt;              &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt; 
-##  1 846137… 11222205… 2019-04-27 19:26:55 dog_feelin… WE A… Twitt…
-##  2 6156562 11206873… 2019-04-23 13:54:13 aewo        We a… Twitt…
-##  3 361335… 11222387… 2019-04-27 20:38:56 bearloga    @tar… Tweet…
-##  4 5850692 11222044… 2019-04-27 18:22:46 Aaroth      @mir… Twitt…
-##  5 132496… 11222486… 2019-04-27 21:18:27 NewYorkSta… &quot;Dev… Twitt…
-##  6 152765… 11218464… 2019-04-26 18:40:19 drewharwell How … Tweet…
-##  7 160392… 11222517… 2019-04-27 21:30:42 pklinkne    Trum… Twitt…
+##  1 846137… 11228451… 2019-04-29 12:48:49 dog_feelin… gooo… Twitt…
+##  2 6156562 11229301… 2019-04-29 18:26:36 aewo        @gar… Twitt…
+##  3 361335… 11225643… 2019-04-28 18:12:46 bearloga    Wow.… Twitt…
+##  4 5850692 11228639… 2019-04-29 14:03:23 Aaroth      @jul… Twitt…
+##  5 132496… 11229010… 2019-04-29 16:30:47 NewYorkSta… &quot;A s… Twitt…
+##  6 152765… 11228638… 2019-04-29 14:02:47 drewharwell Anci… Twitt…
+##  7 160392… 11229432… 2019-04-29 19:18:25 pklinkne    What… Twitt…
 ##  8 235070… 11221966… 2019-04-27 17:51:56 stasavage   Cong… Twitt…
-##  9 881321… 11222415… 2019-04-27 20:50:20 BackAftaTh… &quot;@ca… Twitt…
-## 10 269349… 11222463… 2019-04-27 21:09:13 TheFFBalle… Comi… Twitt…
+##  9 881321… 11229470… 2019-04-29 19:33:34 BackAftaTh… @Chi… Twitt…
+## 10 269349… 11229111… 2019-04-29 17:11:02 TheFFBalle… &quot;Com… Buffer
 ## # … with 280 more rows, and 82 more variables: display_text_width &lt;int&gt;,
 ## #   reply_to_status_id &lt;chr&gt;, reply_to_user_id &lt;chr&gt;,
 ## #   reply_to_screen_name &lt;chr&gt;, is_quote &lt;lgl&gt;, is_retweet &lt;lgl&gt;,
@@ -1126,7 +1125,7 @@ candidates<span class="op">%&gt;%</span><span class="kw">head</span>(<span class
 <pre><code>## # A tibble: 1 x 5
 ##   user_id  screen_name name     friends_count description                  
 ##   &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;            &lt;int&gt; &lt;chr&gt;                        
-## 1 8448612… zeitzoff    Thomas …          2667 Associate professor @AU_SPA.…</code></pre>
+## 1 8448612… zeitzoff    Thomas …          2666 Associate professor @AU_SPA.…</code></pre>
 </div>
 <div id="request-rate-limit" class="section level4">
 <h4><span class="header-section-number">4.4.6.3</span> request rate limit</h4>
@@ -1136,17 +1135,17 @@ candidates<span class="op">%&gt;%</span><span class="kw">head</span>(<span class
 <pre><code>## # A tibble: 6 x 7
 ##   query limit remaining reset reset_at            timestamp           app  
 ##   &lt;chr&gt; &lt;int&gt;     &lt;int&gt; &lt;tim&gt; &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;
-## 1 list…    15        15 15.0… 2019-04-27 18:02:47 2019-04-27 17:47:47 Test…
-## 2 list…    75        75 15.0… 2019-04-27 18:02:47 2019-04-27 17:47:47 Test…
-## 3 list…    15        15 15.0… 2019-04-27 18:02:47 2019-04-27 17:47:47 Test…
-## 4 list…   900       900 15.0… 2019-04-27 18:02:47 2019-04-27 17:47:47 Test…
-## 5 list…    15        15 15.0… 2019-04-27 18:02:47 2019-04-27 17:47:47 Test…
-## 6 list…    75        75 15.0… 2019-04-27 18:02:47 2019-04-27 17:47:47 Test…</code></pre>
+## 1 list…    15        15 15.0… 2019-04-29 15:53:16 2019-04-29 15:38:16 Test…
+## 2 list…    75        75 15.0… 2019-04-29 15:53:16 2019-04-29 15:38:16 Test…
+## 3 list…    15        15 15.0… 2019-04-29 15:53:16 2019-04-29 15:38:16 Test…
+## 4 list…   900       900 15.0… 2019-04-29 15:53:16 2019-04-29 15:38:16 Test…
+## 5 list…    15        15 15.0… 2019-04-29 15:53:16 2019-04-29 15:38:16 Test…
+## 6 list…    75        75 15.0… 2019-04-29 15:53:16 2019-04-29 15:38:16 Test…</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rate_limit</span>(<span class="st">&quot;get_friends&quot;</span>)</code></pre>
 <pre><code>## # A tibble: 1 x 7
 ##   query limit remaining reset reset_at            timestamp           app  
 ##   &lt;chr&gt; &lt;int&gt;     &lt;int&gt; &lt;tim&gt; &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;
-## 1 frie…    15        14 14.9… 2019-04-27 18:02:45 2019-04-27 17:47:47 Test…</code></pre>
+## 1 frie…    15        14 14.9… 2019-04-29 15:53:14 2019-04-29 15:38:16 Test…</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_friends</span>(<span class="kw">c</span>(<span class="st">&quot;drewconway&quot;</span>,<span class="st">&quot;BarackObama&quot;</span>))</code></pre>
 <pre><code>## 1 friend networks collected!</code></pre>
 <pre><code>## 2 friend networks collected!</code></pre>
@@ -1168,12 +1167,12 @@ candidates<span class="op">%&gt;%</span><span class="kw">head</span>(<span class
 <pre><code>## # A tibble: 1 x 7
 ##   query limit remaining reset reset_at            timestamp           app  
 ##   &lt;chr&gt; &lt;int&gt;     &lt;int&gt; &lt;tim&gt; &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;
-## 1 frie…    15        12 14.9… 2019-04-27 18:02:45 2019-04-27 17:47:48 Test…</code></pre>
+## 1 frie…    15        12 14.9… 2019-04-29 15:53:14 2019-04-29 15:38:16 Test…</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rate_limit</span>(<span class="st">&quot;lookup_users&quot;</span>) <span class="co"># 900 every 15 min</span></code></pre>
 <pre><code>## # A tibble: 1 x 7
 ##   query limit remaining reset reset_at            timestamp           app  
 ##   &lt;chr&gt; &lt;int&gt;     &lt;int&gt; &lt;tim&gt; &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;
-## 1 user…   900       897 14.9… 2019-04-27 18:02:46 2019-04-27 17:47:48 Test…</code></pre>
+## 1 user…   900       897 14.9… 2019-04-29 15:53:14 2019-04-29 15:38:17 Test…</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">limit.fri=<span class="kw">rate_limit</span>(<span class="st">&quot;get_friends&quot;</span>)
   <span class="cf">if</span> (limit.fri<span class="op">$</span>remaining<span class="op">==</span><span class="dv">0</span>){
     <span class="kw">Sys.sleep</span>(<span class="dv">60</span><span class="op">*</span><span class="kw">as.numeric</span>(limit.fri<span class="op">$</span>reset))}</code></pre>
@@ -1258,7 +1257,7 @@ user.name=user.df<span class="op">%&gt;%</span>
 <span class="kw">plot</span>(netsim,<span class="dt">vertex.name=</span><span class="kw">V</span>(netsim)<span class="op">$</span>user.name,<span class="dt">vertex.color=</span><span class="st">&quot;gold&quot;</span>, <span class="dt">vertex.size=</span><span class="kw">log</span>(<span class="kw">V</span>(netsim)<span class="op">$</span>degree)<span class="op">*</span>.<span class="dv">8</span><span class="fl">+0.01</span>, 
      <span class="dt">vertex.frame.color=</span><span class="st">&quot;gray&quot;</span>, <span class="dt">vertex.label.color=</span><span class="st">&quot;black&quot;</span>, 
      <span class="dt">vertex.label.cex=</span><span class="fl">0.5</span>, <span class="dt">vertex.label.dist=</span><span class="dv">2</span>, <span class="dt">edge.curved=</span><span class="fl">0.5</span>,<span class="dt">edge.arrow.size=</span>.<span class="dv">2</span>,<span class="dt">vertex.label.cex=</span>.<span class="dv">5</span>,<span class="dt">vertex.label=</span><span class="ot">NA</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-136-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-136-1.png" width="672" /></p>
 </div>
 </div>
 </div>

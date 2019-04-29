@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>6 amen packages | Introduction to Network Analysis Using R</title>
+  <title>Chapter 6 amen packages | Introduction to Network Analysis Using R</title>
   <meta name="description" content="This github page provide a basic introduction on network analysis using R. The documents are based on the lab materials of STAT650 Social Network at Duke University.">
   <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="6 amen packages | Introduction to Network Analysis Using R" />
+  <meta property="og:title" content="Chapter 6 amen packages | Introduction to Network Analysis Using R" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   <meta name="github-repo" content="YunranChen/intro-network-R" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="6 amen packages | Introduction to Network Analysis Using R" />
+  <meta name="twitter:title" content="Chapter 6 amen packages | Introduction to Network Analysis Using R" />
   
   <meta name="twitter:description" content="This github page provide a basic introduction on network analysis using R. The documents are based on the lab materials of STAT650 Social Network at Duke University." />
   
@@ -25,7 +25,7 @@
 <meta name="author" content="Yunran Chen">
 
 
-<meta name="date" content="2019-04-27">
+<meta name="date" content="2019-04-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -283,7 +283,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="amen-packages" class="section level1">
-<h1><span class="header-section-number">6</span> <code>amen</code> packages</h1>
+<h1><span class="header-section-number">Chapter 6</span> <code>amen</code> packages</h1>
 <div id="outline-6" class="section level2">
 <h2><span class="header-section-number">6.1</span> Outline</h2>
 <ul>
@@ -672,11 +672,11 @@ bhat=<span class="kw">colMeans</span>(Y,<span class="dt">na.rm =</span> <span cl
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data=</span><span class="kw">data.frame</span>(<span class="dt">anova=</span>ahat,<span class="dt">posterior=</span>fit_SRM<span class="op">$</span>APM),<span class="kw">aes</span>(<span class="dt">x=</span>anova,<span class="dt">y=</span>posterior))<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span><span class="kw">geom_abline</span>(<span class="dt">slope=</span><span class="dv">1</span>,<span class="dt">intercept =</span> <span class="dv">0</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_fixed</span>()<span class="op">+</span><span class="kw">theme_bw</span>()</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-165-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-165-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data=</span><span class="kw">data.frame</span>(<span class="dt">anova=</span>bhat,<span class="dt">posterior=</span>fit_SRM<span class="op">$</span>BPM),<span class="kw">aes</span>(<span class="dt">x=</span>anova,<span class="dt">y=</span>posterior))<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span><span class="kw">geom_abline</span>(<span class="dt">slope=</span><span class="dv">1</span>,<span class="dt">intercept =</span> <span class="dv">0</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_fixed</span>()<span class="op">+</span><span class="kw">theme_bw</span>()</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-165-2.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-165-2.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r">fit_SRM<span class="op">$</span>GOF[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>,] <span class="co">#statistics to check the goodness of fitting</span></code></pre>
 <pre><code>##     sd.rowmean sd.colmean  dyad.dep   triad.dep
 ## obs  0.4906692  0.4784861 0.9392867  0.20403144
@@ -832,7 +832,7 @@ R - dimension of latent factor <span class="math inline">\(U\)</span> and <span 
 <div id="circle-plot-for-estimated-latent-factor" class="section level3">
 <h3><span class="header-section-number">6.4.6</span> circle plot for estimated latent factor</h3>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">circplot</span>(Y,<span class="dt">U=</span>fit_ame2<span class="op">$</span>U,<span class="dt">V=</span>fit_ame2<span class="op">$</span>V) <span class="co">#only available for 2 dimension latent factor</span></code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-175-1.png" width="672" /></p>
+<p><img src="docs_files/figure-html/unnamed-chunk-175-1.png" width="672" /></p>
 </div>
 </div>
 <div id="choice-of-model-in-ame-binary-ordinal-discrete-or-sparse-relations" class="section level2">
